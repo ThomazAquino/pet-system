@@ -1,0 +1,76 @@
+@import 'styles-variables';
+
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '~bootstrap/scss/bootstrap-grid';
+@import 'styles-reset';
+
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+@import './themes/default-theme';
+@import './themes/light-theme';
+@import './themes/black-theme';
+@import './themes/nature-theme';
+
+@import 'styles-reset.scss-theme';
+@import './app/app/app.component.scss-theme';
+@import './app/shared/big-input/big-input/big-input.component.scss-theme';
+@import './app/features/about/about/about.component.scss-theme';
+@import './app/features/home/home/home.component.scss-theme.scss';
+@import './app/features/examples/notifications/components/notifications.component.scss-theme';
+@import './app/features/examples/todos/components/todos-container.component.scss-theme';
+@import './app/features/examples/stock-market/components/stock-market-container.component.scss-theme';
+@import './app/features/examples/theming/parent/parent.component.scss-theme';
+@import './app/features/examples/theming/child/child.component.scss-theme';
+@import './app/features/examples/examples/examples.component.scss-theme';
+
+@mixin custom-components-theme($theme) {
+  @include pet-styles-reset-theme($theme);
+  @include pet-app-component-theme($theme);
+  @include pet-home-component-theme($theme);
+  @include pet-about-component-theme($theme);
+  @include pet-big-input-component-theme($theme);
+  @include pet-notifications-component-theme($theme);
+  @include pet-todos-container-component-theme($theme);
+  @include pet-stock-market-container-component-theme($theme);
+  @include pet-parent-component-theme($theme);
+  @include pet-child-component-theme($theme);
+  @include pet-examples-component-theme($theme);
+}
+
+.default-theme {
+  @include angular-material-theme($pet-theme);
+  @include custom-components-theme($pet-theme);
+
+  background: rgb(148,243,255);
+  background: linear-gradient(118deg, rgba(148,243,255,1) 0%, rgba(85,177,233,1) 100%);
+
+  .section {
+    background: rgba( 255, 255, 255, 0.50 );
+    box-shadow: -1px 1px 9px 0 rgb(31 38 135 / 19%);
+    backdrop-filter: blur( 2.0px );
+    -webkit-backdrop-filter: blur( 2.0px );
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.38 );
+  }
+
+  .mat-form-field-appearance-fill .mat-form-field-flex {
+    background-color: #F5F5F5 !important;
+  }
+}
+
+.light-theme {
+  @include angular-material-theme($pet-light-theme);
+  @include custom-components-theme($pet-light-theme);
+}
+
+.black-theme {
+  @include angular-material-theme($pet-black-theme);
+  @include custom-components-theme($pet-black-theme);
+}
+
+.nature-theme {
+  @include angular-material-theme($pet-nature-theme);
+  @include custom-components-theme($pet-nature-theme);
+}

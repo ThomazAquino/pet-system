@@ -1,0 +1,32 @@
+@import '~@angular/material/theming';
+
+$toolbar-breakpoint: 600px;
+
+$fa-font-path: '~@fortawesome/fontawesome-free-webfonts/webfonts';
+
+$link-hover-decoration: none;
+$label-margin-bottom: 0;
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+);
+
+$success-colors: mat-palette($mat-green, 400);
+$warning-colors: mat-palette($mat-amber, 400);
+
+$header-height: 68px;
+
+// Hardcoded colors
+$dark-blue: #102F37;
+$light-blue: #7BBFE8;
+$extra-light-blue: #E8F1FF;
+$light-green: #7BE8D7;
+
+// Hardcoded fonts
+
+// Spaces
+$grid-division-size: 15px;

@@ -1,0 +1,9 @@
+$pet-nature-primary: mat-palette($mat-brown, 700, 300, 900);
+$pet-nature-accent: mat-palette($mat-deep-purple, 300);
+$pet-nature-warn: mat-palette($mat-red, 600);
+
+$pet-nature-theme: mat-light-theme(
+  $pet-nature-primary,
+  $pet-nature-accent,
+  $pet-nature-warn
+);

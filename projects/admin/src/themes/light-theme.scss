@@ -1,0 +1,9 @@
+$pet-light-primary: mat-palette($mat-grey, 200, 500, 300);
+$pet-light-accent: mat-palette($mat-brown, 200);
+$pet-light-warn: mat-palette($mat-deep-orange, 200);
+
+$pet-light-theme: mat-light-theme(
+  $pet-light-primary,
+  $pet-light-accent,
+  $pet-light-warn
+);

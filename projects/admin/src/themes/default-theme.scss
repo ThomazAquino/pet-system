@@ -1,0 +1,5 @@
+$pet-primary: mat-palette($mat-indigo, 800, 300, 900);
+$pet-accent: mat-palette($mat-light-blue);
+$pet-warn: mat-palette($mat-pink, 600);
+
+$pet-theme: mat-light-theme($pet-primary, $pet-accent, $pet-warn);

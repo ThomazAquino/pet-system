@@ -1,0 +1,16 @@
+@import '~@angular/material/theming';
+
+@mixin pet-home-component-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $foreground: map-get($theme, foreground);
+  $background: map-get($theme, background);
+
+  .home-button-text {
+    color: mat-color($foreground, text);
+    // color: mat-color($foreground, disabled-button);
+    // color: mat-color($foreground, disabled-text);
+    // color: mat-color($foreground, secondary-text);
+    // color:mat-color($foreground, divider);
+  }
+}

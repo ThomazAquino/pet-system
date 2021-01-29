@@ -1,0 +1,9 @@
+$pet-black-primary: mat-palette($mat-grey, 700, 300, 900);
+$pet-black-accent: mat-palette($mat-blue-grey, 400);
+$pet-black-warn: mat-palette($mat-red, 500);
+
+$pet-black-theme: mat-dark-theme(
+  $pet-black-primary,
+  $pet-black-accent,
+  $pet-black-warn
+);
