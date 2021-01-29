@@ -25,6 +25,7 @@ import { selectAllOwners, selectCustomerEntities } from '../core/owners/owners.r
 import { upsertOwner } from '../core/owners/owners.actions';
 import { selectAllPets } from '../core/pets/pet.reducer';
 import { upsertPet } from '../core/pets/pet.actions';
+import { selectAllTreatments } from '../core/treatments/treatment.reducer';
 
 @Component({
   selector: 'pet-root',
@@ -57,6 +58,9 @@ export class AppComponent implements OnInit {
 
   owners$: Observable<any> = this.store.pipe(select(selectAllOwners));
   pets$: Observable<any> = this.store.pipe(select(selectAllPets));
+  treatments$: Observable<any> = this.store.pipe(select(selectAllTreatments));
+
+
   selectedOwner$: Observable<any> = this.store.pipe(select(selectAllPets));
 
   constructor(

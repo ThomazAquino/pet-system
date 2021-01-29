@@ -1,5 +1,9 @@
 @import '../../styles-variables';
 
+:host {
+  display: block;
+}
+
 .theme-wrapper {
   height: 100%;
   width: 100%;

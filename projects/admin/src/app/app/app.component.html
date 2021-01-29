@@ -85,7 +85,7 @@
       </div>
 
 
-      <!-- <h2>Owners</h2>
+      <h2>Owners</h2>
       <div style="display: flex">
         <div *ngFor="let owner of owners$ | async" style="border: 1px solid black; width: 200px">
           <div>{{owner.name}}</div>
@@ -120,7 +120,24 @@
 
       ----- <br>
 
-      <h2>User profile</h2> -->
+      <h2 style="margin-top: 20px;">Tratments</h2>
+      <div style="display: flex">
+        <div *ngFor="let treatment of treatments$ | async" style="border: 1px solid grey; width: 200px">
+          <div>{{treatment.id}}</div>
+          <div>{{treatment.status}}</div>
+          <div>{{treatment.enterDate}}</div>
+          <div>{{treatment.dischargeDate}}</div>
+          <div>{{treatment.medications}}</div>
+          <div>{{treatment.food}}</div>
+          <div>{{treatment.conclusiveReport}}</div>
+          <div>{{treatment.dischargeCare}}</div>
+          <div>{{treatment.clinicEvo}}</div>
+          <div>{{treatment.clinicEvoResume}}</div>
+          <div>{{treatment.petId}}</div>
+          <div>{{treatment.belongsToVet}}</div>
+        </div>
+      </div>
+      <button (click)="upsertPet()">upsertTreatment</button>
       
 
 
