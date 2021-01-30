@@ -76,7 +76,6 @@ export class CrudComponent {
   save() {
     if (this.bookFormGroup.valid) {
       const book = this.bookFormGroup.value;
-      debugger
       this.store.dispatch(actionBooksUpsertOne({ book }));
       this.isEditing = false;
       this.router.navigate(['examples/crud', book.id]);

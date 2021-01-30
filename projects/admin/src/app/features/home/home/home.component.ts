@@ -3,7 +3,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
 import { Store, select } from '@ngrx/store';
 import { selectOpenTreatments, selectOpenTreatmentsForTable } from '../../../core/treatments/treatment.reducer';
-import { selectPet } from '../../../core/pets/pet.reducer';
+import { selectPet } from '../../../core/pets/pets.reducer';
 import { Subscription } from 'rxjs';
 
 @Component({

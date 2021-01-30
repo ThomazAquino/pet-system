@@ -3,7 +3,7 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { Treatment } from './treatment.model';
 import * as TreatmentActions from './treatment.actions';
 import { AppState } from '../core.state';
-import { selectAllPets, selectPetEntities } from '../pets/pet.reducer';
+import { selectAllPets, selectPetEntities } from '../pets/pets.reducer';
 
 export const treatmentFeatureKey = 'treatments';
 

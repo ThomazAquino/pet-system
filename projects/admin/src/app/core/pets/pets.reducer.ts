@@ -1,18 +1,18 @@
 import { Action, createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import * as PetActions from './pet.actions';
+import * as PetsActions from './pets.actions';
 import { AppState } from '../core.state';
-import { Pet } from './pet.model';
+import { Pet } from './pets.model';
 
 export const petsFeatureKey = 'pets';
 
-export interface PetState extends EntityState<Pet> {
+export interface PetsState extends EntityState<Pet> {
   // additional entities state properties
 }
 
 export const adapter: EntityAdapter<Pet> = createEntityAdapter<Pet>();
 
-export const initialState: PetState = adapter.getInitialState({
+export const initialState: PetsState = adapter.getInitialState({
   // additional entity state properties
   ids: ['id-pet-1', 'id-pet-2', 'id-pet-3'],
   entities: {
@@ -57,39 +57,39 @@ export const initialState: PetState = adapter.getInitialState({
 
 const reduce = createReducer(
   initialState,
-  on(PetActions.addPet,
+  on(PetsActions.addPet,
     (state, action) => adapter.addOne(action.pet, state)
   ),
-  on(PetActions.upsertPet,
+  on(PetsActions.upsertPet,
     (state, action) => adapter.upsertOne(action.pet, state)
   ),
-  on(PetActions.addPets,
+  on(PetsActions.addPets,
     (state, action) => adapter.addMany(action.pets, state)
   ),
-  on(PetActions.upsertPets,
+  on(PetsActions.upsertPets,
     (state, action) => adapter.upsertMany(action.pets, state)
   ),
-  on(PetActions.updatePet,
+  on(PetsActions.updatePet,
     (state, action) => adapter.updateOne(action.pet, state)
   ),
-  on(PetActions.updatePets,
+  on(PetsActions.updatePets,
     (state, action) => adapter.updateMany(action.pets, state)
   ),
-  on(PetActions.deletePet,
+  on(PetsActions.deletePet,
     (state, action) => adapter.removeOne(action.id, state)
   ),
-  on(PetActions.deletePets,
+  on(PetsActions.deletePets,
     (state, action) => adapter.removeMany(action.ids, state)
   ),
-  on(PetActions.loadPets,
+  on(PetsActions.loadPets,
     (state, action) => adapter.addAll(action.pets, state)
   ),
-  on(PetActions.clearPets,
+  on(PetsActions.clearPets,
     state => adapter.removeAll(state)
   ),
 );
 
-export function petReducer(state: PetState | undefined, action: Action) {
+export function petsReducer(state: PetsState | undefined, action: Action) {
   return reduce(state, action);
 }
 
@@ -97,7 +97,7 @@ export const {
   selectIds,
   selectEntities,
   selectAll,
-} = adapter.getSelectors((state: AppState) => state.pet);
+} = adapter.getSelectors((state: AppState) => state.pets);
 
 // select the array of pets
 export const selectAllPets = selectAll;

@@ -16,12 +16,12 @@ import { settingsReducer } from './settings/settings.reducer';
 import { SettingsState } from './settings/settings.model';
 import { Owner } from './owners/owners.model';
 import { ownersReducer, OwnersState } from './owners/owners.reducer';
-import { PetState, petReducer } from './pets/pet.reducer';
+import { PetsState, petsReducer } from './pets/pets.reducer';
 import { treatmentReducer, TreatmentState } from './treatments/treatment.reducer';
 
 export const reducers: ActionReducerMap<AppState> = {
   owners: ownersReducer,
-  pet: petReducer,
+  pets: petsReducer,
   treatment: treatmentReducer,
   auth: authReducer,
   settings: settingsReducer,
@@ -42,8 +42,8 @@ export const selectOwners = createFeatureSelector<AppState, OwnersState>(
   'owners'
 );
 
-export const selectPets = createFeatureSelector<AppState, PetState>(
-  'pet'
+export const selectPets = createFeatureSelector<AppState, PetsState>(
+  'pets'
 );
 
 export const selectTreatments = createFeatureSelector<AppState, TreatmentState>(
@@ -66,7 +66,7 @@ export const selectRouterState = createFeatureSelector<
 
 export interface AppState {
   owners: OwnersState;
-  pet: PetState;
+  pets: PetsState;
   treatment: TreatmentState;
   auth: AuthState;
   settings: SettingsState;

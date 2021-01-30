@@ -51,6 +51,8 @@ import { CustomSerializer } from './router/custom-serializer';
 import { LocalStorageService } from './local-storage/local-storage.service';
 import { HttpErrorInterceptor } from './http-interceptors/http-error.interceptor';
 import { GoogleAnalyticsEffects } from './google-analytics/google-analytics.effects';
+import { OwnersEffects } from './owners/owners.effects';
+import { PetsEffects } from './pets/pets.effects';
 import { NotificationService } from './notifications/notification.service';
 import { SettingsEffects } from './settings/settings.effects';
 import {
@@ -79,7 +81,7 @@ import {
   faInstagram,
   faYoutube
 } from '@fortawesome/free-brands-svg-icons';
-import { OwnersEffects } from './owners/owners.effects';
+
 
 export {
   TitleService,
@@ -133,7 +135,8 @@ export function httpLoaderFactory(http: HttpClient) {
       AuthEffects,
       SettingsEffects,
       GoogleAnalyticsEffects,
-      OwnersEffects
+      OwnersEffects,
+      PetsEffects,
     ]),
     environment.production
       ? []
