@@ -10,6 +10,7 @@ export class LocalStorageService {
 
   static loadInitialState() {
     return Object.keys(localStorage).reduce((state: any, storageKey) => {
+      debugger
       if (storageKey.includes(APP_PREFIX)) {
         const stateKeys = storageKey
           .replace(APP_PREFIX, '')

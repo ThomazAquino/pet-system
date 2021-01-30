@@ -14,13 +14,13 @@ import { authReducer } from './auth/auth.reducer';
 import { RouterStateUrl } from './router/router.state';
 import { settingsReducer } from './settings/settings.reducer';
 import { SettingsState } from './settings/settings.model';
-import { Owner } from './owners/owner.model';
-import { ownerReducer, OwnerState } from './owners/owners.reducer';
+import { Owner } from './owners/owners.model';
+import { ownersReducer, OwnersState } from './owners/owners.reducer';
 import { PetState, petReducer } from './pets/pet.reducer';
 import { treatmentReducer, TreatmentState } from './treatments/treatment.reducer';
 
 export const reducers: ActionReducerMap<AppState> = {
-  owner: ownerReducer,
+  owners: ownersReducer,
   pet: petReducer,
   treatment: treatmentReducer,
   auth: authReducer,
@@ -38,8 +38,8 @@ if (!environment.production) {
   }
 }
 
-export const selectOwners = createFeatureSelector<AppState, OwnerState>(
-  'owner'
+export const selectOwners = createFeatureSelector<AppState, OwnersState>(
+  'owners'
 );
 
 export const selectPets = createFeatureSelector<AppState, PetState>(
@@ -65,7 +65,7 @@ export const selectRouterState = createFeatureSelector<
 >('router');
 
 export interface AppState {
-  owner: OwnerState;
+  owners: OwnersState;
   pet: PetState;
   treatment: TreatmentState;
   auth: AuthState;

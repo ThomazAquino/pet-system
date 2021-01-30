@@ -3,6 +3,7 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { Treatment } from './treatment.model';
 import * as TreatmentActions from './treatment.actions';
 import { AppState } from '../core.state';
+import { selectAllPets, selectPetEntities } from '../pets/pet.reducer';
 
 export const treatmentFeatureKey = 'treatments';
 
@@ -14,11 +15,11 @@ export const adapter: EntityAdapter<Treatment> = createEntityAdapter<Treatment>(
 
 export const initialState: TreatmentState = adapter.getInitialState({
   // additional entity state properties
-  ids: ['id-treatment-1', 'id-treatment-2'],
+  ids: ['id-treatment-1', 'id-treatment-2', 'id-treatment-3'],
   entities: {
     'id-treatment-1' : {
       id: 'id-treatment-1',
-      status: 'interned',
+      status: 'open',
       enterDate: '11/12/2020',
       dischargeDate: null,
       medications: [],
@@ -32,7 +33,7 @@ export const initialState: TreatmentState = adapter.getInitialState({
     },
     'id-treatment-2' : {
       id: 'id-treatment-2',
-      status: 'interned',
+      status: 'open',
       enterDate: '11/12/2020',
       dischargeDate: null,
       medications: [],
@@ -43,6 +44,20 @@ export const initialState: TreatmentState = adapter.getInitialState({
       clinicEvoResume: 2,
       petId: 'id-pet-2',
       belongsToVet: 'id-vet-2'
+    },
+    'id-treatment-3' : {
+      id: 'id-treatment-3',
+      status: 'close',
+      enterDate: '11/12/2020',
+      dischargeDate: null,
+      medications: [],
+      food: [],
+      conclusiveReport: null,
+      dischargeCare: null,
+      clinicEvo: null,
+      clinicEvoResume: 2,
+      petId: 'id-pet-2',
+      belongsToVet: 'id-vet-3'
     }
   }
 });
@@ -100,4 +115,24 @@ export const selectOwnersIds = selectIds;
 // select the dictionary of widget entities
 export const selectTreatmentsEntities = treatmentsEntities;
 
+
+export const selectOpenTreatments = createSelector(
+  allTreatments,
+ (treatments) => treatments.filter(treatment => treatment.status === 'open')
+ );
+
+export const selectOpenTreatmentsForTable = createSelector(
+  selectOpenTreatments,
+  selectPetEntities,
+ (treatments, pets) => treatments.map(treatment => {
+    return {
+      photo: pets[treatment.petId].photo,
+      name: pets[treatment.petId].name,
+      enterDate: treatment.enterDate,
+      belongsToVet: treatment.belongsToVet,
+      clinicEvoResume: treatment.clinicEvoResume,
+      qrCode: pets[treatment.petId].qrCode
+    }
+  })
+ );
 

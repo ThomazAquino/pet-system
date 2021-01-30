@@ -2,10 +2,12 @@
 
 <nav class="nav">
   <ul class="nav__ul">
-      <li class="side-nav__li active">
-        <a class="side-nav__li__a" href="#">
-          <fa-icon icon="home"></fa-icon> Home
+      <li class="side-nav__li" *ngFor="let item of navigation" routerLinkActive="active">
+        <a class="side-nav__li__a" [routerLink]="[item.link]" >
+          <fa-icon [icon]="item.icon"></fa-icon> {{item.label}}
         </a>
       </li>
+
+
   </ul>
 </nav>

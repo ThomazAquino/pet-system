@@ -79,6 +79,7 @@ import {
   faInstagram,
   faYoutube
 } from '@fortawesome/free-brands-svg-icons';
+import { OwnersEffects } from './owners/owners.effects';
 
 export {
   TitleService,
@@ -131,12 +132,13 @@ export function httpLoaderFactory(http: HttpClient) {
     EffectsModule.forRoot([
       AuthEffects,
       SettingsEffects,
-      GoogleAnalyticsEffects
+      GoogleAnalyticsEffects,
+      OwnersEffects
     ]),
     environment.production
       ? []
       : StoreDevtoolsModule.instrument({
-          name: 'Angular NgRx Material Starter'
+          name: 'Pet System'
         }),
 
     // 3rd party

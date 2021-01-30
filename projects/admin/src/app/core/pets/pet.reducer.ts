@@ -18,33 +18,39 @@ export const initialState: PetState = adapter.getInitialState({
   entities: {
     'id-pet-1' : {
       id: 'id-pet-1',
+      photo: '',
       name: 'Lecy',
       type: 'dog',
       breed: 'Buldog',
       color: 'yellow',
       status: 'interned',
       ownerId: 'id-person-1',
-      treatments: ['id-treatment-1', 'id-treatment-2']
+      treatments: ['id-treatment-1', 'id-treatment-2'],
+      qrCode: ''
     },
     'id-pet-2' : {
       id: 'id-pet-2',
+      photo: '',
       name: 'boby',
       type: 'dog',
       breed: 'poodle',
       color: 'white',
       status: 'in-home',
       ownerId: 'id-person-1',
-      treatments: ['id-treatment-3', 'id-treatment-4']
+      treatments: ['id-treatment-3', 'id-treatment-4'],
+      qrCode: ''
     },
     'id-pet-3' : {
       id: 'id-pet-3',
+      photo: '',
       name: 'Rufus',
       type: 'cat',
       breed: 'Angora',
       color: 'black',
       status: 'in-home',
       ownerId: 'id-person-2',
-      treatments: ['id-treatment-5']
+      treatments: ['id-treatment-5'],
+      qrCode: ''
     },
   }
 });
@@ -101,5 +107,10 @@ export const selectPetsIds = selectIds;
 
 // select the dictionary of pets entities
 export const selectPetEntities = selectEntities;
+
+export const selectPet = createSelector(
+  selectEntities,
+  (entities, props: string) => entities[props]
+);
 
 

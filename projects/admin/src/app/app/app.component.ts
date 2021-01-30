@@ -19,13 +19,15 @@ import {
   actionSettingsChangeAnimationsPageDisabled,
   actionSettingsChangeLanguage
 } from '../core/settings/settings.actions';
-import { Owner } from '../core/owners/owner.model';
 import { selectOwners } from '../core/core.state';
 import { selectAllOwners, selectCustomerEntities } from '../core/owners/owners.reducer';
 import { upsertOwner } from '../core/owners/owners.actions';
 import { selectAllPets } from '../core/pets/pet.reducer';
 import { upsertPet } from '../core/pets/pet.actions';
-import { selectAllTreatments } from '../core/treatments/treatment.reducer';
+import { selectAllTreatments, selectOpenTreatments } from '../core/treatments/treatment.reducer';
+import { Treatment } from '../core/treatments/treatment.model';
+import { upsertTreatment } from '../core/treatments/treatment.actions';
+import { Owner } from '../core/owners/owners.model';
 
 @Component({
   selector: 'pet-root',
@@ -59,6 +61,7 @@ export class AppComponent implements OnInit {
   owners$: Observable<any> = this.store.pipe(select(selectAllOwners));
   pets$: Observable<any> = this.store.pipe(select(selectAllPets));
   treatments$: Observable<any> = this.store.pipe(select(selectAllTreatments));
+  openTreatments$: Observable<any> = this.store.pipe(select(selectOpenTreatments));
 
 
   selectedOwner$: Observable<any> = this.store.pipe(select(selectAllPets));
@@ -89,11 +92,11 @@ export class AppComponent implements OnInit {
   }
 
   upsertOwner() {
-    const owner = {
+    const owner: Owner = {
       id: 'asasa',
       name: 'New name',
       lastName: 'New last name',
-      cel: '000-000',
+      cellPhone: '000-000',
       tel: '000-000',
       street: '000-000',
       streetNumber: '000-000',
@@ -107,17 +110,37 @@ export class AppComponent implements OnInit {
   }
   upsertPet() {
     const pet = {
-      id: 'id-pet-4',
-      name: 'Ikki',
-      type: 'Cat',
-      breed: 'Angora',
-      color: 'grey',
-      status: 'interned',
-      ownerId: '?????',
-      treatments: [],
+        id: 'id-pet-5',
+        photo: '',
+        name: 'new dog',
+        type: 'dog',
+        breed: 'poodle',
+        color: 'white',
+        status: 'in-home',
+        ownerId: 'id-person-5',
+        treatments: [],
+        qrCode: ''
     };
 
     this.store.dispatch(upsertPet({pet}));
+  }
+  upsertTreatment() {
+    const treatment: Treatment = {
+      id: 'id-treatment-5',
+      status: 'open',
+      enterDate: '28/01/2021',
+      dischargeDate: null,
+      medications: [],
+      food: [],
+      conclusiveReport: null,
+      dischargeCare: null,
+      clinicEvo: null,
+      clinicEvoResume: 2,
+      petId: 'id-pet-5',
+      belongsToVet: 'id-vet-3'
+    };
+
+    this.store.dispatch(upsertTreatment({treatment}));
   }
 
   onLoginClick() {

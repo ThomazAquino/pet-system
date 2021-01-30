@@ -9,6 +9,15 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 export class SideNavComponent implements OnInit {
   logo = require('../../../assets/logo-long.png').default;
 
+  navigation = [
+    { link: 'home', label: 'Home', icon: 'home' },
+    { link: 'owner', label: 'Tutores', icon: 'user' },
+    { link: 'about', label: 'about', icon: 'home' },
+    { link: 'feature-list', label: 'features', icon: 'home' },
+    { link: 'examples', label: 'examples', icon: 'home' },
+    { link: 'settings', label: 'settings', icon: 'home' }
+  ];
+
 
   constructor() { }
 

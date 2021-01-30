@@ -1,0 +1,26 @@
+.filter-treatment-table {
+  max-width: 250px;
+  float: right;
+  margin-bottom: -10px;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+// treatment-table
+
+.treatment-table {
+  width: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.treatment-table__image {
+  margin-top: 4px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
