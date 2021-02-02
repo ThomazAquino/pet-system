@@ -95,22 +95,27 @@ export function petsReducer(state: PetsState | undefined, action: Action) {
 
 export const {
   selectIds,
-  selectEntities,
-  selectAll,
+  selectEntities: petsEntities,
+  selectAll: allPets,
 } = adapter.getSelectors((state: AppState) => state.pets);
-
-// select the array of pets
-export const selectAllPets = selectAll;
 
 // select the array of pets ids
 export const selectPetsIds = selectIds;
 
 // select the dictionary of pets entities
-export const selectPetEntities = selectEntities;
+export const selectPetEntities = petsEntities;
+
+// select the array of pets
+export const selectAllPets = allPets;
+
 
 export const selectPet = createSelector(
-  selectEntities,
+  petsEntities,
   (entities, props: string) => entities[props]
 );
 
+export const selectPetsByIds = createSelector(
+  petsEntities,
+  (entities, props: string[]) => props.map(id => entities[id])
+);
 

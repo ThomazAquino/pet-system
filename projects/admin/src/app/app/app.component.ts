@@ -20,13 +20,13 @@ import {
   actionSettingsChangeLanguage
 } from '../core/settings/settings.actions';
 import { selectOwners } from '../core/core.state';
-import { selectAllOwners, selectCustomerEntities } from '../core/owners/owners.reducer';
+import { selectAllOwners, selectOwnerEntities } from '../core/owners/owners.reducer';
 import { upsertOwner } from '../core/owners/owners.actions';
 import { selectAllPets } from '../core/pets/pets.reducer';
 import { upsertPet } from '../core/pets/pets.actions';
-import { selectAllTreatments, selectOpenTreatments } from '../core/treatments/treatment.reducer';
-import { Treatment } from '../core/treatments/treatment.model';
-import { upsertTreatment } from '../core/treatments/treatment.actions';
+import { selectAllTreatments, selectOpenTreatments } from '../core/treatments/treatments.reducer';
+import { Treatment } from '../core/treatments/treatments.model';
+import { upsertTreatment } from '../core/treatments/treatments.actions';
 import { Owner } from '../core/owners/owners.model';
 
 @Component({

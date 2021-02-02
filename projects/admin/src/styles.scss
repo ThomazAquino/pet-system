@@ -24,12 +24,14 @@
 @import './app/features/examples/theming/parent/parent.component.scss-theme';
 @import './app/features/examples/theming/child/child.component.scss-theme';
 @import './app/features/examples/examples/examples.component.scss-theme';
+@import './app/shared/header-profile/header-profile.component.scss-theme.scss';
 
 @mixin custom-components-theme($theme) {
   @include pet-styles-reset-theme($theme);
   @include pet-app-component-theme($theme);
   @include pet-home-component-theme($theme);
   @include pet-about-component-theme($theme);
+  @include pet-header-profile-theme($theme);
   @include pet-big-input-component-theme($theme);
   @include pet-notifications-component-theme($theme);
   @include pet-todos-container-component-theme($theme);
@@ -42,6 +44,10 @@
 .default-theme {
   @include angular-material-theme($pet-theme);
   @include custom-components-theme($pet-theme);
+  $primary: map-get($pet-theme, primary);
+  $background: map-get($pet-theme, background);
+  $foreground: map-get($pet-theme, foreground);
+
 
   background: rgb(148,243,255);
   background: linear-gradient(118deg, rgba(148,243,255,1) 0%, rgba(85,177,233,1) 100%);
@@ -57,6 +63,27 @@
 
   .mat-form-field-appearance-fill .mat-form-field-flex {
     background-color: #F5F5F5 !important;
+  }
+
+  .profile-button {
+    border: none;
+    background-color: mat-color($background, background, 1);
+    color: mat-color($foreground, text);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    border-radius: 6px;
+    padding: 7px 9px;
+
+    fa-icon {
+      margin-right: 2px
+    }
+  }
+
+  .primary-hr {
+    background-color: mat-color($primary, lighter);
+    border-top: none;
+    border-bottom: none;
+    height: 1px;
   }
 }
 

@@ -1,0 +1,43 @@
+<div class="header-profile-wrapper">
+  <ng-container *ngIf="isOwner" [ngTemplateOutlet]="ownerProfile"></ng-container>
+  <ng-container *ngIf="!isOwner" [ngTemplateOutlet]="defaultHeader"></ng-container>  
+</div>
+<hr class="primary-hr">
+
+
+
+<ng-template #ownerProfile>
+  <section class="left">
+    <img class="left__image" src="../../../assets/images/owner.png">
+    <div class="left__info">
+      <h3 class="left__info__title">{{headerData.owner.name + ' ' + headerData.owner.lastName}}</h3>
+    </div>
+  </section>
+  <section class="right">
+    <button class="right profile-button" style="margin-bottom: 40px;"> <fa-icon icon="comment-dots"></fa-icon> Mensagem</button>
+  </section>
+</ng-template>
+
+<ng-template #defaultHeader>
+  <section class="left">
+    <img class="left__image" src="../../../assets/images/owner.png">
+    <div class="left__info">
+      <h3 class="left__info__title">{{headerData.owner}}</h3>
+      <h3 class="left__info__sub-title"></h3>
+      <h3 class="left__info__btn profile-button"></h3>
+    </div>
+  </section>
+  
+  <section class="right">
+    <div class="right__first">
+      <div class="right__image"></div>
+      <button class="right profile-button"></button>
+      <button class="right profile-button"></button>
+    </div>
+  
+    <h4 class="right__second">Tutor: <span class="right__second__name"></span> </h4>
+    
+  </section>
+
+</ng-template>
+

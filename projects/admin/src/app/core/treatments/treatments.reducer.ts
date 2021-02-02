@@ -1,19 +1,19 @@
 import { Action, createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { Treatment } from './treatment.model';
-import * as TreatmentActions from './treatment.actions';
+import { Treatment } from './treatments.model';
+import * as TreatmentsActions from './treatments.actions';
 import { AppState } from '../core.state';
 import { selectAllPets, selectPetEntities } from '../pets/pets.reducer';
 
-export const treatmentFeatureKey = 'treatments';
+export const treatmentsFeatureKey = 'treatments';
 
-export interface TreatmentState extends EntityState<Treatment> {
+export interface TreatmentsState extends EntityState<Treatment> {
   // additional entities state properties
 }
 
 export const adapter: EntityAdapter<Treatment> = createEntityAdapter<Treatment>();
 
-export const initialState: TreatmentState = adapter.getInitialState({
+export const initialState: TreatmentsState = adapter.getInitialState({
   // additional entity state properties
   ids: ['id-treatment-1', 'id-treatment-2', 'id-treatment-3'],
   entities: {
@@ -64,39 +64,39 @@ export const initialState: TreatmentState = adapter.getInitialState({
 
 const reduce = createReducer(
   initialState,
-  on(TreatmentActions.addTreatment,
+  on(TreatmentsActions.addTreatment,
     (state, action) => adapter.addOne(action.treatment, state)
   ),
-  on(TreatmentActions.upsertTreatment,
+  on(TreatmentsActions.upsertTreatment,
     (state, action) => adapter.upsertOne(action.treatment, state)
   ),
-  on(TreatmentActions.addTreatments,
+  on(TreatmentsActions.addTreatments,
     (state, action) => adapter.addMany(action.treatments, state)
   ),
-  on(TreatmentActions.upsertTreatments,
+  on(TreatmentsActions.upsertTreatments,
     (state, action) => adapter.upsertMany(action.treatments, state)
   ),
-  on(TreatmentActions.updateTreatment,
+  on(TreatmentsActions.updateTreatment,
     (state, action) => adapter.updateOne(action.treatment, state)
   ),
-  on(TreatmentActions.updateTreatments,
+  on(TreatmentsActions.updateTreatments,
     (state, action) => adapter.updateMany(action.treatments, state)
   ),
-  on(TreatmentActions.deleteTreatment,
+  on(TreatmentsActions.deleteTreatment,
     (state, action) => adapter.removeOne(action.id, state)
   ),
-  on(TreatmentActions.deleteTreatments,
+  on(TreatmentsActions.deleteTreatments,
     (state, action) => adapter.removeMany(action.ids, state)
   ),
-  on(TreatmentActions.loadTreatments,
+  on(TreatmentsActions.loadTreatments,
     (state, action) => adapter.addAll(action.treatments, state)
   ),
-  on(TreatmentActions.clearTreatments,
+  on(TreatmentsActions.clearTreatments,
     state => adapter.removeAll(state)
   ),
 );
 
-export function treatmentReducer(state: TreatmentState | undefined, action: Action) {
+export function treatmentsReducer(state: TreatmentsState | undefined, action: Action) {
   return reduce(state, action);
 }
 
@@ -104,7 +104,7 @@ export const {
   selectIds,
   selectEntities: treatmentsEntities,
   selectAll: allTreatments,
-} = adapter.getSelectors((state: AppState) => state.treatment);
+} = adapter.getSelectors((state: AppState) => state.treatments);
 
 // select the array of owners
 export const selectAllTreatments = allTreatments;

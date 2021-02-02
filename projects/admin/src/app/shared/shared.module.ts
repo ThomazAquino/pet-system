@@ -50,6 +50,7 @@ import { faMediumM, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { BigInputComponent } from './big-input/big-input/big-input.component';
 import { BigInputActionComponent } from './big-input/big-input-action/big-input-action.component';
 import { RtlSupportDirective } from './rtl-support/rtl-support.directive';
+import { HeaderProfileComponent } from './header-profile/header-profile.component';
 
 @NgModule({
   imports: [
@@ -79,7 +80,8 @@ import { RtlSupportDirective } from './rtl-support/rtl-support.directive';
   declarations: [
     BigInputComponent,
     BigInputActionComponent,
-    RtlSupportDirective
+    RtlSupportDirective,
+    HeaderProfileComponent,
   ],
   exports: [
     CommonModule,
@@ -111,6 +113,7 @@ import { RtlSupportDirective } from './rtl-support/rtl-support.directive';
 
     BigInputComponent,
     BigInputActionComponent,
+    HeaderProfileComponent,
     RtlSupportDirective
   ]
 })

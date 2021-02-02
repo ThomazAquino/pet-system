@@ -96,6 +96,11 @@ export const selectAllOwners = allOwners;
 export const selectOwnersIds = selectIds;
 
 // select the dictionary of widget entities
-export const selectCustomerEntities = ownerEntities;
+export const selectOwnerEntities = ownerEntities;
+
+export const selectOwnerById = createSelector(
+  selectOwnerEntities,
+  (entities, props: string) => entities[props]
+);
 
 

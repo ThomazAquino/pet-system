@@ -21,7 +21,7 @@ const routes: Routes = [
         data: { title: 'pet.examples.menu.list' }
       },
       {
-        path: 'profile:id',
+        path: 'profile/:id',
         component: OwnerProfileComponent,
         data: { title: 'pet.examples.menu.profile' }
       },

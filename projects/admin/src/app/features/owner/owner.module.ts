@@ -20,7 +20,8 @@ import { MatSortModule } from '@angular/material/sort';
     SharedModule,
     FontAwesomeModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    SharedModule
   ]
 })
 export class OwnerModule { }

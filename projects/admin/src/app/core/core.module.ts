@@ -53,6 +53,7 @@ import { HttpErrorInterceptor } from './http-interceptors/http-error.interceptor
 import { GoogleAnalyticsEffects } from './google-analytics/google-analytics.effects';
 import { OwnersEffects } from './owners/owners.effects';
 import { PetsEffects } from './pets/pets.effects';
+import { TreatmentsEffects } from './treatments/treatments.effects';
 import { NotificationService } from './notifications/notification.service';
 import { SettingsEffects } from './settings/settings.effects';
 import {
@@ -66,6 +67,7 @@ import {
 } from '@fortawesome/free-regular-svg-icons';
 import {
   faCog,
+  faCommentDots,
   faBars,
   faRocket,
   faPowerOff,
@@ -137,6 +139,7 @@ export function httpLoaderFactory(http: HttpClient) {
       GoogleAnalyticsEffects,
       OwnersEffects,
       PetsEffects,
+      TreatmentsEffects,
     ]),
     environment.production
       ? []
@@ -192,6 +195,7 @@ export class CoreModule {
     }
     faIconLibrary.addIcons(
       faCog,
+      faCommentDots,
       faBars,
       faRocket,
       faPowerOff,

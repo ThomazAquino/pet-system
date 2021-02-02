@@ -1,0 +1,12 @@
+@import '~@angular/material/theming';
+
+@mixin pet-header-profile-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $foreground: map-get($theme, foreground);
+  $background: map-get($theme, background);
+
+  .left__image {
+    box-shadow: 0px 0px 15px 6px rgba(mat-color($primary, lighter), 0.4);
+  }
+}
