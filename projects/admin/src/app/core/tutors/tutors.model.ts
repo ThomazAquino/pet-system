@@ -1,4 +1,4 @@
-export interface Owner {
+export interface Tutor {
   id: string;
   name: string;
   lastName: string;

@@ -5,17 +5,17 @@ import { Observable } from 'rxjs';
 import {
   routeAnimations
 } from '../../../core/core.module';
-import { Owner } from '../../../core/owners/owners.model';
-import { selectAllOwners } from '../../../core/owners/owners.reducer';
+import { Tutor } from '../../../core/tutors/tutors.model';
+import { selectAllTutors } from '../../../core/tutors/tutors.reducer';
 
 @Component({
-  selector: 'pet-owner-container',
-  templateUrl: './owner-container.component.html',
-  styleUrls: ['./owner-container.component.scss'],
+  selector: 'pet-tutor-container',
+  templateUrl: './tutor-container.component.html',
+  styleUrls: ['./tutor-container.component.scss'],
   animations: [routeAnimations],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OwnerContainerComponent implements OnInit {
+export class TutorContainerComponent implements OnInit {
 
   // owners$: Observable<Owner[]> = this.store.pipe(select(selectAllOwners));
 

@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { OwnerContainerComponent } from './owner-container/owner-container.component';
-import { OwnerCreatorComponent } from './owner-creator/owner-creator.component';
-import { OwnerListComponent } from './owner-list/owner-list.component';
-import { OwnerProfileComponent } from './owner-profile/owner-profile.component';
+import { TutorContainerComponent } from './tutor-container/tutor-container.component';
+import { TutorCreatorComponent } from './tutor-creator/tutor-creator.component';
+import { TutorListComponent } from './tutor-list/tutor-list.component';
+import { TutorProfileComponent } from './tutor-profile/tutor-profile.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: OwnerContainerComponent,
+    component: TutorContainerComponent,
     children: [
       {
         path: '',
@@ -17,17 +17,17 @@ const routes: Routes = [
       },
       {
         path: 'list',
-        component: OwnerListComponent,
+        component: TutorListComponent,
         data: { title: 'pet.examples.menu.list' }
       },
       {
         path: 'profile/:id',
-        component: OwnerProfileComponent,
+        component: TutorProfileComponent,
         data: { title: 'pet.examples.menu.profile' }
       },
       {
         path: 'add',
-        component: OwnerCreatorComponent,
+        component: TutorCreatorComponent,
         data: { title: 'pet.examples.menu.add' }
       },
     ]
@@ -38,4 +38,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class OwnerRoutingModule { }
+export class TutorRoutingModule { }

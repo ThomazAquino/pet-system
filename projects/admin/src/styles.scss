@@ -80,7 +80,7 @@
   }
 
   .primary-hr {
-    background-color: mat-color($primary, lighter);
+    background-color: rgba(mat-color($primary, lighter), 0.5);
     border-top: none;
     border-bottom: none;
     height: 1px;

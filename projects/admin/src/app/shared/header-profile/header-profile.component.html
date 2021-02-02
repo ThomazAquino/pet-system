@@ -1,16 +1,16 @@
 <div class="header-profile-wrapper">
-  <ng-container *ngIf="isOwner" [ngTemplateOutlet]="ownerProfile"></ng-container>
-  <ng-container *ngIf="!isOwner" [ngTemplateOutlet]="defaultHeader"></ng-container>  
+  <ng-container *ngIf="isTutor" [ngTemplateOutlet]="tutorProfile"></ng-container>
+  <ng-container *ngIf="!isTutor" [ngTemplateOutlet]="defaultHeader"></ng-container>  
 </div>
 <hr class="primary-hr">
 
 
 
-<ng-template #ownerProfile>
+<ng-template #tutorProfile>
   <section class="left">
-    <img class="left__image" src="../../../assets/images/owner.png">
+    <img class="left__image" src="../../../assets/images/tutor.png">
     <div class="left__info">
-      <h3 class="left__info__title">{{headerData.owner.name + ' ' + headerData.owner.lastName}}</h3>
+      <h3 class="left__info__title">{{headerData.tutor.name + ' ' + headerData.tutor.lastName}}</h3>
     </div>
   </section>
   <section class="right">
@@ -20,9 +20,9 @@
 
 <ng-template #defaultHeader>
   <section class="left">
-    <img class="left__image" src="../../../assets/images/owner.png">
+    <img class="left__image" src="../../../assets/images/tutor.png">
     <div class="left__info">
-      <h3 class="left__info__title">{{headerData.owner}}</h3>
+      <h3 class="left__info__title">{{headerData.tutor}}</h3>
       <h3 class="left__info__sub-title"></h3>
       <h3 class="left__info__btn profile-button"></h3>
     </div>

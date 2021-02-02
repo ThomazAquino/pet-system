@@ -19,15 +19,15 @@ import {
   actionSettingsChangeAnimationsPageDisabled,
   actionSettingsChangeLanguage
 } from '../core/settings/settings.actions';
-import { selectOwners } from '../core/core.state';
-import { selectAllOwners, selectOwnerEntities } from '../core/owners/owners.reducer';
-import { upsertOwner } from '../core/owners/owners.actions';
+import { selectTutorsState } from '../core/core.state';
+import { selectAllTutors, selectTutorsEntities } from '../core/tutors/tutors.reducer';
+import { upsertTutor } from '../core/tutors/tutors.actions';
 import { selectAllPets } from '../core/pets/pets.reducer';
 import { upsertPet } from '../core/pets/pets.actions';
 import { selectAllTreatments, selectOpenTreatments } from '../core/treatments/treatments.reducer';
 import { Treatment } from '../core/treatments/treatments.model';
 import { upsertTreatment } from '../core/treatments/treatments.actions';
-import { Owner } from '../core/owners/owners.model';
+import { Tutor } from '../core/tutors/tutors.model';
 
 @Component({
   selector: 'pet-root',
@@ -58,13 +58,13 @@ export class AppComponent implements OnInit {
   theme$: Observable<string>;
 
 
-  owners$: Observable<any> = this.store.pipe(select(selectAllOwners));
+  tutors$: Observable<any> = this.store.pipe(select(selectAllTutors));
   pets$: Observable<any> = this.store.pipe(select(selectAllPets));
   treatments$: Observable<any> = this.store.pipe(select(selectAllTreatments));
   openTreatments$: Observable<any> = this.store.pipe(select(selectOpenTreatments));
 
 
-  selectedOwner$: Observable<any> = this.store.pipe(select(selectAllPets));
+  selectedTutor$: Observable<any> = this.store.pipe(select(selectAllPets));
 
   constructor(
     private store: Store,
@@ -91,8 +91,8 @@ export class AppComponent implements OnInit {
     this.theme$ = this.store.pipe(select(selectEffectiveTheme));
   }
 
-  upsertOwner() {
-    const owner: Owner = {
+  upsertTutor() {
+    const tutor: Tutor = {
       id: 'asasa',
       name: 'New name',
       lastName: 'New last name',
@@ -106,7 +106,7 @@ export class AppComponent implements OnInit {
       pets: []
     };
 
-    this.store.dispatch(upsertOwner({owner}));
+    this.store.dispatch(upsertTutor({tutor}));
   }
   upsertPet() {
     const pet = {
@@ -117,7 +117,7 @@ export class AppComponent implements OnInit {
         breed: 'poodle',
         color: 'white',
         status: 'in-home',
-        ownerId: 'id-person-5',
+        tutorId: 'id-person-5',
         treatments: [],
         qrCode: ''
     };

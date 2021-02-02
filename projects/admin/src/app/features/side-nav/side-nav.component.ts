@@ -11,7 +11,7 @@ export class SideNavComponent implements OnInit {
 
   navigation = [
     { link: 'home', label: 'Home', icon: 'home' },
-    { link: 'owner', label: 'Tutores', icon: 'user' },
+    { link: 'tutor', label: 'Tutores', icon: 'user' },
     { link: 'about', label: 'about', icon: 'home' },
     { link: 'feature-list', label: 'features', icon: 'home' },
     { link: 'examples', label: 'examples', icon: 'home' },

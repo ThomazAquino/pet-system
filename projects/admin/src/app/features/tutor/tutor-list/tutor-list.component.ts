@@ -4,15 +4,15 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { selectAllOwners } from '../../../core/owners/owners.reducer';
+import { selectAllTutors } from '../../../core/tutors/tutors.reducer';
 
 @Component({
-  selector: 'pet-owner-list',
-  templateUrl: './owner-list.component.html',
-  styleUrls: ['./owner-list.component.scss'],
+  selector: 'pet-tutor-list',
+  templateUrl: './tutor-list.component.html',
+  styleUrls: ['./tutor-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OwnerListComponent implements OnInit {
+export class TutorListComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   displayedColumns: string[] = ['photo', 'name', 'cellPhone', 'cpf',];
   dataSource = new MatTableDataSource();
@@ -25,14 +25,14 @@ export class OwnerListComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.subscriptions.push(this.store.pipe(select(selectAllOwners)).subscribe(owners => {
-      console.log('selectAllOwners', owners);
-      this.dataSource.data = owners;
+    this.subscriptions.push(this.store.pipe(select(selectAllTutors)).subscribe(tutors => {
+      console.log('selectAllTutors', tutors);
+      this.dataSource.data = tutors;
     }))
   }
 
   onTableClick(row) {
-    this.router.navigate(['owner/profile', row.id]);
+    this.router.navigate(['tutor/profile', row.id]);
   }
 
   applyFilter(event: Event) {

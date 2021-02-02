@@ -13,9 +13,9 @@ const routes: Routes = [
       import('./features/home/home.module').then((m) => m.HomeModule)
   },
   {
-    path: 'owner',
+    path: 'tutor',
     loadChildren: () =>
-      import('./features/owner/owner.module').then((m) => m.OwnerModule)
+      import('./features/tutor/tutor.module').then((m) => m.TutorModule)
   },
   {
     path: 'about',

@@ -51,7 +51,7 @@ import { CustomSerializer } from './router/custom-serializer';
 import { LocalStorageService } from './local-storage/local-storage.service';
 import { HttpErrorInterceptor } from './http-interceptors/http-error.interceptor';
 import { GoogleAnalyticsEffects } from './google-analytics/google-analytics.effects';
-import { OwnersEffects } from './owners/owners.effects';
+import { TutorsEffects } from './tutors/tutors.effects';
 import { PetsEffects } from './pets/pets.effects';
 import { TreatmentsEffects } from './treatments/treatments.effects';
 import { NotificationService } from './notifications/notification.service';
@@ -137,7 +137,7 @@ export function httpLoaderFactory(http: HttpClient) {
       AuthEffects,
       SettingsEffects,
       GoogleAnalyticsEffects,
-      OwnersEffects,
+      TutorsEffects,
       PetsEffects,
       TreatmentsEffects,
     ]),

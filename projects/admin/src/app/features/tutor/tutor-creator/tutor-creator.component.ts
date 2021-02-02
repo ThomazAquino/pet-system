@@ -1,12 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-  selector: 'pet-owner-creator',
-  templateUrl: './owner-creator.component.html',
-  styleUrls: ['./owner-creator.component.scss'],
+  selector: 'pet-tutor-creator',
+  templateUrl: './tutor-creator.component.html',
+  styleUrls: ['./tutor-creator.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OwnerCreatorComponent implements OnInit {
+export class TutorCreatorComponent implements OnInit {
 
   constructor() { }
 

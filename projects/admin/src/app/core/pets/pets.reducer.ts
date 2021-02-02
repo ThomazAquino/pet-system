@@ -24,7 +24,7 @@ export const initialState: PetsState = adapter.getInitialState({
       breed: 'Buldog',
       color: 'yellow',
       status: 'interned',
-      ownerId: 'id-person-1',
+      tutorId: 'id-person-1',
       treatments: ['id-treatment-1', 'id-treatment-2'],
       qrCode: ''
     },
@@ -36,7 +36,7 @@ export const initialState: PetsState = adapter.getInitialState({
       breed: 'poodle',
       color: 'white',
       status: 'in-home',
-      ownerId: 'id-person-1',
+      tutorId: 'id-person-1',
       treatments: ['id-treatment-3', 'id-treatment-4'],
       qrCode: ''
     },
@@ -48,7 +48,7 @@ export const initialState: PetsState = adapter.getInitialState({
       breed: 'Angora',
       color: 'black',
       status: 'in-home',
-      ownerId: 'id-person-2',
+      tutorId: 'id-person-2',
       treatments: ['id-treatment-5'],
       qrCode: ''
     },

@@ -6,24 +6,24 @@ import { tap, withLatestFrom } from 'rxjs/operators';
 import { LocalStorageService } from '../core.module';
 
 
-import * as ownersAction from './owners.actions';
-import { selectOwners } from '../core.state';
+import * as tutorsAction from './tutors.actions';
+import { selectTutorsState } from '../core.state';
 
-export const OWNERS_KEY = 'owners';
+export const TUTORS_KEY = 'tutors';
 
 @Injectable()
-export class OwnersEffects {
-  persistOwners = createEffect(
+export class TutorsEffects {
+  persistTutors = createEffect(
     () =>
       this.actions$.pipe(
         ofType(
-          ownersAction.addOwner,
-          ownersAction.updateOwner,
-          ownersAction.upsertOwner,
+          tutorsAction.addTutor,
+          tutorsAction.updateTutor,
+          tutorsAction.upsertTutor,
         ),
-        withLatestFrom(this.store.pipe(select(selectOwners))),
-        tap(([action, owners]) =>
-          this.localStorageService.setItem(OWNERS_KEY, owners)
+        withLatestFrom(this.store.pipe(select(selectTutorsState))),
+        tap(([action, tutors]) =>
+          this.localStorageService.setItem(TUTORS_KEY, tutors)
         )
       ),
     { dispatch: false }

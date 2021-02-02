@@ -1,10 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
-import { Owner } from '../../core/owners/owners.model';
+import { Tutor } from '../../core/tutors/tutors.model';
 import { Pet } from '../../core/pets/pets.model';
 
 // Data receive from parent component
 interface HeaderData {
-  owner?: Owner;
+  tutor?: Tutor;
   pet?: Pet;
 }
 
@@ -35,13 +35,13 @@ export class HeaderProfileComponent implements OnInit {
   headerData: HeaderData;
   leftPart: any;
   rightPart: any;
-  isOwner: boolean;
+  isTutor: boolean;
 
 
   constructor() { }
 
   ngOnInit() {
-    this.isOwner = this.headerData.pet ? false : true;
+    this.isTutor = this.headerData.pet ? false : true;
   }
 
 }

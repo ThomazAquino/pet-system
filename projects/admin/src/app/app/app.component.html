@@ -98,23 +98,23 @@
       </button>
 
 
-      <h2 style="margin-top: 400px">Owners</h2>
+      <h2 style="margin-top: 400px">Tutors</h2>
       <div style="display: flex">
-        <div *ngFor="let owner of owners$ | async" style="border: 1px solid black; width: 200px">
-          <div>{{owner.name}}</div>
-          <div>{{owner.lastName}}</div>
-          <div>{{owner.cel}}</div>
-          <div>{{owner.tel}}</div>
-          <div>{{owner.street}}</div>
-          <div>{{owner.streetNumber}}</div>
-          <div>{{owner.postalCode}}</div>
-          <div>{{owner.streetNumber}}</div>
-          <div>{{owner.birthday}}</div>
-          <div>{{owner.cpf}}</div>
-          <div>{{owner.pets}}</div>
+        <div *ngFor="let tutor of tutors$ | async" style="border: 1px solid black; width: 200px">
+          <div>{{tutor.name}}</div>
+          <div>{{tutor.lastName}}</div>
+          <div>{{tutor.cel}}</div>
+          <div>{{tutor.tel}}</div>
+          <div>{{tutor.street}}</div>
+          <div>{{tutor.streetNumber}}</div>
+          <div>{{tutor.postalCode}}</div>
+          <div>{{tutor.streetNumber}}</div>
+          <div>{{tutor.birthday}}</div>
+          <div>{{tutor.cpf}}</div>
+          <div>{{tutor.pets}}</div>
         </div>
       </div>
-      <button (click)="upsertOwner()">upsertOwner</button>
+      <button (click)="upsertTutor()">upsertTutor</button>
 
       <h2 style="margin-top: 20px;">Pets</h2>
       <div style="display: flex">
@@ -125,11 +125,11 @@
           <div>{{pet.breed}}</div>
           <div>{{pet.color}}</div>
           <div>{{pet.status}}</div>
-          <div>{{pet.ownerId}}</div>
+          <div>{{pet.tutorId}}</div>
           <div>{{pet.treatments}}</div>
         </div>
       </div>
-      <button (click)="upsertPet()">upsertOwner</button>
+      <button (click)="upsertPet()">upsertPet</button>
 
       ----- <br>
 

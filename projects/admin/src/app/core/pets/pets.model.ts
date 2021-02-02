@@ -6,7 +6,7 @@ export interface Pet {
   breed: string;
   color: string;
   status: string;
-  ownerId: string;
+  tutorId: string;
   treatments: any[];
   qrCode: string;
 }

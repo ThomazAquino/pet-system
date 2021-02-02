@@ -1,7 +1,9 @@
-<pet-header-profile [headerData]="{owner: owner}"></pet-header-profile>
+<pet-header-profile [headerData]="{tutor: tutor}"></pet-header-profile>
 
 
 
+
+{{ selectedTutor$ | async | json}}
 
 
 
@@ -10,7 +12,7 @@
         [ngClass]="routeAnimationsElements">
         <div class="row">
           <mat-form-field class="col">
-            <input matInput placeholder="{{ 'anms.examples.crud.placeholder1' | translate }}"
+            <input matInput placeholder="title"
               formControlName="title" required autofocus>
             <mat-error *ngIf="bookFormGroup.get('title').invalid">
               {{ 'anms.examples.crud.placeholder1' | translate }}
@@ -20,7 +22,7 @@
         </div>
         <div class="row">
           <mat-form-field class="col">
-            <input matInput placeholder="{{ 'anms.examples.crud.placeholder2' | translate }}"
+            <input matInput placeholder="author"
               formControlName="author" required>
             <mat-error *ngIf="bookFormGroup.get('author').hasError('required')">
               {{ 'anms.examples.crud.placeholder2' | translate }}
@@ -30,7 +32,7 @@
         </div>
         <div class="row">
           <mat-form-field class="col">
-            <textarea matInput placeholder="{{ 'anms.examples.crud.placeholder3' | translate }}"
+            <textarea matInput placeholder="description"
               formControlName="description" rows="5"></textarea>
             <mat-error *ngIf="bookFormGroup.get('description').invalid">
               {{ 'anms.examples.crud.placeholder1' | translate }}

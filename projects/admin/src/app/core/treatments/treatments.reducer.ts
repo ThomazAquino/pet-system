@@ -106,11 +106,11 @@ export const {
   selectAll: allTreatments,
 } = adapter.getSelectors((state: AppState) => state.treatments);
 
-// select the array of owners
+// select the array of treatments
 export const selectAllTreatments = allTreatments;
 
 // select the array of widget ids
-export const selectOwnersIds = selectIds;
+export const selectTreatmentsIds = selectIds;
 
 // select the dictionary of widget entities
 export const selectTreatmentsEntities = treatmentsEntities;
