@@ -27,6 +27,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 import { environment } from '../../environments/environment';
 
@@ -62,9 +63,7 @@ import {
   selectSettingsStickyHeader
 } from './settings/settings.selectors';
 import { MatButtonModule } from '@angular/material/button';
-import {
-  faBell
-} from '@fortawesome/free-regular-svg-icons';
+import { faBell } from '@fortawesome/free-regular-svg-icons';
 import {
   faCog,
   faCommentDots,
@@ -83,7 +82,6 @@ import {
   faInstagram,
   faYoutube
 } from '@fortawesome/free-brands-svg-icons';
-
 
 export {
   TitleService,
@@ -139,7 +137,7 @@ export function httpLoaderFactory(http: HttpClient) {
       GoogleAnalyticsEffects,
       TutorsEffects,
       PetsEffects,
-      TreatmentsEffects,
+      TreatmentsEffects
     ]),
     environment.production
       ? []
@@ -161,7 +159,8 @@ export function httpLoaderFactory(http: HttpClient) {
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
     { provide: ErrorHandler, useClass: AppErrorHandler },
-    { provide: RouterStateSerializer, useClass: CustomSerializer }
+    { provide: RouterStateSerializer, useClass: CustomSerializer },
+    NgxImageCompressService
   ],
   exports: [
     // angular

@@ -1,53 +1,111 @@
-<pet-header-profile [headerData]="{tutor: tutor}"></pet-header-profile>
+<pet-header-profile [headerData]="{tutor: tutorFormGroup.value}"
+                    (imageUploaded)="handleImageUploaded($event)"></pet-header-profile>
 
+<form *ngIf="tutorFormGroup" [formGroup]="tutorFormGroup" [ngClass]="routeAnimationsElements" class="profile-form">
+  <mat-form-field appearance="fill">
+    <mat-label>Nome</mat-label>
+    <input matInput placeholder="name"
+      formControlName="name" required autofocus>
+    <mat-error *ngIf="tutorFormGroup.get('name').invalid">
+      {{ 'anms.examples.crud.placeholder1' | translate }}
+      {{ 'anms.examples.crud.error' | translate }}
+    </mat-error>
+  </mat-form-field>
 
+  <mat-form-field appearance="fill">
+    <mat-label>Sobre nome</mat-label>
+    <input matInput placeholder="lastName"
+      formControlName="lastName" required autofocus>
+    <mat-error *ngIf="tutorFormGroup.get('lastName').invalid">
+      {{ 'anms.examples.crud.placeholder1' | translate }}
+      {{ 'anms.examples.crud.error' | translate }}
+    </mat-error>
+  </mat-form-field>
 
+  <mat-form-field appearance="fill">
+    <mat-label>CPF</mat-label>
+    <input matInput placeholder="cpf"
+      formControlName="cpf" required autofocus>
+    <mat-error *ngIf="tutorFormGroup.get('cpf').invalid">
+      {{ 'anms.examples.crud.placeholder1' | translate }}
+      {{ 'anms.examples.crud.error' | translate }}
+    </mat-error>
+  </mat-form-field>
 
-{{ selectedTutor$ | async | json}}
+  <mat-form-field appearance="fill">
+    <mat-label>birthday</mat-label>
+    <input matInput placeholder="birthday"
+      formControlName="birthday" required autofocus>
+    <mat-error *ngIf="tutorFormGroup.get('birthday').invalid">
+      {{ 'anms.examples.crud.placeholder1' | translate }}
+      {{ 'anms.examples.crud.error' | translate }}
+    </mat-error>
+  </mat-form-field>
 
+  <mat-form-field appearance="fill" style="grid-column: 1 / 3;">
+    <mat-label>street</mat-label>
+    <input matInput placeholder="street"
+      formControlName="street" required autofocus>
+    <mat-error *ngIf="tutorFormGroup.get('street').invalid">
+      {{ 'anms.examples.crud.placeholder1' | translate }}
+      {{ 'anms.examples.crud.error' | translate }}
+    </mat-error>
+  </mat-form-field>
 
+  <mat-form-field appearance="fill">
+    <mat-label>streetNumber</mat-label>
+    <input matInput placeholder="streetNumber"
+      formControlName="streetNumber" required autofocus>
+    <mat-error *ngIf="tutorFormGroup.get('streetNumber').invalid">
+      {{ 'anms.examples.crud.placeholder1' | translate }}
+      {{ 'anms.examples.crud.error' | translate }}
+    </mat-error>
+  </mat-form-field>
 
+  <mat-form-field appearance="fill">
+    <mat-label>postalCode</mat-label>
+    <input matInput placeholder="postalCode"
+      formControlName="postalCode" required autofocus>
+    <mat-error *ngIf="tutorFormGroup.get('postalCode').invalid">
+      {{ 'anms.examples.crud.placeholder1' | translate }}
+      {{ 'anms.examples.crud.error' | translate }}
+    </mat-error>
+  </mat-form-field>
 
-<form [formGroup]="bookFormGroup"
-        [ngClass]="routeAnimationsElements">
-        <div class="row">
-          <mat-form-field class="col">
-            <input matInput placeholder="title"
-              formControlName="title" required autofocus>
-            <mat-error *ngIf="bookFormGroup.get('title').invalid">
-              {{ 'anms.examples.crud.placeholder1' | translate }}
-              {{ 'anms.examples.crud.error' | translate }}
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="row">
-          <mat-form-field class="col">
-            <input matInput placeholder="author"
-              formControlName="author" required>
-            <mat-error *ngIf="bookFormGroup.get('author').hasError('required')">
-              {{ 'anms.examples.crud.placeholder2' | translate }}
-              {{ 'anms.examples.crud.error' | translate }}
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="row">
-          <mat-form-field class="col">
-            <textarea matInput placeholder="description"
-              formControlName="description" rows="5"></textarea>
-            <mat-error *ngIf="bookFormGroup.get('description').invalid">
-              {{ 'anms.examples.crud.placeholder1' | translate }}
-              {{ 'anms.examples.crud.error' | translate }}
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="row">
-          <div class="col-12 d-flex justify-content-between">
-            <!-- <button (click)="save()" mat-raised-button color="primary">
-              {{'anms.examples.crud.save' | translate }}
-            </button>
-            <button (click)="cancelEditing()" mat-raised-button>
-              {{'anms.examples.crud.cancel' | translate }}
-            </button> -->
-          </div>
-        </div>
-      </form>
+  <mat-form-field appearance="fill">
+    <mat-label>tel</mat-label>
+    <input matInput placeholder="tel"
+      formControlName="tel" required autofocus>
+    <mat-error *ngIf="tutorFormGroup.get('tel').invalid">
+      {{ 'anms.examples.crud.placeholder1' | translate }}
+      {{ 'anms.examples.crud.error' | translate }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>cellPhone</mat-label>
+    <input matInput placeholder="cellPhone"
+      formControlName="cellPhone" required autofocus>
+    <mat-error *ngIf="tutorFormGroup.get('cellPhone').invalid">
+      {{ 'anms.examples.crud.placeholder1' | translate }}
+      {{ 'anms.examples.crud.error' | translate }}
+    </mat-error>
+  </mat-form-field>
+</form> 
+
+<div class="row">
+  <div class="col-12 d-flex justify-content-end" *ngIf="formValueChanges$ | async">
+    <button (click)="cancelEditing()" mat-raised-button style="margin-right: 15px;">
+      descartar
+    </button>
+    <button (click)="save()" mat-raised-button color="primary">
+      salvar
+    </button>
+  </div>
+</div>
+
+<div class="pet-list">
+  <h4 class="pet-list__title">Lista de Pets</h4>
+  <pet-list></pet-list>
+</div>
+

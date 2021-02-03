@@ -21,6 +21,11 @@ const routes: Routes = [
         data: { title: 'pet.examples.menu.list' }
       },
       {
+        path: 'profile',
+        component: TutorProfileComponent,
+        data: { title: 'pet.examples.menu.profile' }
+      },
+      {
         path: 'profile/:id',
         component: TutorProfileComponent,
         data: { title: 'pet.examples.menu.profile' }
@@ -29,7 +34,7 @@ const routes: Routes = [
         path: 'add',
         component: TutorCreatorComponent,
         data: { title: 'pet.examples.menu.add' }
-      },
+      }
     ]
   }
 ];
@@ -38,4 +43,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TutorRoutingModule { }
+export class TutorRoutingModule {}

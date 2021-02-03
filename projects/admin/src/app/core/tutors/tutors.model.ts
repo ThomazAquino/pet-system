@@ -2,6 +2,7 @@ export interface Tutor {
   id: string;
   name: string;
   lastName: string;
+  image: string;
   cellPhone: string;
   tel: string;
   street: string;
@@ -9,5 +10,5 @@ export interface Tutor {
   postalCode: string;
   birthday: string;
   cpf: string;
-  pets: any[]
+  pets: any[];
 }

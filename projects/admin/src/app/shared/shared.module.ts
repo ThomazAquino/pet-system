@@ -51,6 +51,7 @@ import { BigInputComponent } from './big-input/big-input/big-input.component';
 import { BigInputActionComponent } from './big-input/big-input-action/big-input-action.component';
 import { RtlSupportDirective } from './rtl-support/rtl-support.directive';
 import { HeaderProfileComponent } from './header-profile/header-profile.component';
+import { ListComponent } from './list/list.component';
 
 @NgModule({
   imports: [
@@ -82,6 +83,7 @@ import { HeaderProfileComponent } from './header-profile/header-profile.componen
     BigInputActionComponent,
     RtlSupportDirective,
     HeaderProfileComponent,
+    ListComponent
   ],
   exports: [
     CommonModule,
@@ -114,6 +116,7 @@ import { HeaderProfileComponent } from './header-profile/header-profile.componen
     BigInputComponent,
     BigInputActionComponent,
     HeaderProfileComponent,
+    ListComponent,
     RtlSupportDirective
   ]
 })

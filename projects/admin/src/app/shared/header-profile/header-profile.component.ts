@@ -1,4 +1,12 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild
+} from '@angular/core';
 import { Tutor } from '../../core/tutors/tutors.model';
 import { Pet } from '../../core/pets/pets.model';
 
@@ -10,19 +18,18 @@ interface HeaderData {
 
 // Data
 interface LeftSideHeader {
-    image: string;
-    title: string;
-    subTitle?: string;
-    btnIcon: string;
+  image: string;
+  title: string;
+  subTitle?: string;
+  btnIcon: string;
 }
 
 interface RightSideHeader {
-    image: string;
-    title: string;
-    subTitle?: string;
-    btnIcon: string;
+  image: string;
+  title: string;
+  subTitle?: string;
+  btnIcon: string;
 }
-
 
 @Component({
   selector: 'pet-header-profile',
@@ -32,16 +39,28 @@ interface RightSideHeader {
 })
 export class HeaderProfileComponent implements OnInit {
   @Input()
-  headerData: HeaderData;
+  headerData?: HeaderData;
+  @Output()
+  imageUploaded = new EventEmitter<any>();
+  @ViewChild('imageInput') imageInput;
+
   leftPart: any;
   rightPart: any;
   isTutor: boolean;
 
-
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     this.isTutor = this.headerData.pet ? false : true;
   }
 
+  processFile(event): void {
+    if (event.value) {
+      this.imageUploaded.emit(event);
+    }
+  }
+
+  onImageClick(): void {
+    this.imageInput.nativeElement.click();
+  }
 }

@@ -2,6 +2,7 @@
 
 :host {
   display: block;
+  height: 100%;
 }
 
 .theme-wrapper {
@@ -11,10 +12,9 @@
 
 .main {
   display: grid;
-  grid-template-columns: 200px 1fr 350px;
+  grid-template-columns: 200px 1fr 250px;
   grid-column-gap: $grid-division-size;
   column-gap: $grid-division-size;
-
 
   pet-chat,
   .wrapper {
@@ -22,15 +22,35 @@
   }
 }
 
+@media (max-width: map-get($grid-breakpoints, lg)) {
+  .main {
+    grid-template-columns: 1fr 250px;
+    padding: 0 15px;
 
+    pet-side-nav {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateX(-150%);
+      height: 100vh;
+    }
+  }
+}
 
+@media (max-width: map-get($grid-breakpoints, md)) {
+  .main {
+    grid-template-columns: 1fr;
+    padding: 0 15px;
 
-
-
-
-
-
-
+    pet-chat {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateX(-150%);
+      height: 100vh;
+    }
+  }
+}
 
 mat-sidenav-container {
   height: 100%;

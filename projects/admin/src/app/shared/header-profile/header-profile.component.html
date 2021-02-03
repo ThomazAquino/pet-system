@@ -1,3 +1,5 @@
+<input #imageInput type="file" accept="image/*" (change)="processFile(imageInput)" style="display:none">
+
 <div class="header-profile-wrapper">
   <ng-container *ngIf="isTutor" [ngTemplateOutlet]="tutorProfile"></ng-container>
   <ng-container *ngIf="!isTutor" [ngTemplateOutlet]="defaultHeader"></ng-container>  
@@ -8,9 +10,9 @@
 
 <ng-template #tutorProfile>
   <section class="left">
-    <img class="left__image" src="../../../assets/images/tutor.png">
+    <img class="left__image" (click)="onImageClick()" [src]="headerData?.tutor?.image" onError="this.src='./assets/images/user-placeholder.png'">
     <div class="left__info">
-      <h3 class="left__info__title">{{headerData.tutor.name + ' ' + headerData.tutor.lastName}}</h3>
+      <h3 class="left__info__title">{{ (headerData?.tutor?.name) || ''}} {{' '}}  {{(headerData?.tutor?.lastName || '')}}</h3>
     </div>
   </section>
   <section class="right">
@@ -22,7 +24,7 @@
   <section class="left">
     <img class="left__image" src="../../../assets/images/tutor.png">
     <div class="left__info">
-      <h3 class="left__info__title">{{headerData.tutor}}</h3>
+      <h3 class="left__info__title">{{headerData?.tutor || ''}} sss</h3>
       <h3 class="left__info__sub-title"></h3>
       <h3 class="left__info__btn profile-button"></h3>
     </div>
