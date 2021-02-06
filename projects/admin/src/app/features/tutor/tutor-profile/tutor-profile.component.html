@@ -106,6 +106,7 @@
 
 <div class="pet-list">
   <h4 class="pet-list__title">Lista de Pets</h4>
-  <pet-list></pet-list>
+  <pet-general-list [list]="pets$ | async" (rowClick)="onPetListClick($event)" ></pet-general-list>
 </div>
+
 

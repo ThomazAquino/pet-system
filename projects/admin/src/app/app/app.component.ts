@@ -102,7 +102,7 @@ export class AppComponent implements OnInit {
       id: 'asasa',
       name: 'New name',
       lastName: 'New last name',
-      image: '',
+      avatar: '',
       cellPhone: '000-000',
       tel: '000-000',
       street: '000-000',
@@ -118,7 +118,7 @@ export class AppComponent implements OnInit {
   upsertPet() {
     const pet = {
       id: 'id-pet-5',
-      photo: '',
+      avatar: '',
       name: 'new dog',
       type: 'dog',
       breed: 'poodle',

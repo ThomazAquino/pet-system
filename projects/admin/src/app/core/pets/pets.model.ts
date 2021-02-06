@@ -1,6 +1,6 @@
 export interface Pet {
   id: string;
-  photo: string;
+  avatar: string;
   name: string;
   type: string;
   breed: string;

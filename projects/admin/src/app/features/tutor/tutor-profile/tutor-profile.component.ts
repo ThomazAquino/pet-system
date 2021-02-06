@@ -19,7 +19,7 @@ import {
   Subscription,
   BehaviorSubject
 } from 'rxjs';
-import { selectPetsByIds } from '../../../core/pets/pets.reducer';
+import { selectPetsByIdsForListComponent } from '../../../core/pets/pets.reducer';
 import { selectSelectedTutor } from '../../../core/tutors/tutors.selectors';
 import { debounceTime, filter, first, takeUntil, tap } from 'rxjs/operators';
 import { upsertTutor } from '../../../core/tutors/tutors.actions';
@@ -40,15 +40,16 @@ export class TutorProfileComponent implements OnInit, OnDestroy {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
 
   tutorFormGroup = this.fb.group(TutorProfileComponent.populateTutor());
+
   formValueChanges$ = new BehaviorSubject(false);
   selectedTutor$: Observable<Tutor> = this.store.pipe(
     select(selectSelectedTutor)
   );
-  initialFormState: any;
 
+  initialFormState: any;
   isNew: boolean;
 
-  pets: Pet[];
+  pets$: Observable<any>;
   selectedFile: ImageSnippet;
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
@@ -63,7 +64,7 @@ export class TutorProfileComponent implements OnInit, OnDestroy {
       id: tutor?.id || uuid(),
       name: tutor?.name,
       lastName: tutor?.lastName,
-      image: tutor?.image,
+      image: tutor?.avatar,
       cpf: tutor?.cpf,
       birthday: tutor?.birthday,
       street: tutor?.street,
@@ -93,12 +94,10 @@ export class TutorProfileComponent implements OnInit, OnDestroy {
           .subscribe((_) => this.formValueChanges$.next(true));
 
         if (tutor) {
-          this.store
-            .select(selectPetsByIds, tutor.pets)
-            .pipe(takeUntil(this.destroyed$))
-            .subscribe((pets: Pet[]) => {
-              this.pets = pets;
-            });
+          this.pets$ = this.store.select(
+            selectPetsByIdsForListComponent,
+            tutor.pets
+          );
         } else {
           this.isNew = true;
         }
@@ -138,6 +137,10 @@ export class TutorProfileComponent implements OnInit, OnDestroy {
     });
 
     reader.readAsDataURL(file);
+  }
+
+  onPetListClick(pet) {
+    console.log(pet);
   }
 
   ngOnDestroy() {
