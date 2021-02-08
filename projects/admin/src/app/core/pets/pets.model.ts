@@ -10,3 +10,9 @@ export interface Pet {
   treatments: any[];
   qrCode: string;
 }
+
+export enum TypePet {
+  cat = 'CAT',
+  dog = 'DOG',
+}
+

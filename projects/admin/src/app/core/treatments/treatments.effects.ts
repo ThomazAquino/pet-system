@@ -7,7 +7,7 @@ import { LocalStorageService } from '../core.module';
 
 
 import * as treatmentsAction from './treatments.actions';
-import { selectTreatments } from '../core.state';
+import { selectTreatmentsState } from '../core.state';
 
 export const TREATMENTS_KEY = 'treatments';
 
@@ -21,7 +21,7 @@ export class TreatmentsEffects {
           treatmentsAction.updateTreatment,
           treatmentsAction.upsertTreatment,
         ),
-        withLatestFrom(this.store.pipe(select(selectTreatments))),
+        withLatestFrom(this.store.pipe(select(selectTreatmentsState))),
         tap(([action, treatments]) =>
           this.localStorageService.setItem(TREATMENTS_KEY, treatments)
         )

@@ -9,13 +9,9 @@ import {
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { Store, select } from '@ngrx/store';
-import {
-  selectOpenTreatments,
-  selectOpenTreatmentsForTable
-} from '../../../core/treatments/treatments.reducer';
-import { selectPet } from '../../../core/pets/pets.reducer';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { selectOpenTreatmentsForHomeTable } from '../../../core/treatments/treatments.selectors';
 
 @Component({
   selector: 'pet-home',
@@ -42,7 +38,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.push(
       this.store
-        .pipe(select(selectOpenTreatmentsForTable))
+        .pipe(select(selectOpenTreatmentsForHomeTable))
         .subscribe((openTreatmentsForTable) => {
           console.log('openTreatmentsForTable', openTreatmentsForTable);
           this.dataSource.data = openTreatmentsForTable;
@@ -60,8 +56,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  onTutorButtonClick() {
+  onTutorAddButtonClick() {
     this.router.navigate(['tutor/profile']);
+  }
+
+  onPetAddButtonClick() {
+    this.router.navigate(['pet/profile']);
   }
 
   ngOnDestroy() {

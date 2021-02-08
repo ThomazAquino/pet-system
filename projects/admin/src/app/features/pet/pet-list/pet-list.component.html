@@ -1,0 +1,4 @@
+<pet-general-list
+  [list]="pets$ | async"
+  (rowClick)="onPetListClick($event)">
+</pet-general-list>

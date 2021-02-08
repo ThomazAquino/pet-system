@@ -20,17 +20,13 @@ import {
   actionSettingsChangeLanguage
 } from '../core/settings/settings.actions';
 import { selectTutorsState } from '../core/core.state';
-import {
-  selectAllTutors,
-  selectTutorsEntities
-} from '../core/tutors/tutors.reducer';
+
 import { upsertTutor } from '../core/tutors/tutors.actions';
 import { selectAllPets } from '../core/pets/pets.reducer';
 import { upsertPet } from '../core/pets/pets.actions';
 import {
-  selectAllTreatments,
   selectOpenTreatments
-} from '../core/treatments/treatments.reducer';
+} from '../core/treatments/treatments.selectors';
 import { Treatment } from '../core/treatments/treatments.model';
 import { upsertTreatment } from '../core/treatments/treatments.actions';
 import { Tutor } from '../core/tutors/tutors.model';
@@ -63,9 +59,6 @@ export class AppComponent implements OnInit {
   language$: Observable<string>;
   theme$: Observable<string>;
 
-  tutors$: Observable<any> = this.store.pipe(select(selectAllTutors));
-  pets$: Observable<any> = this.store.pipe(select(selectAllPets));
-  treatments$: Observable<any> = this.store.pipe(select(selectAllTreatments));
   openTreatments$: Observable<any> = this.store.pipe(
     select(selectOpenTreatments)
   );

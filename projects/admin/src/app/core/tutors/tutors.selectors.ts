@@ -1,27 +1,33 @@
 import { createSelector } from '@ngrx/store';
-
 import { selectRouterState } from '../core.module';
-import { selectTutorsState } from '../core.state';
-
+import { selectTutorsState, AppState } from '../core.state';
 import { tutorAdapter, TutorsState } from './tutors.reducer';
 
-const { selectEntities, selectAll } = tutorAdapter.getSelectors();
+// export const {
+//   selectIds,
+//   selectEntities,
+//   selectAll
+// } = tutorAdapter.getSelectors((state: AppState) => state.tutors);
 
-export const selectTutors = createSelector(
-  selectTutorsState,
-  (state: TutorsState) => state
-);
+// export const selectTutorsEntities = selectEntities;
+// export const selectAllTutors = selectAll;
+// export const selectTutorsIds = selectIds;
 
-export const selectAllTutors = createSelector(selectTutors, selectAll);
-export const selectTutorsEntities = createSelector(
-  selectTutors,
-  selectEntities
-);
+const { selectEntities, selectAll, selectIds } = tutorAdapter.getSelectors();
+export const selectAllTutors = createSelector(selectTutorsState, selectAll);
+export const selectTutorsEntities = createSelector(selectTutorsState, selectEntities);
+export const selectTutorsIds = createSelector(selectTutorsState, selectIds);
+
 
 export const selectSelectedTutor = createSelector(
   selectTutorsEntities,
   selectRouterState,
   (entities, params) => params && entities[params.state.params.id]
+);
+
+export const selectTutorById = createSelector(
+  selectTutorsEntities,
+  (entities, props: string) => entities[props]
 );
 
 export const selectTutorsForListComponent = createSelector(
@@ -71,3 +77,9 @@ export const selectTutorsForListComponent = createSelector(
     };
   }
 );
+
+
+// export const selectTutorsEntities = createSelector(
+//   selectTutorsState,
+//   selectEntities
+// );

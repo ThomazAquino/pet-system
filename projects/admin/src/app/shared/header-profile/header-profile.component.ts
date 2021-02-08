@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { Tutor } from '../../core/tutors/tutors.model';
 import { Pet } from '../../core/pets/pets.model';
+import { Router } from '@angular/router';
 
 // Data receive from parent component
 interface HeaderData {
@@ -48,7 +49,7 @@ export class HeaderProfileComponent implements OnInit {
   rightPart: any;
   isTutor: boolean;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
     this.isTutor = this.headerData.pet ? false : true;
@@ -62,5 +63,9 @@ export class HeaderProfileComponent implements OnInit {
 
   onImageClick(): void {
     this.imageInput.nativeElement.click();
+  }
+
+  openTutorProfile() {
+    this.router.navigate(['tutor/profile', this.headerData.tutor?.id]);
   }
 }

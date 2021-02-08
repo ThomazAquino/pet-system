@@ -72,6 +72,8 @@ export class ListComponent implements OnInit, AfterViewInit {
     // this.displayedColumns = Object.keys(this.list[0]).filter(item => item !== 'id')
     // this.dataSource.data = this.list;
 
+    console.log('List component: ', this.list)
+
     this.displayedColumns = Object.keys(this.list.info).filter(
       (item) => this.list.info[item].included
     );

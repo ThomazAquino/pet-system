@@ -1,6 +1,5 @@
 import {
   Action,
-  createFeatureSelector,
   createReducer,
   createSelector,
   on
@@ -9,7 +8,7 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { Treatment } from './treatments.model';
 import * as TreatmentsActions from './treatments.actions';
 import { AppState } from '../core.state';
-import { selectAllPets, selectPetEntities } from '../pets/pets.reducer';
+import { selectPetsEntities } from '../pets/pets.reducer';
 
 export const treatmentsFeatureKey = 'treatments';
 
@@ -17,20 +16,21 @@ export interface TreatmentsState extends EntityState<Treatment> {
   // additional entities state properties
 }
 
-export const adapter: EntityAdapter<Treatment> = createEntityAdapter<Treatment>();
+export const treatmentsAdapter: EntityAdapter<Treatment> = createEntityAdapter<Treatment>();
 
-export const initialState: TreatmentsState = adapter.getInitialState({
+export const initialState: TreatmentsState = treatmentsAdapter.getInitialState({
   // additional entity state properties
   ids: ['id-treatment-1', 'id-treatment-2', 'id-treatment-3'],
   entities: {
     'id-treatment-1': {
       id: 'id-treatment-1',
-      status: 'open',
-      enterDate: '11/12/2020',
-      dischargeDate: null,
+      status: 'close',
+      enterDate: '11/12/2019',
+      dischargeDate: '19/12/2019',
       medications: [],
       food: [],
       conclusiveReport: null,
+      conclusiveReportShort: 'Parvovirose',
       dischargeCare: null,
       clinicEvo: null,
       clinicEvoResume: 3,
@@ -40,7 +40,7 @@ export const initialState: TreatmentsState = adapter.getInitialState({
     'id-treatment-2': {
       id: 'id-treatment-2',
       status: 'open',
-      enterDate: '11/12/2020',
+      enterDate: '21/04/2021',
       dischargeDate: null,
       medications: [],
       food: [],
@@ -48,21 +48,52 @@ export const initialState: TreatmentsState = adapter.getInitialState({
       dischargeCare: null,
       clinicEvo: null,
       clinicEvoResume: 2,
-      petId: 'id-pet-2',
+      petId: 'id-pet-1',
       belongsToVet: 'id-vet-2'
     },
     'id-treatment-3': {
       id: 'id-treatment-3',
       status: 'close',
       enterDate: '11/12/2020',
-      dischargeDate: null,
+      dischargeDate: '17/12/2020',
       medications: [],
       food: [],
       conclusiveReport: null,
+      conclusiveReportShort: 'Otite canina',
       dischargeCare: null,
       clinicEvo: null,
       clinicEvoResume: 2,
       petId: 'id-pet-2',
+      belongsToVet: 'id-vet-3'
+    },
+    'id-treatment-4': {
+      id: 'id-treatment-4',
+      status: 'close',
+      enterDate: '01/01/2021',
+      dischargeDate: '09/01/2021',
+      medications: [],
+      food: [],
+      conclusiveReport: null,
+      conclusiveReportShort: 'Insuficiência renal',
+      dischargeCare: null,
+      clinicEvo: null,
+      clinicEvoResume: 2,
+      petId: 'id-pet-2',
+      belongsToVet: 'id-vet-3'
+    },
+    'id-treatment-5': {
+      id: 'id-treatment-5',
+      status: 'close',
+      enterDate: '01/01/2020',
+      dischargeDate: '09/01/2020',
+      medications: [],
+      food: [],
+      conclusiveReport: null,
+      conclusiveReportShort: 'Raiva',
+      dischargeCare: null,
+      clinicEvo: null,
+      clinicEvoResume: 2,
+      petId: 'id-pet-3',
       belongsToVet: 'id-vet-3'
     }
   }
@@ -71,33 +102,33 @@ export const initialState: TreatmentsState = adapter.getInitialState({
 const reduce = createReducer(
   initialState,
   on(TreatmentsActions.addTreatment, (state, action) =>
-    adapter.addOne(action.treatment, state)
+    treatmentsAdapter.addOne(action.treatment, state)
   ),
   on(TreatmentsActions.upsertTreatment, (state, action) =>
-    adapter.upsertOne(action.treatment, state)
+    treatmentsAdapter.upsertOne(action.treatment, state)
   ),
   on(TreatmentsActions.addTreatments, (state, action) =>
-    adapter.addMany(action.treatments, state)
+    treatmentsAdapter.addMany(action.treatments, state)
   ),
   on(TreatmentsActions.upsertTreatments, (state, action) =>
-    adapter.upsertMany(action.treatments, state)
+    treatmentsAdapter.upsertMany(action.treatments, state)
   ),
   on(TreatmentsActions.updateTreatment, (state, action) =>
-    adapter.updateOne(action.treatment, state)
+    treatmentsAdapter.updateOne(action.treatment, state)
   ),
   on(TreatmentsActions.updateTreatments, (state, action) =>
-    adapter.updateMany(action.treatments, state)
+    treatmentsAdapter.updateMany(action.treatments, state)
   ),
   on(TreatmentsActions.deleteTreatment, (state, action) =>
-    adapter.removeOne(action.id, state)
+    treatmentsAdapter.removeOne(action.id, state)
   ),
   on(TreatmentsActions.deleteTreatments, (state, action) =>
-    adapter.removeMany(action.ids, state)
+    treatmentsAdapter.removeMany(action.ids, state)
   ),
   on(TreatmentsActions.loadTreatments, (state, action) =>
-    adapter.addAll(action.treatments, state)
+    treatmentsAdapter.addAll(action.treatments, state)
   ),
-  on(TreatmentsActions.clearTreatments, (state) => adapter.removeAll(state))
+  on(TreatmentsActions.clearTreatments, (state) => treatmentsAdapter.removeAll(state))
 );
 
 export function treatmentsReducer(
@@ -107,38 +138,26 @@ export function treatmentsReducer(
   return reduce(state, action);
 }
 
-export const {
-  selectIds,
-  selectEntities: treatmentsEntities,
-  selectAll: allTreatments
-} = adapter.getSelectors((state: AppState) => state.treatments);
+// export const {
+//   selectIds,
+//   selectEntities: treatmentsEntities,
+//   selectAll: allTreatments
+// } = treatmentsAdapter.getSelectors((state: AppState) => state.treatments);
 
-// select the array of treatments
-export const selectAllTreatments = allTreatments;
+// // select the array of treatments
+// export const selectAllTreatments = allTreatments;
 
-// select the array of widget ids
+// // select the array of widget ids
+// export const selectTreatmentsIds = selectIds;
+
+// // select the dictionary of widget entities
+// export const selectTreatmentsEntities = treatmentsEntities;
+
+
+export const { selectIds, selectEntities, selectAll } = 
+treatmentsAdapter.getSelectors((state: AppState) => state.treatments);
+
+export const selectAllTreatments = selectAll;
+export const selectTreatmentsEntities = selectEntities;
 export const selectTreatmentsIds = selectIds;
 
-// select the dictionary of widget entities
-export const selectTreatmentsEntities = treatmentsEntities;
-
-export const selectOpenTreatments = createSelector(
-  allTreatments,
-  (treatments) => treatments.filter((treatment) => treatment.status === 'open')
-);
-
-export const selectOpenTreatmentsForTable = createSelector(
-  selectOpenTreatments,
-  selectPetEntities,
-  (treatments, pets) =>
-    treatments.map((treatment) => {
-      return {
-        photo: pets[treatment.petId].avatar,
-        name: pets[treatment.petId].name,
-        enterDate: treatment.enterDate,
-        belongsToVet: treatment.belongsToVet,
-        clinicEvoResume: treatment.clinicEvoResume,
-        qrCode: pets[treatment.petId].qrCode
-      };
-    })
-);

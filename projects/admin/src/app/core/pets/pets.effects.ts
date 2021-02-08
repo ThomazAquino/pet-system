@@ -7,7 +7,7 @@ import { LocalStorageService } from '../core.module';
 
 
 import * as petsAction from './pets.actions';
-import { selectPets } from '../core.state';
+import { selectPetsState } from '../core.state';
 
 export const PETS_KEY = 'pets';
 
@@ -21,7 +21,7 @@ export class PetsEffects {
           petsAction.updatePet,
           petsAction.upsertPet,
         ),
-        withLatestFrom(this.store.pipe(select(selectPets))),
+        withLatestFrom(this.store.pipe(select(selectPetsState))),
         tap(([action, pets]) =>
           this.localStorageService.setItem(PETS_KEY, pets)
         )

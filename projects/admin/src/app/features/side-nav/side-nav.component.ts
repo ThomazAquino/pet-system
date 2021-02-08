@@ -12,9 +12,10 @@ export class SideNavComponent implements OnInit {
   navigation = [
     { link: 'home', label: 'Home', icon: 'home' },
     { link: 'tutor', label: 'Tutores', icon: 'user' },
-    { link: 'about', label: 'about', icon: 'home' },
-    { link: 'feature-list', label: 'features', icon: 'home' },
-    { link: 'examples', label: 'examples', icon: 'home' },
+    { link: 'pet', label: 'Pets', icon: 'dog' },
+    // { link: 'about', label: 'about', icon: 'home' },
+    // { link: 'feature-list', label: 'features', icon: 'home' },
+    // { link: 'examples', label: 'examples', icon: 'home' },
     { link: 'settings', label: 'settings', icon: 'home' }
   ];
 

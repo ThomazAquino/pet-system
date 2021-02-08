@@ -8,25 +8,22 @@ import { ROUTE_ANIMATIONS_ELEMENTS } from '../../../core/core.module';
 import { v4 as uuid } from 'uuid';
 import { select, State, Store } from '@ngrx/store';
 import { Form, FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { selectTutorsById } from '../../../core/tutors/tutors.reducer';
 import { Tutor } from '../../../core/tutors/tutors.model';
-import { Pet } from '../../../core/pets/pets.model';
 import {
   merge,
   Observable,
   ReplaySubject,
-  Subscription,
   BehaviorSubject
 } from 'rxjs';
-import { selectPetsByIdsForListComponent } from '../../../core/pets/pets.reducer';
+import { selectPetsByIdsForListComponent } from '../../../core/pets/pets.selectors';
 import { selectSelectedTutor } from '../../../core/tutors/tutors.selectors';
 import { debounceTime, filter, first, takeUntil, tap } from 'rxjs/operators';
 import { upsertTutor } from '../../../core/tutors/tutors.actions';
 import { NgxImageCompressService } from 'ngx-image-compress';
+import { ActivatedRoute, Router } from '@angular/router';
 
 class ImageSnippet {
-  constructor(public src: string, public file: File) {}
+  constructor(public file: File) {}
 }
 
 @Component({
@@ -36,16 +33,13 @@ class ImageSnippet {
   host: { class: 'section' },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class TutorProfileComponent implements OnInit, OnDestroy {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
 
   tutorFormGroup = this.fb.group(TutorProfileComponent.populateTutor());
 
   formValueChanges$ = new BehaviorSubject(false);
-  selectedTutor$: Observable<Tutor> = this.store.pipe(
-    select(selectSelectedTutor)
-  );
-
   initialFormState: any;
   isNew: boolean;
 
@@ -56,7 +50,9 @@ export class TutorProfileComponent implements OnInit, OnDestroy {
   constructor(
     public store: Store,
     public fb: FormBuilder,
-    private imageCompress: NgxImageCompressService
+    private imageCompress: NgxImageCompressService,
+    private router: Router,
+    private activatedRouter: ActivatedRoute
   ) {}
 
   static populateTutor(tutor?: Tutor): any {
@@ -64,7 +60,7 @@ export class TutorProfileComponent implements OnInit, OnDestroy {
       id: tutor?.id || uuid(),
       name: tutor?.name,
       lastName: tutor?.lastName,
-      image: tutor?.avatar,
+      avatar: tutor?.avatar,
       cpf: tutor?.cpf,
       birthday: tutor?.birthday,
       street: tutor?.street,
@@ -80,6 +76,10 @@ export class TutorProfileComponent implements OnInit, OnDestroy {
       .pipe(select(selectSelectedTutor))
       .pipe(takeUntil(this.destroyed$))
       .subscribe((tutor: Tutor) => {
+        if (!tutor) { 
+          this.isNew = true;
+          return 
+        }
         this.tutorFormGroup = this.fb.group(
           TutorProfileComponent.populateTutor(tutor)
         );
@@ -88,18 +88,16 @@ export class TutorProfileComponent implements OnInit, OnDestroy {
         this.tutorFormGroup.valueChanges
           .pipe(
             takeUntil(this.destroyed$),
-            debounceTime(500),
+            debounceTime(200),
             tap((form: Form) => console.log(form))
           )
           .subscribe((_) => this.formValueChanges$.next(true));
 
-        if (tutor) {
+        if (tutor.pets) {
           this.pets$ = this.store.select(
             selectPetsByIdsForListComponent,
             tutor.pets
           );
-        } else {
-          this.isNew = true;
         }
       });
   }
@@ -107,7 +105,12 @@ export class TutorProfileComponent implements OnInit, OnDestroy {
   save() {
     if (this.tutorFormGroup.status === 'VALID') {
       this.store.dispatch(upsertTutor({ tutor: this.tutorFormGroup.value }));
-      this.formValueChanges$.next(false);
+
+      if (this.isNew) {
+        this.router.navigate(['tutor/profile', this.tutorFormGroup.controls.id.value]);
+      } else {
+        this.formValueChanges$.next(false);
+      }
     }
   }
 
@@ -125,7 +128,7 @@ export class TutorProfileComponent implements OnInit, OnDestroy {
         .compressFile(event.target.result, null, 75, 50)
         .then((result) => {
           // this.store.dispatch(upsertTutor({tutor : {...this.tutorFormGroup.value, image:result}}));
-          this.tutorFormGroup.controls.image.setValue(result);
+          this.tutorFormGroup.controls.avatar.setValue(result);
         });
       // this.imageService.uploadImage(this.selectedFile.file).subscribe(
       //   (res) => {
@@ -140,7 +143,11 @@ export class TutorProfileComponent implements OnInit, OnDestroy {
   }
 
   onPetListClick(pet) {
-    console.log(pet);
+    this.router.navigate(['pet/profile', pet.id]);
+  }
+
+  onAddPetClick() {
+    this.router.navigate(['pet/profile'], { queryParams: {tutor: this.tutorFormGroup.controls.id.value} });
   }
 
   ngOnDestroy() {

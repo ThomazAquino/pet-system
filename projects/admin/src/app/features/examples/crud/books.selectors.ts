@@ -1,7 +1,6 @@
 import { createSelector } from '@ngrx/store';
 
 import { selectRouterState } from '../../../core/core.module';
-import { selectTutorsEntities } from '../../../core/tutors/tutors.reducer';
 import { selectExamples, ExamplesState } from '../examples.state';
 
 import { bookAdapter } from './books.reducer';
@@ -18,12 +17,6 @@ export const selectBooksEntities = createSelector(selectBooks, selectEntities);
 
 export const selectSelectedBook = createSelector(
   selectBooksEntities,
-  selectRouterState,
-  (entities, params) => params && entities[params.state.params.id]
-);
-
-export const selectSelectedTutorTEST = createSelector(
-  selectTutorsEntities,
   selectRouterState,
   (entities, params) => params && entities[params.state.params.id]
 );

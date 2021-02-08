@@ -24,10 +24,7 @@
     "contributors:check": "all-contributors check"
   },
   "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
+    
   },
   "commitlint": {
     "extends": [
