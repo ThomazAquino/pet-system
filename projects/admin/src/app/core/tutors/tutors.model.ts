@@ -2,7 +2,7 @@ export interface Tutor {
   id: string;
   name: string;
   lastName: string;
-  image: string;
+  avatar: string;
   cellPhone: string;
   tel: string;
   street: string;

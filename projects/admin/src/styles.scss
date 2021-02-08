@@ -79,6 +79,20 @@
     }
   }
 
+  .accent-button {
+    display: block;
+    background-color: #FF8557;
+    color: #FFF;
+    box-shadow: 0px 0px 9px 5px rgb(255 133 87 / 33%);
+    font-size: 1.31rem;
+    font-weight: 500;
+    font-family: "poppins", sans-serif;
+    width: 100%;
+    max-width: 469px;
+    padding: 20px 10px;
+    border-radius: 8px;
+  }
+
   .primary-hr {
     background-color: rgba(mat-color($primary, lighter), 0.5);
     border-top: none;

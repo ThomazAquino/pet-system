@@ -10,7 +10,7 @@
 
 <ng-template #tutorProfile>
   <section class="left">
-    <img class="left__image" (click)="onImageClick()" [src]="headerData?.tutor?.image" onError="this.src='./assets/images/user-placeholder.png'">
+    <img class="left__image" (click)="onImageClick()" [src]="headerData?.tutor?.avatar" onError="this.src='./assets/images/user-placeholder.png'">
     <div class="left__info">
       <h3 class="left__info__title">{{ (headerData?.tutor?.name) || ''}} {{' '}}  {{(headerData?.tutor?.lastName || '')}}</h3>
     </div>
@@ -22,22 +22,24 @@
 
 <ng-template #defaultHeader>
   <section class="left">
-    <img class="left__image" src="../../../assets/images/tutor.png">
+    <img class="left__image" (click)="onImageClick()" [src]="headerData?.pet?.avatar" onError="this.src='./assets/images/pet-placeholder.png'">
     <div class="left__info">
-      <h3 class="left__info__title">{{headerData?.tutor || ''}} sss</h3>
-      <h3 class="left__info__sub-title"></h3>
-      <h3 class="left__info__btn profile-button"></h3>
+      <h3 class="left__info__title">{{headerData?.pet?.name || ''}}</h3>
+      <h3 class="left__info__sub-title">{{ (headerData?.pet?.type) || ''}} {{' '}}  {{(headerData?.pet?.breed || '')}} {{' '}}  {{(headerData?.pet?.color || '')}}</h3>
+      <!-- <h3 class="left__info__btn profile-button"></h3> -->
     </div>
   </section>
   
   <section class="right">
     <div class="right__first">
-      <div class="right__image"></div>
-      <button class="right profile-button"></button>
-      <button class="right profile-button"></button>
+      <img class="right__image" [src]="headerData?.tutor?.avatar" onError="this.src='./assets/images/user-placeholder.png'">
+      <button class="right profile-button" style="margin-right: 20px;" (click)="openTutorProfile()">
+        <fa-icon icon="user"></fa-icon> Ver perfil
+      </button>
+      <button class="right profile-button" disabled><fa-icon icon="comment-dots"></fa-icon> Mensagem</button>
     </div>
   
-    <h4 class="right__second">Tutor: <span class="right__second__name"></span> </h4>
+    <h4 class="right__second"><span style="font-weight: 500;">Tutor:</span> {{ (headerData?.tutor?.name) || ''}} {{' '}}  {{(headerData?.tutor?.lastName || '')}}</h4>
     
   </section>
 

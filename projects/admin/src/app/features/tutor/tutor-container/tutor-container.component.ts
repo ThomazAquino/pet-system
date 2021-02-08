@@ -5,8 +5,6 @@ import { Observable } from 'rxjs';
 import {
   routeAnimations
 } from '../../../core/core.module';
-import { Tutor } from '../../../core/tutors/tutors.model';
-import { selectAllTutors } from '../../../core/tutors/tutors.reducer';
 
 @Component({
   selector: 'pet-tutor-container',

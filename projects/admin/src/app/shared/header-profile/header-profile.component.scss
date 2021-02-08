@@ -28,3 +28,29 @@
   font-weight: 500;
   font-family: "poppins", sans-serif;
 }
+
+.left__info__sub-title {
+  font-size: 1.125rem;
+  font-weight: 400;
+  font-family: "poppins", sans-serif;
+}
+
+// right side
+
+.right__first {
+  margin-bottom: 17px;
+}
+
+.right__image {
+  border-radius: 50%;
+  width: 39px;
+  height: 39px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.right__second {
+  font-size: 1.125rem;
+  font-weight: 400;
+  font-family: "poppins", sans-serif;
+}

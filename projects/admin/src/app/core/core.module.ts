@@ -73,7 +73,8 @@ import {
   faUserCircle,
   faPlayCircle,
   faHome,
-  faUser
+  faUser,
+  faDog
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faGithub,
@@ -207,7 +208,8 @@ export class CoreModule {
       faYoutube,
       faHome,
       faBell,
-      faUser
+      faUser,
+      faDog
     );
   }
 }

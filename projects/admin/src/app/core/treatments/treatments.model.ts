@@ -6,6 +6,7 @@ export interface Treatment {
   medications: string[];
   food: string[];
   conclusiveReport: string;
+  conclusiveReportShort?: string;
   dischargeCare: string;
   clinicEvo: any;
   clinicEvoResume: number;

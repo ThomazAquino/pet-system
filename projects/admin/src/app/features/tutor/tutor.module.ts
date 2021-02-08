@@ -17,10 +17,6 @@ import { MatSortModule } from '@angular/material/sort';
   imports: [
     CommonModule,
     TutorRoutingModule,
-    SharedModule,
-    FontAwesomeModule,
-    MatTableModule,
-    MatSortModule,
     SharedModule
   ]
 })

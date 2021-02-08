@@ -52,6 +52,8 @@ import { BigInputActionComponent } from './big-input/big-input-action/big-input-
 import { RtlSupportDirective } from './rtl-support/rtl-support.directive';
 import { HeaderProfileComponent } from './header-profile/header-profile.component';
 import { ListComponent } from './list/list.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   imports: [
@@ -76,7 +78,9 @@ import { ListComponent } from './list/list.component';
     MatSlideToggleModule,
     MatDividerModule,
 
-    FontAwesomeModule
+    FontAwesomeModule,
+    MatTableModule,
+    MatSortModule
   ],
   declarations: [
     BigInputComponent,

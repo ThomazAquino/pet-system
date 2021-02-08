@@ -42,11 +42,11 @@ export const selectTutorsState = createFeatureSelector<AppState, TutorsState>(
   'tutors'
 );
 
-export const selectPets = createFeatureSelector<AppState, PetsState>(
+export const selectPetsState = createFeatureSelector<AppState, PetsState>(
   'pets'
 );
 
-export const selectTreatments = createFeatureSelector<AppState, TreatmentsState>(
+export const selectTreatmentsState = createFeatureSelector<AppState, TreatmentsState>(
   'treatments'
 );
 

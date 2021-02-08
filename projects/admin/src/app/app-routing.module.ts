@@ -18,6 +18,11 @@ const routes: Routes = [
       import('./features/tutor/tutor.module').then((m) => m.TutorModule)
   },
   {
+    path: 'pet',
+    loadChildren: () =>
+      import('./features/pet/pet.module').then((m) => m.PetModule)
+  },
+  {
     path: 'about',
     loadChildren: () =>
       import('./features/about/about.module').then((m) => m.AboutModule)

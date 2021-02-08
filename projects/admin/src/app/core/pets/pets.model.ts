@@ -1,6 +1,6 @@
 export interface Pet {
   id: string;
-  photo: string;
+  avatar: string;
   name: string;
   type: string;
   breed: string;
@@ -10,3 +10,9 @@ export interface Pet {
   treatments: any[];
   qrCode: string;
 }
+
+export enum TypePet {
+  cat = 'CAT',
+  dog = 'DOG',
+}
+
