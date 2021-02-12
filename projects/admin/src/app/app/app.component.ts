@@ -29,7 +29,8 @@ import {
 } from '../core/treatments/treatments.selectors';
 import { Treatment } from '../core/treatments/treatments.model';
 import { upsertTreatment } from '../core/treatments/treatments.actions';
-import { Tutor } from '../core/tutors/tutors.model';
+import { Role, Tutor } from '../core/tutors/tutors.model';
+import { AuthService } from '../core/auth/auth.service';
 
 @Component({
   selector: 'pet-root',
@@ -65,10 +66,16 @@ export class AppComponent implements OnInit {
 
   selectedTutor$: Observable<any> = this.store.pipe(select(selectAllPets));
 
+  Role = Role;
+  account: Tutor;
+
   constructor(
     private store: Store,
-    private storageService: LocalStorageService
-  ) {}
+    private storageService: LocalStorageService,
+    private authService: AuthService
+  ) {
+    this.authService.auth.subscribe(x => this.account = x);
+  }
 
   private static isIEorEdgeOrSafari() {
     return ['ie', 'edge', 'safari'].includes(browser().name);
@@ -88,6 +95,10 @@ export class AppComponent implements OnInit {
     this.stickyHeader$ = this.store.pipe(select(selectSettingsStickyHeader));
     this.language$ = this.store.pipe(select(selectSettingsLanguage));
     this.theme$ = this.store.pipe(select(selectEffectiveTheme));
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
   upsertTutor() {

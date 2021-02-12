@@ -1,4 +1,5 @@
 <div class="user-info">
+ <span class="logout" *ngIf=" isAuth$ | async" (click)="logout()" >Logout</span>
   <fa-icon [icon]="['far','bell']" class="user__notification"></fa-icon>
   <img class="user__avatar">
 </div>

@@ -11,4 +11,11 @@ export interface Tutor {
   birthday: string;
   cpf: string;
   pets: any[];
+  jwtToken?: string;
+  role?: string;
+}
+
+export enum Role {
+  User = 'User',
+  Admin = 'Admin'
 }

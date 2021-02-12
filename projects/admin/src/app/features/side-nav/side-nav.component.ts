@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
   selector: 'pet-side-nav',
@@ -8,6 +9,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class SideNavComponent implements OnInit {
   logo = require('../../../assets/logo-long.png').default;
+  isAuth$ = this.authService.auth;
 
   navigation = [
     { link: 'home', label: 'Home', icon: 'home' },
@@ -20,7 +22,7 @@ export class SideNavComponent implements OnInit {
   ];
 
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
   }

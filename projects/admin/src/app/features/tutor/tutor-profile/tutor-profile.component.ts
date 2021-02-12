@@ -104,11 +104,12 @@ export class TutorProfileComponent implements OnInit, OnDestroy {
 
   save() {
     if (this.tutorFormGroup.status === 'VALID') {
-      this.store.dispatch(upsertTutor({ tutor: this.tutorFormGroup.value }));
-
       if (this.isNew) {
+        this.store.dispatch(upsertTutor({ tutor: {...this.tutorFormGroup.value, pets: []}}));
+
         this.router.navigate(['tutor/profile', this.tutorFormGroup.controls.id.value]);
       } else {
+        this.store.dispatch(upsertTutor({ tutor: this.tutorFormGroup.value }));
         this.formValueChanges$.next(false);
       }
     }

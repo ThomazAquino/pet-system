@@ -165,7 +165,12 @@ export class PetProfileComponent implements OnInit, OnDestroy {
   }
 
   onAddTreatmentClick() {
-
+    this.router.navigate(['treatment'], {
+      queryParams: { 
+        tutor: this.selectedTutor$,
+        pet: this.petFormGroup.controls.id.value,
+      }
+    });
   }
 
   ngOnDestroy() {

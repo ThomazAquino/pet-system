@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
   selector: 'pet-header',
@@ -8,9 +9,16 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  isAuth$ = this.authService.auth;
+
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
 }

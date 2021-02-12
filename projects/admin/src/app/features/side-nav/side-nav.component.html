@@ -1,6 +1,6 @@
 <img [src]="logo" [alt]="logo" class="logo"/>
 
-<nav class="nav">
+<nav class="nav" *ngIf="isAuth$ | async">
   <ul class="nav__ul">
       <li class="side-nav__li" *ngFor="let item of navigation" routerLinkActive="active">
         <a class="side-nav__li__a" [routerLink]="[item.link]" >

@@ -40,7 +40,7 @@ import {
 import { AuthEffects } from './auth/auth.effects';
 import { selectIsAuthenticated, selectAuth } from './auth/auth.selectors';
 import { authLogin, authLogout } from './auth/auth.actions';
-import { AuthGuardService } from './auth/auth-guard.service';
+import { AuthGuard } from './auth/auth-guard';
 import { TitleService } from './title/title.service';
 import {
   ROUTE_ANIMATIONS_ELEMENTS,
@@ -95,7 +95,7 @@ export {
   selectIsAuthenticated,
   ROUTE_ANIMATIONS_ELEMENTS,
   AnimationsService,
-  AuthGuardService,
+  AuthGuard,
   selectRouterState,
   NotificationService,
   selectEffectiveTheme,

@@ -41,6 +41,12 @@
   @include pet-examples-component-theme($theme);
 }
 
+.main ~ .default-theme {
+  background-color: red !important;
+}
+
+
+
 .default-theme {
   @include angular-material-theme($pet-theme);
   @include custom-components-theme($pet-theme);
@@ -49,8 +55,10 @@
   $foreground: map-get($pet-theme, foreground);
 
 
-  background: rgb(148,243,255);
-  background: linear-gradient(118deg, rgba(148,243,255,1) 0%, rgba(85,177,233,1) 100%);
+  &.primary-gradient {
+    background: rgb(148,243,255);
+    background: linear-gradient(118deg, rgba(148,243,255,1) 0%, rgba(85,177,233,1) 100%);
+  }
 
   .section {
     background: rgba( 255, 255, 255, 0.50 );
