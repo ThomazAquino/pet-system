@@ -63,7 +63,11 @@ import {
   selectSettingsStickyHeader
 } from './settings/settings.selectors';
 import { MatButtonModule } from '@angular/material/button';
-import { faBell } from '@fortawesome/free-regular-svg-icons';
+import {
+  faBell,
+  faClock,
+  faCalendar
+ } from '@fortawesome/free-regular-svg-icons';
 import {
   faCog,
   faCommentDots,
@@ -74,7 +78,9 @@ import {
   faPlayCircle,
   faHome,
   faUser,
-  faDog
+  faDog,
+  faStethoscope,
+  faPills
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faGithub,
@@ -135,7 +141,6 @@ export function httpLoaderFactory(http: HttpClient) {
     EffectsModule.forRoot([
       AuthEffects,
       SettingsEffects,
-      GoogleAnalyticsEffects,
       TutorsEffects,
       PetsEffects,
       TreatmentsEffects
@@ -208,8 +213,12 @@ export class CoreModule {
       faYoutube,
       faHome,
       faBell,
+      faClock,
+      faCalendar,
       faUser,
-      faDog
+      faDog,
+      faStethoscope,
+      faPills
     );
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Form, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
@@ -31,7 +31,7 @@ export class PetProfileComponent implements OnInit, OnDestroy {
 
   petFormGroup = this.fb.group(PetProfileComponent.populatePet());
   formValueChanges$ = new BehaviorSubject(false);
-  selectedPet$: Observable<Pet> = this.store.pipe(select(selectSelectedPet));
+  // selectedPet$: Observable<Pet> = this.store.pipe(select(selectSelectedPet));
   selectedTutor$: Observable<Tutor>;
 
   initialFormState: any;
@@ -49,7 +49,8 @@ export class PetProfileComponent implements OnInit, OnDestroy {
     public fb: FormBuilder,
     private imageCompress: NgxImageCompressService,
     private router: Router,
-    private activatedRouter: ActivatedRoute
+    private activatedRouter: ActivatedRoute,
+    private cdRef: ChangeDetectorRef,
   ) { }
 
   static populatePet(pet?: Pet): any {
@@ -147,6 +148,7 @@ export class PetProfileComponent implements OnInit, OnDestroy {
         .then((result) => {
           // this.store.dispatch(upsertTutor({tutor : {...this.tutorFormGroup.value, image:result}}));
           this.petFormGroup.controls.avatar.setValue(result);
+          this.cdRef.detectChanges();
         });
       // this.imageService.uploadImage(this.selectedFile.file).subscribe(
       //   (res) => {
@@ -161,16 +163,20 @@ export class PetProfileComponent implements OnInit, OnDestroy {
   }
 
   onTreatmentsListClick(treatment) {
-
+    this.router.navigate(['treatment', treatment.id]);
   }
 
   onAddTreatmentClick() {
-    this.router.navigate(['treatment'], {
-      queryParams: { 
-        tutor: this.selectedTutor$,
-        pet: this.petFormGroup.controls.id.value,
-      }
+    this.selectedTutor$.pipe(first()).subscribe(tutor => {
+      this.router.navigate(['treatment/add'], {
+        queryParams: { 
+          tutor: tutor.id,
+          pet: this.petFormGroup.controls.id.value,
+        }
+      });
     });
+
+    
   }
 
   ngOnDestroy() {

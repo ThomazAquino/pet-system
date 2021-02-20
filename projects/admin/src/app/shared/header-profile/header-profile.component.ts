@@ -15,6 +15,9 @@ import { Router } from '@angular/router';
 interface HeaderData {
   tutor?: Tutor;
   pet?: Pet;
+  options?: {
+    showPetProfileButton: boolean;
+  };
 }
 
 // Data
@@ -53,6 +56,7 @@ export class HeaderProfileComponent implements OnInit {
 
   ngOnInit() {
     this.isTutor = this.headerData.pet ? false : true;
+    console.log(this.headerData)
   }
 
   processFile(event): void {
@@ -67,5 +71,9 @@ export class HeaderProfileComponent implements OnInit {
 
   openTutorProfile() {
     this.router.navigate(['tutor/profile', this.headerData.tutor?.id]);
+  }
+
+  openPetProfile() {
+    this.router.navigate(['pet/profile', this.headerData.pet?.id]);
   }
 }

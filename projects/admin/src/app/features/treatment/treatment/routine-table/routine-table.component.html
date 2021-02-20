@@ -1,0 +1,122 @@
+<header class="header">
+  <div class="header__title">Medicações</div>
+</header>
+
+<div class="grid">
+  <div class="header-cell">Medicação</div>
+  <div class="header-cell">Periodicidade</div>
+  <div class="header-cell">Primeira dose</div>
+  <div class="header-cell">Próxima dose</div>
+</div>
+<hr class="primary-hr">
+
+<div *ngIf="data.value">
+  <ng-container class="grid" *ngFor="let medication of data.value; trackBy: trackByUserId; last as isLast">
+    <div class="grid" [ngClass]="routeAnimationsElements">
+      <div class="body-cell"><fa-icon icon="pills"></fa-icon> {{ medication.name}}</div>
+      <div class="body-cell"><fa-icon [icon]="['far','clock']"></fa-icon>{{ medication.frequency | frequency}}</div>
+      <div class="body-cell"><fa-icon [icon]="['far','calendar']"></fa-icon>{{ medication.firstDose | date: 'd/MM/yyyy HH:mm'}}</div>
+      <!-- <div class="body-cell"><fa-icon [icon]="['far','calendar']"></fa-icon>{{ medication.lastDose | date: 'd/MM/yyyy HH:mm'}}</div> -->
+      <div class="body-cell" [class.warn]="(currentDate > getNextDose(medication))"><fa-icon [icon]="['far','calendar']"></fa-icon>{{ getNextDose(medication) | date: 'd/MM/yyyy HH:mm'}}</div>
+      <div class="body-cell"><button (click)="editRoutine(medication)" mat-button>Edit</button></div>
+    </div>
+    <hr class="primary-hr" [class.extra-margin]="!isLast">
+  </ng-container>
+</div>
+
+
+  <ng-container *ngIf="isEdit$ | async as isEdit">
+
+  <form [formGroup]="routineForm" #routineFormRef="ngForm" (ngSubmit)="onSubmit(routineFormRef)">
+    <div class="grid" style="margin-top: 40px;">
+    <mat-form-field>
+      <input matInput placeholder="Medicação" formControlName="name" />
+    </mat-form-field>
+
+    <div style="display: flex;">
+      <mat-form-field style="margin: 0;width: 1.5rem;">
+        <input matInput  formControlName="frequency" />
+      </mat-form-field>
+  
+      <mat-form-field style="width: 2rem">
+        <!-- <mat-label>Favorite food</mat-label> -->
+        <mat-select formControlName="frequencyFormat">
+          <mat-option selected value="m">minutos</mat-option>
+          <mat-option value="h">horas</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    
+
+    <!-- <mat-form-field>
+      <mat-label>Primeira dose</mat-label>
+      <input matInput  formControlName="firstDose" [matDatepicker]="picker" placeholder="Selecione">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Ultima dose</mat-label>
+      <input matInput  formControlName="endDose" [matDatepicker]="picker2" placeholder="Selecione">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field> -->
+
+    <!-- <mat-form-field>
+      <mat-label>Primeira dose</mat-label>
+      <input matInput formControlName="firstDose" [matDatepicker]="picker" placeholder="Selecione">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+
+    </mat-form-field> -->
+
+    <mat-form-field>
+        <mat-label>label</mat-label>
+
+        <div style="display: flex;">
+          <input matInput formControlName="firstDose" [min]="minDate" [max]="maxDate"
+          (dateChange)="openClock()" [matDatepicker]="picker" placeholder="Selecione">
+
+          <span style="margin: 0 0.4rem;font-weight: 500">-</span>
+
+          <input [value]="selectedHour" readonly matInput [ngxTimepicker]="clock" [format]="24" inputmode="numeric"
+             placeholder="time" style=" width: 3rem"/>
+        </div>
+        
+        <mat-datepicker-toggle [for]="picker" matPrefix ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <ngx-material-timepicker #clock (opened)="toggleClock(true)" (closed)="toggleClock(false)" (timeSet)="getTimePickerValue($event, 'firstDose')">
+        </ngx-material-timepicker>
+    </mat-form-field>
+
+    <!-- <mat-form-field>
+      <mat-label>Enter a date range</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input matStartDate formControlName="firstDose" placeholder="Start date">
+        <input matEndDate formControlName="endDose" placeholder="End date">
+      </mat-date-range-input>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    
+      <mat-error *ngIf="routineForm.controls.firstDose.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+      <mat-error *ngIf="routineForm.controls.endDose.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+    </mat-form-field> -->
+
+    
+      <button *ngIf="!isEdit.value" type="submit" mat-raised-button color="primary" style="justify-self: end;">
+       Cadastrar
+      </button>
+      <button *ngIf="isEdit.value" type="submit" mat-raised-button color="primary" style="justify-self: end;">
+       Atualizar
+      </button>
+      <button type="reset" mat-button color="warn">Reset</button>
+    
+  </div>
+    
+
+  </form>
+</ng-container>
+
+
+
+
+

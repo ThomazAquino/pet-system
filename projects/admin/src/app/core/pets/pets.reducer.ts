@@ -9,6 +9,7 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import * as PetsActions from './pets.actions';
 import { AppState, selectPetsState } from '../core.state';
 import { Pet } from './pets.model';
+import { addPropertyToArrayInPets } from './pets.actions';
 
 export const petsFeatureKey = 'pets';
 
@@ -88,6 +89,18 @@ const reduce = createReducer(
   on(PetsActions.loadPets, (state, action) =>
     petAdapter.addAll(action.pets, state)
   ),
+
+  on(PetsActions.addPropertyToArrayInPets, (state, action) => {
+    const arrayValue = [...state.entities[action.petId][action.propertyName], action.value];
+    const changes = {}
+    changes[action.propertyName] = arrayValue;
+    return petAdapter.updateOne({
+      id: action.petId,
+      changes: changes
+    },
+    state)
+  }),
+
   on(PetsActions.clearPets, (state) => petAdapter.removeAll(state))
 );
 

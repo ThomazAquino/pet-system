@@ -11,6 +11,11 @@
   grid-column-gap: 15px;
   grid-template-columns: repeat(3, minmax(99px, 400px));
   margin-bottom: $grid-division-size;
+  margin-bottom: 60px;
+}
+
+.sub-title {
+  margin-bottom: -10px;
 }
 
 .home-button {

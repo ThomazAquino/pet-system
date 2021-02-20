@@ -3,7 +3,7 @@ export interface Treatment {
   status: string;
   enterDate: string;
   dischargeDate: string;
-  medications: string[];
+  medications: any[];
   food: string[];
   conclusiveReport: string;
   conclusiveReportShort?: string;

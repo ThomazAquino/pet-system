@@ -10,6 +10,33 @@ import {
 } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+
+export interface ListComponent {
+  data?: ListComponentDataItem[];
+  info?: { [key: string]: ListListComponentItemInfo }
+}
+
+export interface ListComponentDataItem {
+  id?: string;
+  row1?: string | number;
+  row2?: string | number;
+  row3?: string | number;
+  row4?: string | number;
+  row5?: string | number;
+  row6?: string | number;
+  row7?: string | number;
+  row8?: string | number;
+  row9?: string | number;
+  row10?: string | number;
+}
+
+export interface ListListComponentItemInfo {
+  included: boolean;
+  label: string;
+  sort: boolean;
+  type: string;
+  width: string;
+}
 @Component({
   selector: 'pet-general-list',
   templateUrl: './list.component.html',
@@ -23,69 +50,16 @@ export class ListComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = [];
   dataSource = new MatTableDataSource();
 
-  // fakeData = [
-  //   {
-  //     id: 'ID-PET-1',
-  //     column1: { label: 'Image', data: 'ImagePath'},
-  //     column2: { label: 'Name',  data: 'Lecy'},
-  //     column3: { label: 'Informações',  data: 'dog Buldog yellow'},
-  //     column4: { label: 'Status',  data: 'interned'     },
-  //   },
-  //   {
-  //     id: 'ID-PET-2',
-  //     column1: { label: 'Image', data: 'ImagePath'},
-  //     column2: { label: 'Name',  data: 'Bobby'},
-  //     column3: { label: 'Informações',  data: 'Cat white'},
-  //     column4: { label: 'Status',  data: 'in home'     },
-  //   },
-  //]
-
-  // fakeData =  {
-  //   data : [
-  //     {
-  //       id: 'ID-PET-1',
-  //       column1: 'ImagePath',
-  //       column2: 'Lecy',
-  //       column3: 'dog Buldog yellow',
-  //       column4: 'interned'
-  //     },
-  //     {
-  //       id: 'ID-PET-2',
-  //       column1: 'ImagePath2',
-  //       column2: 'Lecy2',
-  //       column3: 'dog Buldog yellow2',
-  //       column4: 'interned2'
-  //     },
-  //   ],
-  //   info : {
-  //     id: {included: false, label: '', sort: false, onlyQuery: false, width: ''},
-  //     column1: {included: true, label: '', sort: false, onlyQuery: false, width: '50px'},
-  //     column2: {included: true, label: 'Name', sort: true, onlyQuery: false, width: ''},
-  //     column3: {included: true, label: 'Informações', sort: true, onlyQuery: false, width: ''},
-  //     column4: {included: true, label: 'Status', sort: true, onlyQuery: false, width: ''}
-  //   }
-  // }
-
   constructor() {}
 
   ngOnInit() {
-    // this.displayedColumns = Object.keys(this.list[0]).filter(item => item !== 'id')
-    // this.dataSource.data = this.list;
-
-    console.log('List component: ', this.list)
-
-    this.displayedColumns = Object.keys(this.list.info).filter(
+    this.displayedColumns = Object.keys(this.list?.info).filter(
       (item) => this.list.info[item].included
     );
-    // this.displayedColumns = ['column1', 'column2', 'column3'];
+    console.log('list',this.list)
+
     console.log(this.displayedColumns);
     this.dataSource.data = this.list.data;
-
-    // this.displayedColumns = ['column1']
-    // this.dataSource.data = [{column1: 'A'}, {column1: 'B'}];
-
-    // console.log(this.fakeData);
-    // console.log(this.list);
   }
 
   ngAfterViewInit() {

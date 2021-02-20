@@ -1,0 +1,33 @@
+<pet-header-profile
+  [headerData]="{
+    pet: selectedPet$ | async,
+    tutor: selectedTutor$ | async,
+    options: {showPetProfileButton: true}
+  }">
+</pet-header-profile>
+
+<h2 class="treatment-title">Novo tratamento</h2>
+
+<form
+  *ngIf="treatmentFormGroup"
+  [formGroup]="treatmentFormGroup"
+  [ngClass]="routeAnimationsElements"
+  class="treatment-creation-form">
+
+  <mat-form-field appearance="fill">
+    <mat-label>Data de entrada</mat-label>
+    <input matInput formControlName="enterDate" required [matDatepicker]="picker">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+
+  </mat-form-field>
+
+
+  <button
+    class="accent-button submit-treatment-creation"
+    type="submit"
+    (click)="finishCreation()">
+    Fnalizar cadastro
+  </button>
+
+</form>

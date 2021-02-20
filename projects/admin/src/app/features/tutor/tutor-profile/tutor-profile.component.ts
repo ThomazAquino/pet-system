@@ -2,7 +2,8 @@ import {
   Component,
   OnInit,
   OnDestroy,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  ChangeDetectorRef
 } from '@angular/core';
 import { ROUTE_ANIMATIONS_ELEMENTS } from '../../../core/core.module';
 import { v4 as uuid } from 'uuid';
@@ -52,7 +53,7 @@ export class TutorProfileComponent implements OnInit, OnDestroy {
     public fb: FormBuilder,
     private imageCompress: NgxImageCompressService,
     private router: Router,
-    private activatedRouter: ActivatedRoute
+    private cdRef: ChangeDetectorRef,
   ) {}
 
   static populateTutor(tutor?: Tutor): any {
@@ -130,6 +131,7 @@ export class TutorProfileComponent implements OnInit, OnDestroy {
         .then((result) => {
           // this.store.dispatch(upsertTutor({tutor : {...this.tutorFormGroup.value, image:result}}));
           this.tutorFormGroup.controls.avatar.setValue(result);
+          this.cdRef.detectChanges();
         });
       // this.imageService.uploadImage(this.selectedFile.file).subscribe(
       //   (res) => {
