@@ -1,0 +1,26 @@
+<header class="header">
+  <div class="header__title">{{data.label}}</div>
+  <hr class="primary-hr">
+</header>
+
+<section class="input-body">
+  <textarea
+    [value]="value"
+    (keyup.escape)="onClear()"
+    (keyup)="onInputChange($event.target.value)"
+    rows="6">
+  </textarea>
+  <!-- (keyup.enter)="isValid && onSave()" -->
+
+  <button
+    *ngIf="!data.options?.autoSave"
+    (click)="onSave()"
+    [disabled]="value === originalValue"
+    mat-raised-button
+    color="primary"
+    class="save-button">Salvar
+  </button>
+</section>
+
+
+

@@ -17,6 +17,7 @@
   grid-template-columns: 200px 1fr;
   grid-column-gap: $grid-division-size;
   column-gap: $grid-division-size;
+  padding-right: $grid-division-size;
 
   pet-chat,
   .wrapper {

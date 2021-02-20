@@ -1,0 +1,44 @@
+:host {
+  display: block;
+  width: 100%;
+  padding-bottom: 25px;
+  margin-bottom: 60px;
+
+  &:after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.header__title {
+  font-size: 1rem;
+  font-family: "poppins", sans-serif;
+  font-weight: 500;
+  padding: 15px 0 4px 25px;
+}
+
+.input-body {
+  padding: 0 25px;
+
+  textarea {
+    width: 100%;
+    border-radius: 9px;
+    border: 1px solid #BFBFBF;
+    font-size: 1rem;
+    font-family: "poppins", sans-serif;
+    font-weight: 400;
+    padding: 10px 10px 10px 15px;
+    font-style: italic;
+    color: #3e3e3e;
+  }
+}
+
+.save-button {
+  float: right;
+  margin-top: 15px
+}

@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 
 import { Pet } from './pets.model';
+import { Treatment } from '../treatments/treatments.model';
 
 export const loadPets = createAction(
   '[Pets/API] Load Pets', 
@@ -50,4 +51,14 @@ export const deletePets = createAction(
 
 export const clearPets = createAction(
   '[Pets/API] Clear Pets'
+);
+
+export const addPropertyToArrayInPets = createAction(
+  '[Pet/API] Add property to array.',
+  props<{ petId: string,  propertyName: string, value: any}>()
+);
+
+export const createTreatmentForPet = createAction(
+  '[Pet/API] Create Treatment For Pet.',
+  props<{ treatment: Treatment }>()
 );

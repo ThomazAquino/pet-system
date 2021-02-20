@@ -75,6 +75,7 @@
 <button
   class="accent-button"
   *ngIf="!isNew"
+  [disabled]="petFormGroup.controls.status.value === 'interned'"
   (click)="onAddTreatmentClick()"
   style="margin-top:30px">
   Adicionar Tratamento

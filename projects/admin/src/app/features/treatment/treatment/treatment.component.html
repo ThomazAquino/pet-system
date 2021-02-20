@@ -1,0 +1,39 @@
+<pet-header-profile
+  [headerData]="{
+    pet: selectedPet$ | async,
+    tutor: selectedTutor$ | async,
+    options: {showPetProfileButton: true}
+  }">
+</pet-header-profile>
+
+<h2 class="treatment-title">Tratamento em andamento</h2>
+
+<mat-form-field appearance="fill">
+  <mat-label>Data de entrada</mat-label>
+  <input matInput disabled [value]="selectedTreatment.enterDate">
+  <mat-datepicker-toggle class="date-picker" matPrefix></mat-datepicker-toggle>
+  <mat-datepicker #dp1></mat-datepicker>
+</mat-form-field>
+
+<pet-routine-table [data]="{
+  propertyName: 'medications',
+  label: 'Medicações',
+  value: selectedTreatment.medications
+  }"
+  (valueChange)="updateNestedPropertyOnTreatment($event)"></pet-routine-table>
+
+<pet-treatment-text-area [data]="{
+  propertyName: 'conclusiveReport',
+  label: 'Laúdo conclusivo',
+  value: selectedTreatment.conclusiveReport
+  }"
+  (valueChange)="updatePropertyOnTreatment($event)">
+</pet-treatment-text-area>
+
+<pet-treatment-text-area [data]="{
+  propertyName: 'dischargeCare',
+  label: 'Cuidados pós alta',
+  value: selectedTreatment.dischargeCare
+  }"
+  (valueChange)="updatePropertyOnTreatment($event)">
+</pet-treatment-text-area>

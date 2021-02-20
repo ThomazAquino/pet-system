@@ -27,6 +27,13 @@
       <h3 class="left__info__title">{{headerData?.pet?.name || ''}}</h3>
       <h3 class="left__info__sub-title">{{ (headerData?.pet?.type) || ''}} {{' '}}  {{(headerData?.pet?.breed || '')}} {{' '}}  {{(headerData?.pet?.color || '')}}</h3>
       <!-- <h3 class="left__info__btn profile-button"></h3> -->
+      <button 
+        *ngIf="headerData?.options?.showPetProfileButton"
+        (click)="openPetProfile()"
+        class="left profile-button">
+        <fa-icon icon="user" style="margin-right: 5px;"></fa-icon> Ver perfil
+      </button>
+      
     </div>
   </section>
   

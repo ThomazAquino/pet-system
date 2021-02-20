@@ -3,7 +3,7 @@ import { Action, select, Store } from '@ngrx/store';
 import { Actions, Effect, ofType, createEffect } from '@ngrx/effects';
 import { tap, withLatestFrom } from 'rxjs/operators';
 
-import { LocalStorageService } from '../core.module';
+import { LocalStorageService } from '../local-storage/local-storage.service';
 
 
 import * as treatmentsAction from './treatments.actions';
@@ -20,6 +20,8 @@ export class TreatmentsEffects {
           treatmentsAction.addTreatment,
           treatmentsAction.updateTreatment,
           treatmentsAction.upsertTreatment,
+          treatmentsAction.addPropertyToArrayInTreatment,
+          treatmentsAction.updatePropertyToArrayInTreatment,
         ),
         withLatestFrom(this.store.pipe(select(selectTreatmentsState))),
         tap(([action, treatments]) =>
