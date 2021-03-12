@@ -1,3 +1,4 @@
+import { loadAllPets } from './../../../core/pets/pets.actions';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -16,6 +17,9 @@ export class PetListComponent implements OnInit {
   constructor(private store: Store, private router: Router) { }
 
   ngOnInit(): void {
+    this.store.dispatch(loadAllPets());
+
+
     this.pets$ = this.store.select(
       selectAllPetsForListComponent
     );

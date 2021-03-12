@@ -1,7 +1,7 @@
-import { updatePropertyToArrayInTreatment } from './../../../core/treatments/treatments.actions';
+import { closeTreatment, loadTreatmentById, updatePropertyToArrayInTreatment } from './../../../core/treatments/treatments.actions';
 import { selectSelectedTreatment } from './../../../core/treatments/treatments.selectors';
 import { Treatment } from './../../../core/treatments/treatments.model';
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Form, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
@@ -15,6 +15,10 @@ import { Tutor } from '../../../core/tutors/tutors.model';
 import { selectTutorById } from '../../../core/tutors/tutors.selectors';
 import { addPropertyToArrayInTreatment, updateTreatment } from '../../../core/treatments/treatments.actions';
 import { NotificationService } from '../../../core/notifications/notification.service';
+import { NoIdProvided, NO_ID_PROVIDED } from '../../../core/core.state';
+import { loadPetById } from '../../../core/pets/pets.actions';
+import { loadTutorById } from '../../../core/tutors/tutors.actions';
+import { TypeOfHeader } from '../../../shared/header-profile/header-profile.component';
 
 class ImageSnippet {
   constructor(public file: File) {}
@@ -24,9 +28,11 @@ export interface InputData {
   propertyName: string;
   label: string;
   value: any;
-  action?: string;
+  operation?: string;
+  isNested?: boolean;
   options?: {
     autoSave: boolean;
+    disabled?: boolean
   }
 }
 
@@ -45,9 +51,15 @@ export class TreatmentComponent implements OnInit {
   selectedPet$: Observable<Pet>;
   selectedTutor$: Observable<Tutor>;
   selectedTreatment: Treatment;
+  treatmentHeader = TypeOfHeader.treatment;
 
   initialFormState: any;
   isNew: boolean;
+
+  isInitialization = true;
+  getTutor = false;
+
+  treatmentCallMade = false;
 
   // old pets in tutor profile
   treatments$: Observable<any>;
@@ -58,8 +70,10 @@ export class TreatmentComponent implements OnInit {
     public fb: FormBuilder,
     private imageCompress: NgxImageCompressService,
     private router: Router,
+    private route: ActivatedRoute,
     private activatedRouter: ActivatedRoute,
-    private notificationService : NotificationService
+    private notificationService : NotificationService,
+    private cdRef: ChangeDetectorRef
   ) { }
 
   static populatePet(treatment?: Treatment): any {
@@ -75,7 +89,7 @@ export class TreatmentComponent implements OnInit {
       conclusiveReportShort: treatment?.conclusiveReportShort,
       clinicEvo: treatment?.clinicEvo,
       clinicEvoResume: treatment?.clinicEvoResume,
-      belongsToVet: treatment?.belongsToVet
+      vetName: treatment?.vetName
     };
   }
 
@@ -83,32 +97,58 @@ export class TreatmentComponent implements OnInit {
     this.store
       .pipe(select(selectSelectedTreatment))
       .pipe(takeUntil(this.destroyed$))
-      .subscribe((treatment: Treatment) => {
+      .subscribe((treatment: Treatment | NoIdProvided) => {
+        // Prevent the component to make a call because the router is change on state
+        // so the subscription triggers but not in the component.
+    
+        if (treatment === NO_ID_PROVIDED) return;
         if (!treatment) {
-          // this.isNew = true;
+          const id = this.route.snapshot.params['id'];
+          if (id !== 'add' && !this.treatmentCallMade) {
+            this.treatmentCallMade = true;
+            this.store.dispatch(loadTreatmentById({id: id}));
+          }
           return 
+        } else {
+          this.treatmentCallMade = true;
         }
+
         this.selectedTreatment = treatment;
         this.treatmentFormGroup = this.fb.group(
           TreatmentComponent.populatePet(treatment)
         );
+
+        debugger
         this.initialFormState = this.treatmentFormGroup.getRawValue();
 
-        this.treatmentFormGroup.valueChanges
-          .pipe(
-            takeUntil(this.destroyed$),
-            debounceTime(200),
-            tap((form: Form) => console.log(form))
-          )
-          .subscribe((_) => this.formValueChanges$.next(true));
+        if (this.isInitialization) {
+          this.isInitialization = false;
 
+          this.treatmentFormGroup.valueChanges
+            .pipe(
+              takeUntil(this.destroyed$),
+              debounceTime(200),
+              tap((form: Form) => console.log(form))
+            )
+            .subscribe((_) => this.formValueChanges$.next(true));
+
+            this.store.dispatch(loadPetById({id: treatment.petId}));
+        }
+
+
+        
         this.selectedPet$ = this.store.pipe(select(selectPetById, treatment.petId));
 
         this.selectedPet$.pipe(takeUntil(this.destroyed$)).subscribe(pet => {
           if (pet?.tutorId) {
+            if (!this.getTutor) {
+              this.store.dispatch(loadTutorById({id: pet.tutorId}));
+              this.getTutor = true;
+            }
             this.selectedTutor$ = this.store.pipe(select(selectTutorById, pet.tutorId));
           }
         })
+        setTimeout(() => this.cdRef.detectChanges(), 1);
       });
   }
 
@@ -127,24 +167,34 @@ export class TreatmentComponent implements OnInit {
     this.store.dispatch(updateTreatment({
       treatment: {
         id: this.treatmentFormGroup.controls.id.value,
-        changes: updateObj
+        changes: updateObj,
+        operation: change.operation,
+        isNested: change.isNested
       }
     }));
     this.notificationService.info(`${change.label} atualizado.`);
   }
 
-  updateNestedPropertyOnTreatment(change: InputData) {
-    if (change.action === 'add') {
-      this.store.dispatch(addPropertyToArrayInTreatment(
-        { treatmentId: this.selectedTreatment.id,  propertyName: 'medications', value: change.value}
-      ));
-      this.notificationService.info(`${change.label} criado.`);
-    } else if (change.action === 'update') {
-      this.store.dispatch(updatePropertyToArrayInTreatment(
-        { treatmentId: this.selectedTreatment.id,  propertyName: 'medications', value: change.value}
-      ));
-    }
-    
+  // updateNestedPropertyOnTreatment(change: InputData) {
+  //   if (change.operation === 'add') {
+  //     this.store.dispatch(addPropertyToArrayInTreatment(
+  //       { treatmentId: this.selectedTreatment.id,  propertyName: 'medications', value: change.value}
+  //     ));
+  //     this.notificationService.info(`${change.label} criado.`);
+  //   } else if (change.operation === 'update') {
+  //     this.store.dispatch(updatePropertyToArrayInTreatment(
+  //       { treatmentId: this.selectedTreatment.id,  propertyName: 'medications', value: change.value}
+  //     ));
+  //   }
+  // }
+
+  onCloseTreatmentClick() {
+    this.store.dispatch(closeTreatment({id: this.treatmentFormGroup.controls.id.value}));
+  }
+
+  ngOnDestroy() {
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
   }
 
 }

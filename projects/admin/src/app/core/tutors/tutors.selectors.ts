@@ -1,17 +1,7 @@
 import { createSelector } from '@ngrx/store';
-import { selectRouterState } from '../core.module';
-import { selectTutorsState, AppState } from '../core.state';
+import { selectRouterState, selectTutorsState } from '../core.state';
+import { Role, Status, Tutor } from './tutors.model';
 import { tutorAdapter, TutorsState } from './tutors.reducer';
-
-// export const {
-//   selectIds,
-//   selectEntities,
-//   selectAll
-// } = tutorAdapter.getSelectors((state: AppState) => state.tutors);
-
-// export const selectTutorsEntities = selectEntities;
-// export const selectAllTutors = selectAll;
-// export const selectTutorsIds = selectIds;
 
 const { selectEntities, selectAll, selectIds } = tutorAdapter.getSelectors();
 export const selectAllTutors = createSelector(selectTutorsState, selectAll);
@@ -22,7 +12,7 @@ export const selectTutorsIds = createSelector(selectTutorsState, selectIds);
 export const selectSelectedTutor = createSelector(
   selectTutorsEntities,
   selectRouterState,
-  (entities, params) => params && entities[params.state.params.id]
+  (tutorEntities, params) => params && tutorEntities[params.state.params.id]
 );
 
 export const selectTutorById = createSelector(
@@ -32,47 +22,54 @@ export const selectTutorById = createSelector(
 
 export const selectTutorsForListComponent = createSelector(
   selectAllTutors,
-  (entities) => {
+  (tutors, params?: Role) => {
+    const filteredTutors = params ? tutors.filter((tutor) => tutor.role === params) : tutors;
     return {
-      data: entities.map((tutor) => {
-        return {
-          id: tutor.id,
+      data: filteredTutors.map((tutor) => {
+        return {id: tutor.id,
           column1: tutor.avatar,
-          column2: `${tutor.name} ${tutor.lastName}`,
-          column3: tutor.cellPhone,
+          column2: `${tutor.firstName} ${tutor.lastName}`,
+          column3: tutor.cellphone,
           column4: tutor.cpf
         };
       }),
       info: {
         id: { included: false, label: '', sort: false, width: '' },
-        column1: {
-          included: true,
-          type: 'image',
-          label: '',
-          sort: false,
-          width: '70px'
-        },
-        column2: {
-          included: true,
-          type: 'string',
-          label: 'Name',
-          sort: true,
-          width: ''
-        },
-        column3: {
-          included: true,
-          type: 'string',
-          label: 'Cellphone',
-          sort: true,
-          width: ''
-        },
-        column4: {
-          included: false,
-          type: '',
-          label: '',
-          sort: false,
-          width: '0px'
-        }
+        column1: {included: true,type: 'image',label: '',sort: false,width: '70px' },
+        column2: {included: true,type: 'string',label: 'Name',sort: true,width: '' },
+        column3: {included: true,type: 'string',label: 'Cellphone',sort: true,width: '' },
+        column4: {included: false,type: '',label: '',sort: false,width: '0px' }
+      }
+    };
+  }
+);
+
+export const selectFilteredUsersForListComponent = createSelector(
+  selectAllTutors,
+  (tutors, params?: Role) => {
+
+    const filteredTutors = params ? tutors.filter((tutor) => tutor.role === params) : 
+                                    tutors.filter((tutor) => tutor.role !== Role.User);
+    return {
+      data: filteredTutors.map((tutor: Tutor) => {
+        return {
+          id: tutor.id,
+          column1: tutor.avatar,
+          column2: `${tutor.firstName} ${tutor.lastName}`,
+          column3: tutor.role,
+          column4: tutor.cellphone,
+          column5: tutor.status || Status.offline,
+          column6: tutor.cpf
+        };
+      }),
+      info: {
+        id: { included: false, label: '', sort: false, width: '' },
+        column1: {included: true,type: 'image',label: '',sort: false,width: '70px'},
+        column2: {included: true,type: 'string',label: 'Name',sort: true,width: ''},
+        column3: {included: true,type: 'string',label: 'Função', sort: true,width: ''},
+        column4: {included: true,type: 'string',label: 'Cellphone',sort: true,width: ''},
+        column5: {included: true,type: 'string',label: 'Status',sort: true, width: ''},
+        column6: {included: false,type: '',label: '',sort: false,width: '0px'}
       }
     };
   }

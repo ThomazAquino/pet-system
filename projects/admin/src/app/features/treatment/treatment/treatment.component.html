@@ -2,7 +2,7 @@
   [headerData]="{
     pet: selectedPet$ | async,
     tutor: selectedTutor$ | async,
-    options: {showPetProfileButton: true}
+    options: {showPetProfileButton: true, typeOfHeader: treatmentHeader}
   }">
 </pet-header-profile>
 
@@ -10,7 +10,7 @@
 
 <mat-form-field appearance="fill">
   <mat-label>Data de entrada</mat-label>
-  <input matInput disabled [value]="selectedTreatment.enterDate">
+  <input matInput disabled [value]="selectedTreatment?.enterDate">
   <mat-datepicker-toggle class="date-picker" matPrefix></mat-datepicker-toggle>
   <mat-datepicker #dp1></mat-datepicker>
 </mat-form-field>
@@ -18,14 +18,16 @@
 <pet-routine-table [data]="{
   propertyName: 'medications',
   label: 'Medicações',
-  value: selectedTreatment.medications
+  value: selectedTreatment?.medications,
+  options: {disabled: selectedTreatment.status === 'closed'}
   }"
-  (valueChange)="updateNestedPropertyOnTreatment($event)"></pet-routine-table>
+  (valueChange)="updatePropertyOnTreatment($event)"></pet-routine-table>
 
 <pet-treatment-text-area [data]="{
   propertyName: 'conclusiveReport',
   label: 'Laúdo conclusivo',
-  value: selectedTreatment.conclusiveReport
+  value: selectedTreatment?.conclusiveReport,
+  options: {disabled: selectedTreatment.status === 'closed'}
   }"
   (valueChange)="updatePropertyOnTreatment($event)">
 </pet-treatment-text-area>
@@ -33,7 +35,15 @@
 <pet-treatment-text-area [data]="{
   propertyName: 'dischargeCare',
   label: 'Cuidados pós alta',
-  value: selectedTreatment.dischargeCare
+  value: selectedTreatment?.dischargeCare,
+  options: {disabled: selectedTreatment.status === 'closed'}
   }"
   (valueChange)="updatePropertyOnTreatment($event)">
 </pet-treatment-text-area>
+
+<button *ngIf="selectedTreatment.status !== 'closed'"
+  class="accent-button"
+  (click)="onCloseTreatmentClick()"
+  style="margin:30px auto auto">
+  Encerrar tratamento
+</button>

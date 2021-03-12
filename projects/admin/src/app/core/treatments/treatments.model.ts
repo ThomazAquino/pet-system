@@ -11,5 +11,7 @@ export interface Treatment {
   clinicEvo: any;
   clinicEvoResume: number;
   petId: string;
-  belongsToVet: string;
+  petName: string;
+  vetId: string;
+  vetName: string;
 }

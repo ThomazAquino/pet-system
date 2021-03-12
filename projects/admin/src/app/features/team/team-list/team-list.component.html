@@ -1,0 +1,20 @@
+<nav mat-tab-nav-bar class="team-filter">
+  <a mat-tab-link
+    *ngFor="let filter of roles"
+    (click)="filterByRole(filter.value)"
+    [active]="activeLink == filter.value">
+    {{filter.label}}
+  </a>
+</nav>
+
+<pet-general-list
+  [list]="users$ | async"
+  (rowClick)="onUserListClick($event)">
+</pet-general-list>
+
+<button
+  (click)="onAddUserClick()"
+  class="accent-button"
+  style="margin: 50px auto auto;">
+  Adicionar Membro
+</button>

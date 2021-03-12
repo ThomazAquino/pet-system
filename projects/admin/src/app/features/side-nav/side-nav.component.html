@@ -3,7 +3,7 @@
 <nav class="nav" *ngIf="isAuth$ | async">
   <ul class="nav__ul">
       <li class="side-nav__li" *ngFor="let item of navigation" routerLinkActive="active">
-        <a class="side-nav__li__a" [routerLink]="[item.link]" >
+        <a class="side-nav__li__a" [routerLink]="[item.link]" [class.disabled]="item.disabled">
           <fa-icon [icon]="item.icon"></fa-icon> {{item.label}}
         </a>
       </li>
@@ -11,3 +11,5 @@
 
   </ul>
 </nav>
+
+<div class="t" (click)="cacheReset()">Clean local Storage</div>

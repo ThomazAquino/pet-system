@@ -72,3 +72,6 @@ export interface AppState {
   settings: SettingsState;
   router: RouterReducerState<RouterStateUrl>;
 }
+
+export type NoIdProvided = 'NO_ID_PROVIDED';
+export const NO_ID_PROVIDED: NoIdProvided  = 'NO_ID_PROVIDED';

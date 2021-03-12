@@ -1,18 +1,22 @@
 <input #imageInput type="file" accept="image/*" (change)="processFile(imageInput)" style="display:none">
 
-<div class="header-profile-wrapper">
-  <ng-container *ngIf="isTutor" [ngTemplateOutlet]="tutorProfile"></ng-container>
-  <ng-container *ngIf="!isTutor" [ngTemplateOutlet]="defaultHeader"></ng-container>  
-</div>
+
+  <div class="header-profile-wrapper" [ngSwitch]="headerData?.options?.typeOfHeader">
+    <ng-container *ngSwitchCase="eTypeOfHeader.tutorProfile" [ngTemplateOutlet]="tutorProfile"></ng-container>
+    <ng-container *ngSwitchCase="eTypeOfHeader.petProfile" [ngTemplateOutlet]="defaultHeader"></ng-container>
+    <ng-container *ngSwitchCase="eTypeOfHeader.treatment" [ngTemplateOutlet]="defaultHeader"></ng-container>
+    <ng-container *ngSwitchDefault [ngTemplateOutlet]="tutorProfile"></ng-container>
+  
+  
+  </div>  
+
 <hr class="primary-hr">
-
-
 
 <ng-template #tutorProfile>
   <section class="left">
     <img class="left__image" (click)="onImageClick()" [src]="headerData?.tutor?.avatar" onError="this.src='./assets/images/user-placeholder.png'">
     <div class="left__info">
-      <h3 class="left__info__title">{{ (headerData?.tutor?.name) || ''}} {{' '}}  {{(headerData?.tutor?.lastName || '')}}</h3>
+      <h3 class="left__info__title">{{ (headerData?.tutor?.firstName) || ''}} {{' '}}  {{(headerData?.tutor?.lastName || '')}}</h3>
     </div>
   </section>
   <section class="right">
@@ -26,7 +30,7 @@
     <div class="left__info">
       <h3 class="left__info__title">{{headerData?.pet?.name || ''}}</h3>
       <h3 class="left__info__sub-title">{{ (headerData?.pet?.type) || ''}} {{' '}}  {{(headerData?.pet?.breed || '')}} {{' '}}  {{(headerData?.pet?.color || '')}}</h3>
-      <!-- <h3 class="left__info__btn profile-button"></h3> -->
+      
       <button 
         *ngIf="headerData?.options?.showPetProfileButton"
         (click)="openPetProfile()"
@@ -46,7 +50,7 @@
       <button class="right profile-button" disabled><fa-icon icon="comment-dots"></fa-icon> Mensagem</button>
     </div>
   
-    <h4 class="right__second"><span style="font-weight: 500;">Tutor:</span> {{ (headerData?.tutor?.name) || ''}} {{' '}}  {{(headerData?.tutor?.lastName || '')}}</h4>
+    <h4 class="right__second"><span style="font-weight: 500;">Tutor:</span> {{ (headerData?.tutor?.firstName) || ''}} {{' '}}  {{(headerData?.tutor?.lastName || '')}}</h4>
     
   </section>
 

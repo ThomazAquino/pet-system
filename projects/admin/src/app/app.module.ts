@@ -16,6 +16,7 @@ import { AuthService } from './core/auth/auth.service';
 import { appInitializer } from './shared/app.initializer';
 import { JwtInterceptor } from './shared/jwt.interceptor';
 import { TreatmentModule } from './features/treatment/treatment.module';
+import { TeamModule } from './features/team/team.module';
 
 @NgModule({
   imports: [
@@ -32,6 +33,8 @@ import { TreatmentModule } from './features/treatment/treatment.module';
     ChatModule,
 
     AuthModule,
+
+    TeamModule,
   ],
   declarations: [AppComponent, SideNavComponent, HeaderComponent],
   bootstrap: [AppComponent],

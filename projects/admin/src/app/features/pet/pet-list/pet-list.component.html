@@ -1,4 +1,5 @@
 <pet-general-list
-  [list]="pets$ | async"
+*ngIf="pets$ | async as pets"
+  [list]="pets"
   (rowClick)="onPetListClick($event)">
 </pet-general-list>

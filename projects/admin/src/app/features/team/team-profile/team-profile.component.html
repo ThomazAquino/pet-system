@@ -1,0 +1,215 @@
+<pet-header-profile [headerData]="{tutor: tutorFormGroup.value}"
+  (imageUploaded)="handleImageUploaded($event)"></pet-header-profile>
+
+  <form *ngIf="tutorFormGroup" [formGroup]="tutorFormGroup" [ngClass]="routeAnimationsElements" class="profile-form">
+    
+    <div class="row">
+      <div class="col-md-6 col-lg-4">
+        <mat-form-field appearance="fill">
+          <mat-label>Nome</mat-label>
+          <input matInput placeholder="name"
+            formControlName="firstName" required>
+          <mat-error *ngIf="tutorFormGroup.get('firstName').invalid">
+            {{ 'anms.examples.crud.placeholder1' | translate }}
+            {{ 'anms.examples.crud.error' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <mat-form-field appearance="fill">
+          <mat-label>Sobre nome</mat-label>
+          <input matInput placeholder="lastName"
+            formControlName="lastName" required>
+          <mat-error *ngIf="tutorFormGroup.get('lastName').invalid">
+            {{ 'anms.examples.crud.placeholder1' | translate }}
+            {{ 'anms.examples.crud.error' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <div class="col-md-6 col-lg-4">
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="email"
+            formControlName="email" required>
+          <mat-error *ngIf="tutorFormGroup.get('email').invalid">
+            {{ 'anms.examples.crud.placeholder1' | translate }}
+            {{ 'anms.examples.crud.error' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <div class="col-md-6 col-lg-4">
+        <mat-form-field appearance="fill">
+          <mat-label>CPF</mat-label>
+          <input matInput placeholder="cpf"
+            formControlName="cpf" required>
+          <mat-error *ngIf="tutorFormGroup.get('cpf').invalid">
+            {{ 'anms.examples.crud.placeholder1' | translate }}
+            {{ 'anms.examples.crud.error' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <div class="col-md-6 col-lg-4">
+        <mat-form-field appearance="fill">
+          <mat-label>birthday</mat-label>
+          <input matInput placeholder="birthday"
+            formControlName="birthday" required>
+          <mat-error *ngIf="tutorFormGroup.get('birthday').invalid">
+            {{ 'anms.examples.crud.placeholder1' | translate }}
+            {{ 'anms.examples.crud.error' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <div class="col-md-6 col-lg-4">
+        <mat-form-field appearance="fill" style="grid-column: 1 / 3;">
+          <mat-label>street</mat-label>
+          <input matInput placeholder="street"
+            formControlName="street" required>
+          <mat-error *ngIf="tutorFormGroup.get('street').invalid">
+            {{ 'anms.examples.crud.placeholder1' | translate }}
+            {{ 'anms.examples.crud.error' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <div class="col-md-6 col-lg-4">
+        <mat-form-field appearance="fill">
+          <mat-label>streetNumber</mat-label>
+          <input matInput placeholder="streetNumber"
+            formControlName="streetNumber" required>
+          <mat-error *ngIf="tutorFormGroup.get('streetNumber').invalid">
+            {{ 'anms.examples.crud.placeholder1' | translate }}
+            {{ 'anms.examples.crud.error' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <div class="col-md-6 col-lg-4">
+        <mat-form-field appearance="fill">
+          <mat-label>postalCode</mat-label>
+          <input matInput placeholder="postalCode"
+            formControlName="postalCode" required>
+          <mat-error *ngIf="tutorFormGroup.get('postalCode').invalid">
+            {{ 'anms.examples.crud.placeholder1' | translate }}
+            {{ 'anms.examples.crud.error' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <div class="col-md-6 col-lg-4">
+        <mat-form-field appearance="fill">
+          <mat-label>telephone</mat-label>
+          <input matInput placeholder="telephone"
+            formControlName="telephone" required>
+          <mat-error *ngIf="tutorFormGroup.get('telephone').invalid">
+            {{ 'anms.examples.crud.placeholder1' | translate }}
+            {{ 'anms.examples.crud.error' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <div class="col-md-6 col-lg-4">
+        <mat-form-field appearance="fill">
+          <mat-label>cellphone</mat-label>
+          <input matInput placeholder="cellphone"
+            formControlName="cellphone" required>
+          <mat-error *ngIf="tutorFormGroup.get('cellphone').invalid">
+            {{ 'anms.examples.crud.placeholder1' | translate }}
+            {{ 'anms.examples.crud.error' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <mat-form-field appearance="fill">
+          <mat-label>role</mat-label>
+            <mat-select formControlName="role" required>
+              <mat-option *ngFor="let role of roles" [value]="role.value">
+                {{role.label}}
+              </mat-option>
+            </mat-select>
+          <mat-error *ngIf="tutorFormGroup.get('role').invalid">
+            {{ 'anms.examples.crud.placeholder1' | translate }}
+            {{ 'anms.examples.crud.error' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div *ngIf="!isAddMode">
+          <h3 class="pt-3">Mudar senha</h3>
+          <p>Deixe em branco para manter a mesma senha.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <mat-form-field appearance="fill">
+          <mat-label>password</mat-label>
+          <input matInput placeholder="password"
+            formControlName="password">
+          <mat-error *ngIf="tutorFormGroup.get('password').invalid">
+            {{ 'anms.examples.crud.placeholder1' | translate }}
+            {{ 'anms.examples.crud.error' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <mat-form-field appearance="fill">
+          <mat-label>confirmPassword</mat-label>
+          <input matInput placeholder="confirmPassword"
+            formControlName="confirmPassword">
+          <mat-error *ngIf="tutorFormGroup.get('confirmPassword').invalid">
+            {{ 'anms.examples.crud.placeholder1' | translate }}
+            {{ 'anms.examples.crud.error' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  
+    <div style="margin-bottom: 70px;">
+      <button
+        *ngIf="!(formValueChanges$ | async) && !isAddMode"
+        (click)="deleteUser()
+        "mat-raised-button
+        color="warn"
+        style="float: right;">
+        <fa-icon [icon]="['far','trash-alt']"></fa-icon> Deletar usuário
+      </button>
+    </div>
+  
+   
+  
+      <button
+        class="accent-button"
+        type="submit"
+        *ngIf="isAddMode"
+        (click)="save()"
+        style="margin-top: 30px;">
+        Fnalizar cadastro
+      </button>
+  
+  </form> 
+  
+  <div class="row">
+    <div class="col-12 d-flex justify-content-end" *ngIf="formValueChanges$ | async">
+      <button (click)="cancelEditing()" mat-raised-button style="margin-right: 15px;">
+        descartar
+      </button>
+      <button [disabled]="tutorFormGroup.status !== 'VALID'" (click)="save()" mat-raised-button color="primary">
+        salvar
+      </button>
+    </div>
+  </div>
+  
+  <!-- <ng-container *ngIf="pets$ | async">
+    <div class="pet-list">
+      <h4 class="pet-list__title">Lista de Pets</h4>
+      <pet-general-list [list]="pets$ | async" (rowClick)="onPetListClick($event)" ></pet-general-list>
+    </div>
+  </ng-container> -->
+  
+  
+  <!-- <button class="accent-button" *ngIf="!isAddMode" (click)="onAddPetClick()">Adicionar Pet</button> -->
+  

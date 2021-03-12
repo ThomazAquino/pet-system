@@ -37,4 +37,13 @@
   fa-icon {
     margin-right: 18px;
   }
+
+  &.disabled {
+    color:#a0a3a4 !important;
+    pointer-events: none;
+
+    &:hover {
+      color:#a0a3a4 !important;
+    }
+  }
 }

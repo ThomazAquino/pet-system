@@ -104,11 +104,12 @@ export class AppComponent implements OnInit {
   upsertTutor() {
     const tutor: Tutor = {
       id: 'asasa',
-      name: 'New name',
+      email: '',
+      firstName: 'New name',
       lastName: 'New last name',
       avatar: '',
-      cellPhone: '000-000',
-      tel: '000-000',
+      cellphone: '000-000',
+      telephone: '000-000',
       street: '000-000',
       streetNumber: '000-000',
       postalCode: '000-000',
@@ -136,22 +137,22 @@ export class AppComponent implements OnInit {
     this.store.dispatch(upsertPet({ pet }));
   }
   upsertTreatment() {
-    const treatment: Treatment = {
-      id: 'id-treatment-5',
-      status: 'open',
-      enterDate: '28/01/2021',
-      dischargeDate: null,
-      medications: [],
-      food: [],
-      conclusiveReport: null,
-      dischargeCare: null,
-      clinicEvo: null,
-      clinicEvoResume: 2,
-      petId: 'id-pet-5',
-      belongsToVet: 'id-vet-3'
-    };
+    // const treatment: Treatment = {
+    //   id: 'id-treatment-5',
+    //   status: 'open',
+    //   enterDate: '28/01/2021',
+    //   dischargeDate: null,
+    //   medications: [],
+    //   food: [],
+    //   conclusiveReport: null,
+    //   dischargeCare: null,
+    //   clinicEvo: null,
+    //   clinicEvoResume: 2,
+    //   petId: 'id-pet-5',
+    //   belongsToVet: 'id-vet-3'
+    // };
 
-    this.store.dispatch(upsertTreatment({ treatment }));
+    // this.store.dispatch(upsertTreatment({ treatment }));
   }
 
   onLoginClick() {

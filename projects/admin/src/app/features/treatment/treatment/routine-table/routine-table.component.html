@@ -18,7 +18,15 @@
       <div class="body-cell"><fa-icon [icon]="['far','calendar']"></fa-icon>{{ medication.firstDose | date: 'd/MM/yyyy HH:mm'}}</div>
       <!-- <div class="body-cell"><fa-icon [icon]="['far','calendar']"></fa-icon>{{ medication.lastDose | date: 'd/MM/yyyy HH:mm'}}</div> -->
       <div class="body-cell" [class.warn]="(currentDate > getNextDose(medication))"><fa-icon [icon]="['far','calendar']"></fa-icon>{{ getNextDose(medication) | date: 'd/MM/yyyy HH:mm'}}</div>
-      <div class="body-cell"><button (click)="editRoutine(medication)" mat-button>Edit</button></div>
+      <div class="body-cell"><button  *ngIf="!data.options.disabled" (click)="editRoutine(medication)" mat-button>Edit</button></div>
+      <fa-icon
+        *ngIf="!data.options.disabled"
+        (click)="onDeleteClick(medication)"
+        [icon]="['far','trash-alt']"
+        [matTooltip]="'treatment.medications.delete' | translate"
+        matTooltipPosition="above"
+        class="routine-delete">
+      </fa-icon>
     </div>
     <hr class="primary-hr" [class.extra-margin]="!isLast">
   </ng-container>
@@ -27,7 +35,7 @@
 
   <ng-container *ngIf="isEdit$ | async as isEdit">
 
-  <form [formGroup]="routineForm" #routineFormRef="ngForm" (ngSubmit)="onSubmit(routineFormRef)">
+  <form *ngIf="!data.options.disabled" [formGroup]="routineForm" #routineFormRef="ngForm" (ngSubmit)="onSubmit(routineFormRef)">
     <div class="grid" style="margin-top: 40px;">
     <mat-form-field>
       <input matInput placeholder="Medicação" formControlName="name" />
@@ -47,39 +55,15 @@
       </mat-form-field>
     </div>
     
-
-    <!-- <mat-form-field>
-      <mat-label>Primeira dose</mat-label>
-      <input matInput  formControlName="firstDose" [matDatepicker]="picker" placeholder="Selecione">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
     <mat-form-field>
-      <mat-label>Ultima dose</mat-label>
-      <input matInput  formControlName="endDose" [matDatepicker]="picker2" placeholder="Selecione">
-      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-      <mat-datepicker #picker2></mat-datepicker>
-    </mat-form-field> -->
-
-    <!-- <mat-form-field>
-      <mat-label>Primeira dose</mat-label>
-      <input matInput formControlName="firstDose" [matDatepicker]="picker" placeholder="Selecione">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-
-    </mat-form-field> -->
-
-    <mat-form-field>
-        <mat-label>label</mat-label>
-
         <div style="display: flex;">
           <input matInput formControlName="firstDose" [min]="minDate" [max]="maxDate"
-          (dateChange)="openClock()" [matDatepicker]="picker" placeholder="Selecione">
+          (dateChange)="openClock()" [matDatepicker]="picker">
 
           <span style="margin: 0 0.4rem;font-weight: 500">-</span>
 
           <input [value]="selectedHour" readonly matInput [ngxTimepicker]="clock" [format]="24" inputmode="numeric"
-             placeholder="time" style=" width: 3rem"/>
+             placeholder="time" style=" width: 3rem" placeholder="Hora"/>
         </div>
         
         <mat-datepicker-toggle [for]="picker" matPrefix ></mat-datepicker-toggle>

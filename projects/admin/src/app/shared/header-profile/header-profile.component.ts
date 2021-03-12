@@ -10,6 +10,7 @@ import {
 import { Tutor } from '../../core/tutors/tutors.model';
 import { Pet } from '../../core/pets/pets.model';
 import { Router } from '@angular/router';
+import { SimpleChanges, OnChanges } from '@angular/core';
 
 // Data receive from parent component
 interface HeaderData {
@@ -17,7 +18,14 @@ interface HeaderData {
   pet?: Pet;
   options?: {
     showPetProfileButton: boolean;
+    typeOfHeader?: TypeOfHeader
   };
+}
+
+export enum TypeOfHeader {
+  tutorProfile = 'tutorProfile',
+  petProfile = 'petProfile',
+  treatment = 'treatment',
 }
 
 // Data
@@ -47,6 +55,7 @@ export class HeaderProfileComponent implements OnInit {
   @Output()
   imageUploaded = new EventEmitter<any>();
   @ViewChild('imageInput') imageInput;
+  eTypeOfHeader = TypeOfHeader;
 
   leftPart: any;
   rightPart: any;
@@ -54,9 +63,8 @@ export class HeaderProfileComponent implements OnInit {
 
   constructor(private router: Router) {}
 
-  ngOnInit() {
-    this.isTutor = this.headerData.pet ? false : true;
-    console.log(this.headerData)
+  ngOnInit() { 
+    console.log(this.headerData?.options?.typeOfHeader);
   }
 
   processFile(event): void {

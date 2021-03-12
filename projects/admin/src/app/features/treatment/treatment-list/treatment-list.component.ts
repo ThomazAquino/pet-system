@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { loadAllTreatments } from '../../../core/treatments/treatments.actions';
 import { selectAllTreatmentsForListComponent } from '../../../core/treatments/treatments.selectors';
 
 @Component({
@@ -16,9 +17,8 @@ export class TreatmentListComponent implements OnInit {
   constructor(private store: Store, private router: Router) { }
 
   ngOnInit(): void {
-    this.treatments$ = this.store.select(
-      selectAllTreatmentsForListComponent
-    );
+    this.store.dispatch(loadAllTreatments());
+    this.treatments$ = this.store.select(selectAllTreatmentsForListComponent);
   }
 
   onPetListClick(treatment) {

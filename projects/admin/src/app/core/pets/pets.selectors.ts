@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
-import { selectRouterState } from '../core.module';
-import { selectPetsState, AppState } from '../core.state';
+import { selectRouterState } from '../core.state';
+import { selectPetsState, AppState, NO_ID_PROVIDED } from '../core.state';
 import { petAdapter, PetsState, selectAllPets, selectPetsEntities } from './pets.reducer';
 
 
@@ -76,8 +76,11 @@ export const selectAllPetsForListComponent = createSelector(
 export const selectPetsByIdsForListComponent = createSelector(
   selectPetsEntities,
   (entities, props: string[]) => {
+    const petsNotFound = props.filter(id => !entities[id]);
+    if (petsNotFound) { petsNotFound.forEach(t => console.error(`Pet "${t}" not found in store.`)) }
+
     return {
-      data: props.map((id) => {
+      data: props.filter(id => entities[id]).map((id) => {
         return {
           id: entities[id].id,
           column1: entities[id].avatar,

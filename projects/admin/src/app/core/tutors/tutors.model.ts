@@ -1,10 +1,11 @@
 export interface Tutor {
   id: string;
-  name: string;
+  email: string;
+  firstName: string;
   lastName: string;
   avatar: string;
-  cellPhone: string;
-  tel: string;
+  cellphone: string;
+  telephone: string;
   street: string;
   streetNumber: string;
   postalCode: string;
@@ -13,9 +14,17 @@ export interface Tutor {
   pets: any[];
   jwtToken?: string;
   role?: string;
+  status?: Status; 
 }
 
 export enum Role {
+  Admin = 'Admin',
+  Vet = 'Vet',
+  Nurse = 'Nurse',
   User = 'User',
-  Admin = 'Admin'
+}
+
+export enum Status {
+  online = 'online',
+  offline = 'offline'
 }

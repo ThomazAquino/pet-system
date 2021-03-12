@@ -3,14 +3,48 @@ import { Update } from '@ngrx/entity';
 
 import { Tutor } from './tutors.model';
 
-export const loadTutors = createAction(
-  '[Tutors/API] Load Tutors', 
+export const loadAllTutors = createAction(
+  '[Tutors/API] Load All Tutors'
+);
+
+export const loadTutorById = createAction(
+  '[Tutors/API] Load Tutor By Id',
+  props<{ id: string }>()
+);
+
+export const loadManyTutorsByIds = createAction(
+  '[Tutors/API] Load Tutors By Ids',
+  props<{ ids: string[] }>()
+);
+
+export const loadTutorsSuccess = createAction(
+  '[Tutors/API] Load Tutors Success', 
   props<{ tutors: Tutor[] }>()
+);
+
+export const loadTutorSuccess = createAction(
+  '[Tutors/API] Load Tutor Success', 
+  props<{ tutor: Tutor }>()
+);
+
+export const loadTutorsFail = createAction(
+  '[Tutors/API] Load Tutors Fail', 
+  props<{ error: any }>()
 );
 
 export const addTutor = createAction(
   '[Tutors/API] Add Tutor',
   props<{ tutor: Tutor }>()
+);
+
+export const addTutorSuccess = createAction(
+  '[Tutors/API] Add Tutor Success',
+  props<{ tutor: Tutor }>()
+);
+
+export const addTutorFail = createAction(
+  '[Tutors/API] Add Tutor Fail ',
+  props<{ error: any }>()
 );
 
 export const upsertTutor = createAction(
@@ -33,6 +67,16 @@ export const updateTutor = createAction(
   props<{ tutor: Update<Tutor> }>()
 );
 
+export const updateTutorSuccess = createAction(
+  '[Tutors/API] Update Tutor Success',
+  props<{ tutor: Update<Tutor> }>()
+);
+
+export const updateTutorFail = createAction(
+  '[Tutors/API] Update Tutor Fail',
+  props<{ error: any }>()
+);
+
 export const updateTutors = createAction(
   '[Tutors/API] Update Tutors',
   props<{ tutors: Update<Tutor>[] }>()
@@ -43,6 +87,16 @@ export const deleteTutor = createAction(
   props<{ id: string }>()
 );
 
+export const deleteTutorSuccess = createAction(
+  '[Tutors/API] Delete Tutor Success',
+  props<{ id: string }>()
+);
+
+export const deleteTutorFail = createAction(
+  '[Tutors/API] Delete Tutor Fail',
+  props<{ error: any }>()
+);
+
 export const deleteTutors = createAction(
   '[Tutors/API] Delete Tutors',
   props<{ ids: string[] }>()
@@ -50,4 +104,14 @@ export const deleteTutors = createAction(
 
 export const clearTutors = createAction(
   '[Tutors/API] Clear Tutors'
+);
+
+export const addPropertyToArrayInTutor = createAction(
+  '[Tutors/API] Add property to array.',
+  props<{ tutorId: string,  propertyName: string, value: any}>()
+);
+
+export const removePropertyToArrayInTutor = createAction(
+  '[Tutors/API] Remove property to array.',
+  props<{ tutorId: string,  propertyName: string, value: any}>()
 );

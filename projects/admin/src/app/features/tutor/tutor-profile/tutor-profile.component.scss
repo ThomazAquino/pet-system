@@ -10,10 +10,14 @@
   // grid-template-columns: repeat(4, 1fr);
   // gap: 10px;
   // grid-auto-rows: minmax(85px, auto);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  // display: flex;
+  // flex-wrap: wrap;
+  // gap: 10px;
   margin-bottom: 40px;
+
+  mat-form-field {
+    width: 100%;
+  }
 }
 
 .pet-list {

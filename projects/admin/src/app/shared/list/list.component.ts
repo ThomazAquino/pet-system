@@ -6,10 +6,12 @@ import {
   Input,
   ViewChild,
   EventEmitter,
-  Output
+  Output,
+  SimpleChanges
 } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { OnChanges } from '@angular/core';
 
 export interface ListComponent {
   data?: ListComponentDataItem[];
@@ -43,7 +45,7 @@ export interface ListListComponentItemInfo {
   styleUrls: ['./list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ListComponent implements OnInit, AfterViewInit {
+export class ListComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild(MatSort) sort: MatSort;
   @Input() list?: any;
   @Output() rowClick = new EventEmitter<any>();
@@ -64,6 +66,12 @@ export class ListComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!changes.list.firstChange) {
+      this.dataSource.data = changes.list.currentValue.data;
+    }
   }
 
   onTableClick(row) {

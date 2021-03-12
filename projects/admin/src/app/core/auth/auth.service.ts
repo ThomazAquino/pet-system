@@ -9,6 +9,7 @@ import { Tutor } from '../tutors/tutors.model';
 
 // const baseUrl = `${environment.apiUrl}/accounts`;
 const baseUrl = 'http://localhost:4000/accounts';
+// const baseUrl = '/apis/accounts';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -32,9 +33,9 @@ export class AuthService {
 
     login(email: string, password: string) {
         return this.http.post<any>(`${baseUrl}/authenticate`, { email, password }, { withCredentials: true })
-            .pipe(map(auth => {
-                this.authSubject.next(auth);
-                this.startRefreshTokenTimer();
+        .pipe(map(auth => {
+            this.authSubject.next(auth);
+            this.startRefreshTokenTimer();
                 return auth;
             }));
     }

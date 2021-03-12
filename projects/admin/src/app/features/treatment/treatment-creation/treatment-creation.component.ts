@@ -14,6 +14,8 @@ import { addTreatment, upsertTreatment } from '../../../core/treatments/treatmen
 import { first } from 'rxjs/operators';
 import { NotificationService } from '../../../core/notifications/notification.service';
 import * as petsAction  from '../../../core/pets/pets.actions';
+import * as treatmentsAction  from '../../../core/treatments/treatments.actions';
+import { AuthService } from '../../../core/auth/auth.service';
 
 @Component({
   selector: 'pet-treatment-creation',
@@ -35,18 +37,20 @@ export class TreatmentCreationComponent implements OnInit {
     private router: Router,
     private store: Store,
     public fb: FormBuilder,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private authService: AuthService
   ) { }
 
   static createTreatment(): Partial<Treatment> {
     return {
-      id: uuid(),
+      // id: uuid(),
       enterDate: ''
     };
   }
 
   ngOnInit() {
     this.getUserAndPetFromQueryParams();
+
     this.treatmentFormGroup.controls.enterDate.setValue(new Date());
   }
 
@@ -60,22 +64,19 @@ export class TreatmentCreationComponent implements OnInit {
   }
 
   finishCreation() {
-    let petId;
-    let canOpenTreatment;
-    this.selectedPet$.pipe(first()).subscribe(pet => {
-      petId = pet.id;
-      canOpenTreatment = pet.status !== 'interned';
-    });
+    let pet: Pet;
+    this.selectedPet$.pipe(first()).subscribe(p => pet = p);
 
-    if (!canOpenTreatment) {
-      this.notificationService.error('Este pet lá possui um tratamento aberto');
+    if (pet.status === 'interned') {
+      this.notificationService.error('Este pet já possui um tratamento aberto');
       return;
     }
 
+    const vet = this.authService.authValue;
     const dateInUtc = this.treatmentFormGroup.controls.enterDate.value.toUTCString() || this.treatmentFormGroup.controls.enterDate.value;
     
     const treatment: Treatment = {
-      id: this.treatmentFormGroup.controls.id.value,
+      id: '',
       status: 'open',
       enterDate: dateInUtc,
       dischargeDate: null,
@@ -85,12 +86,15 @@ export class TreatmentCreationComponent implements OnInit {
       conclusiveReportShort: null,
       dischargeCare: null,
       clinicEvo: null,
-      clinicEvoResume: 2,
-      petId: petId,
-      belongsToVet: 'id-vet-3'
+      clinicEvoResume: null,
+      petId: pet.id,
+      petName: pet.name,
+      vetId: vet.id,
+      vetName: vet.firstName
     };
 
-    this.store.dispatch(petsAction.createTreatmentForPet({treatment: treatment}));
+    // this.store.dispatch(petsAction.createTreatmentForPet({treatment: treatment}));
+    this.store.dispatch(treatmentsAction.addTreatment({treatment: treatment}));
 
     // this.store.dispatch(upsertTreatment({ treatment }));
 
@@ -103,7 +107,7 @@ export class TreatmentCreationComponent implements OnInit {
       // addPropertyToArrayInPets
       // change pet status to interned
 
-    this.router.navigate(['treatment/', this.treatmentFormGroup.controls.id.value]);
+    // this.router.navigate(['treatment/', this.treatmentFormGroup.controls.id.value]);
   }
 
 }

@@ -3,26 +3,57 @@ import { Update } from '@ngrx/entity';
 
 import { Treatment } from './treatments.model';
 
-export interface UpdateStr<T> {
+
+
+export interface GeneralUpdate<T> {
   id: string;
   changes: Partial<T>;
+  operation?: string;
+  isNested?: boolean;
 }
-export interface UpdateNum<T> {
-  id: number;
-  changes: Partial<T>;
-}
-export declare type MyUpdate<T> = UpdateStr<T> | UpdateNum<T>;
 
+export const loadAllTreatments = createAction(
+  '[Treatments/API] Load All Treatments'
+);
 
+export const loadManyTreatmentsByIds = createAction(
+  '[Treatments/API] Load Many Treatments By Ids',
+  props<{ ids: string[] }>()
+);
 
-export const loadTreatments = createAction(
-  '[Treatments/API] Load Treatments', 
+export const loadTreatmentById = createAction(
+  '[Treatments/API] Load Treatment By Id',
+  props<{ id: string }>()
+);
+
+export const loadTreatmentSuccess = createAction(
+  '[Treatments/API] Load Single Treatment Success', 
+  props<{ treatment: Treatment }>()
+);
+
+export const loadTreatmentsSuccess = createAction(
+  '[Treatments/API] Load Treatments Success', 
   props<{ treatments: Treatment[] }>()
+);
+
+export const loadTreatmentsFail = createAction(
+  '[Treatments/API] Load Treatments Fail', 
+  props<{ error: any }>()
 );
 
 export const addTreatment = createAction(
   '[Treatments/API] Add Treatment',
   props<{ treatment: Treatment }>()
+);
+
+export const addTreatmentSuccess = createAction(
+  '[Treatments/API] Add Treatment Success',
+  props<{ treatment: Treatment }>()
+);
+
+export const addTreatmentFail = createAction(
+  '[Treatments/API] Add Treatment Fail',
+  props<{ error: any }>()
 );
 
 export const upsertTreatment = createAction(
@@ -42,7 +73,17 @@ export const upsertTreatments = createAction(
 
 export const updateTreatment = createAction(
   '[Treatments/API] Update Treatment',
-  props<{ treatment: Update<Treatment> }>()
+  props<{ treatment: GeneralUpdate<Treatment> }>()
+);
+
+export const updateTreatmentSuccess = createAction(
+  '[Treatments/API] Update Treatment Success',
+  props<{ treatment: Update<Treatment> | any }>()
+);
+
+export const updateTreatmentFail = createAction(
+  '[Treatments/API] Update Treatment Fail',
+  props<{ error: any }>()
 );
 
 export const addPropertyToArrayInTreatment = createAction(
@@ -60,6 +101,21 @@ export const updateTreatments = createAction(
   props<{ treatments: Update<Treatment>[] }>()
 );
 
+export const closeTreatment = createAction(
+  '[Treatments/API] Close Treatment',
+  props<{ id: string }>()
+);
+
+export const closeTreatmentSuccess = createAction(
+  '[Treatments/API] Close Treatment Success',
+  props<{ id: string }>()
+);
+
+export const closeTreatmentFail = createAction(
+  '[Treatments/API] Close Treatment Fail',
+  props<{ error: any }>()
+);
+
 export const deleteTreatment = createAction(
   '[Treatments/API] Delete Treatment',
   props<{ id: string }>()
@@ -73,3 +129,4 @@ export const deleteTreatments = createAction(
 export const clearTreatments = createAction(
   '[Treatments/API] Clear Treatments'
 );
+

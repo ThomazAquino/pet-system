@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
@@ -16,16 +17,25 @@ export class SideNavComponent implements OnInit {
     { link: 'tutor', label: 'Tutores', icon: 'user' },
     { link: 'pet', label: 'Pets', icon: 'dog' },
     { link: 'treatment', label: 'Tratamentos', icon: 'stethoscope' },
-    // { link: 'about', label: 'about', icon: 'home' },
+    { link: 'team', label: 'Equipe', icon: 'user-friends' },
+    { link: 'home', label: 'Medicações', icon: 'pills', disabled: true },
+    { link: 'home', label: 'Exames', icon: 'microscope', disabled: true },
+    // { link: 'about', label: 'about', icon: 'home' }, 
     // { link: 'feature-list', label: 'features', icon: 'home' },
     // { link: 'examples', label: 'examples', icon: 'home' },
-    { link: 'settings', label: 'settings', icon: 'home' }
+    { link: 'settings', label: 'settings', icon: 'cog' }  
   ];
 
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  cacheReset() {
+    localStorage.clear();
+    sessionStorage.clear();
+    this.router.navigate(['']);
   }
 
 }

@@ -10,33 +10,41 @@ export const selectSelectedTreatment = createSelector(
   (entities, params) => params && entities[params.state.params.id]
 );
 
+export const selectTreatmentById = createSelector(
+  selectTreatmentsEntities,
+  (entities, props: string) => entities[props]
+);
+
 
 export const selectOpenTreatments = createSelector(
   selectAllTreatments,
   (treatments) => treatments.filter((treatment) => treatment.status === 'open')
 );
 
-export const selectOpenTreatmentsForHomeTable = createSelector(
-  selectOpenTreatments,
-  selectPetsEntities,
-  (treatments, pets) =>
-    treatments.map((treatment) => {
-      return {
-        photo: pets[treatment.petId].avatar,
-        name: pets[treatment.petId].name,
-        enterDate: treatment.enterDate,
-        belongsToVet: treatment.belongsToVet,
-        clinicEvoResume: treatment.clinicEvoResume,
-        qrCode: pets[treatment.petId].qrCode
-      };
-    })
-);
+// export const selectOpenTreatmentsForHomeTable = createSelector(
+//   selectOpenTreatments,
+//   selectPetsEntities,
+//   (treatments, pets) =>
+//     treatments.map((treatment) => {
+//       return {
+//         photo: pets[treatment.petId].avatar,
+//         name: pets[treatment.petId].name,
+//         enterDate: treatment.enterDate,
+//         belongsToVet: treatment.belongsToVet,
+//         clinicEvoResume: treatment.clinicEvoResume,
+//         qrCode: pets[treatment.petId].qrCode
+//       };
+//     })
+// );
 
 export const selectTreatmentsByIdsForListComponent = createSelector(
   selectTreatmentsEntities,
   (entities, props: string[]) => {
+    const treatmentsNotFound = props.filter(id => !entities[id]);
+    if (treatmentsNotFound) { treatmentsNotFound.forEach(t => console.error(`Treatment: "${t}" not found in store.`)) }
+
     return {
-      data: props.map((id) => {
+      data: props.filter(id => entities[id]).map((id) => {
         return {
           id: entities[id].id,
           column1: './assets/images/treatment-placeholder.png',
@@ -67,7 +75,7 @@ export const selectOpenTreatmentsForListComponent = createSelector(
             column1: pets[treatment.petId].avatar,
             column2: pets[treatment.petId].name,
             column3: treatment.enterDate,
-            column4: treatment.belongsToVet,
+            column4: treatment.vetName,
             column5: treatment.clinicEvoResume,
             column6: treatment.status,
             column7: pets[treatment.petId].qrCode
@@ -100,7 +108,7 @@ export const selectAllTreatmentsForListComponent = createSelector(
           column1: pets[treatment.petId]?.avatar,
           column2: pets[treatment.petId]?.name,
           column3: treatment.enterDate,
-          column4: treatment.belongsToVet,
+          column4: treatment.vetName,
           column5: treatment.clinicEvoResume,
           column6: treatment.status,
           column7: pets[treatment.petId]?.qrCode

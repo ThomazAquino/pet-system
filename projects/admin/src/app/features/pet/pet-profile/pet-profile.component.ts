@@ -1,19 +1,23 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Form, FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { NgxImageCompressService } from 'ngx-image-compress';
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { debounceTime, first, takeUntil, tap } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
+import { threadId } from 'worker_threads';
 import { ROUTE_ANIMATIONS_ELEMENTS } from '../../../core/core.module';
-import { upsertPet } from '../../../core/pets/pets.actions';
+import { NoIdProvided, NO_ID_PROVIDED } from '../../../core/core.state';
+import { addPet, deletePet, loadPetById, updatePet, upsertPet } from '../../../core/pets/pets.actions';
 import { Pet } from '../../../core/pets/pets.model';
 import { selectSelectedPet } from '../../../core/pets/pets.selectors';
+import { loadManyTreatmentsByIds } from '../../../core/treatments/treatments.actions';
 import { selectTreatmentsByIdsForListComponent } from '../../../core/treatments/treatments.selectors';
 import { updateTutor } from '../../../core/tutors/tutors.actions';
 import { Tutor } from '../../../core/tutors/tutors.model';
 import { selectTutorById } from '../../../core/tutors/tutors.selectors';
+import { TypeOfHeader } from '../../../shared/header-profile/header-profile.component';
 
 class ImageSnippet {
   constructor(public file: File) {}
@@ -35,7 +39,13 @@ export class PetProfileComponent implements OnInit, OnDestroy {
   selectedTutor$: Observable<Tutor>;
 
   initialFormState: any;
-  isNew: boolean;
+  isAddMode: boolean;
+
+  petHeader = TypeOfHeader.petProfile;
+
+  isInitialization = true;
+
+  petCallMade = false;
 
   // old pets in tutor profile
   treatments$: Observable<any>;
@@ -49,16 +59,17 @@ export class PetProfileComponent implements OnInit, OnDestroy {
     public fb: FormBuilder,
     private imageCompress: NgxImageCompressService,
     private router: Router,
+    private route: ActivatedRoute,
     private activatedRouter: ActivatedRoute,
     private cdRef: ChangeDetectorRef,
   ) { }
 
   static populatePet(pet?: Pet): any {
     return {
-      id: pet?.id || uuid(),
+      id: pet?.id,
       tutorId: pet?.tutorId,
       name: pet?.name,
-      avatar: pet?.avatar,
+      avatar: pet?.avatar || '',
       type: pet?.type,
       breed: pet?.breed,
       color: pet?.color,
@@ -67,6 +78,7 @@ export class PetProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    // Only for creation of pet
     this.getUserFromQueryParams();
 
     this.store
@@ -74,33 +86,55 @@ export class PetProfileComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroyed$))
       .subscribe((pet: Pet) => {
         if (!pet) {
-          this.isNew = true;
+          this.isAddMode = true;
+
+          // Try to get user from the server
+          const id = this.route.snapshot.params['id'];
+          if (id && id !== 'add' && !this.petCallMade) {
+            this.petCallMade = true;
+            this.store.dispatch(loadPetById({id: id}));
+          }
           return 
+        } else {
+          this.isAddMode = false;
+          this.petCallMade = true;
         }
+        
         this.petFormGroup = this.fb.group(
           PetProfileComponent.populatePet(pet)
         );
         this.initialFormState = this.petFormGroup.getRawValue();
 
-        this.petFormGroup.valueChanges
+        if (this.isInitialization) {
+          this.isInitialization = false;
+
+          this.petFormGroup.valueChanges
           .pipe(
             takeUntil(this.destroyed$),
             debounceTime(200),
             tap((form: Form) => console.log(form))
           )
           .subscribe((_) => this.formValueChanges$.next(true));
+        }
 
+        // dispatch load?
         this.selectedTutor$ = this.store.pipe(select(selectTutorById, pet.tutorId));
 
         if (pet?.treatments?.length > 0) {
+          this.store.dispatch(loadManyTreatmentsByIds({ids: pet.treatments}));
+
           this.treatments$ = this.store.select(
             selectTreatmentsByIdsForListComponent,
             pet.treatments
           );
         }
+        // Temp. To not make the call when route changes
+        this.petCallMade = true;
+        setTimeout(() => this.cdRef.detectChanges(), 1);
       });
   }
 
+  // Only for creation of pet
   getUserFromQueryParams() {
     this.activatedRouter.queryParams.subscribe(queryParams => {
       if (queryParams) {
@@ -112,23 +146,28 @@ export class PetProfileComponent implements OnInit, OnDestroy {
 
   save() {
     if (this.petFormGroup.status === 'VALID') {
-      this.store.dispatch(upsertPet({ pet: this.petFormGroup.value }));
+      // this.store.dispatch(upsertPet({ pet: this.petFormGroup.value }));
 
-      if (this.isNew) {
-        this.store.select(selectTutorById, this.petFormGroup.controls.tutorId.value).pipe(
-          first()
-        ).subscribe(tutor => {
-          this.store.dispatch(updateTutor(
-            {tutor: {
-              id: tutor.id,
-              changes: {pets: [...tutor.pets, this.petFormGroup.controls.id.value]}
-            }}
-          ))
-        })
-
-        this.router.navigate(['pet/profile', this.petFormGroup.controls.id.value]);
+      if (this.isAddMode) {
+        const pet = this.petFormGroup.getRawValue()
+        pet.treatments = [];
+        console.log(pet)
+        this.store.dispatch(addPet({ pet: pet }));
       } else {
         this.formValueChanges$.next(false);
+        const changes: Partial<Pet> = {};
+        Object.keys(this.petFormGroup.controls).forEach(fieldKey => {
+          if (fieldKey === 'id') return;
+          if (this.petFormGroup.controls[fieldKey].touched && this.initialFormState[fieldKey] !== this.petFormGroup.controls[fieldKey].value) {
+            changes[fieldKey] = this.petFormGroup.controls[fieldKey].value;
+          }
+        });
+        this.store.dispatch(updatePet({
+          pet: {
+            id: this.petFormGroup.controls.id.value,
+            changes: changes
+          }
+        }));
       }
     }
   }
@@ -175,8 +214,11 @@ export class PetProfileComponent implements OnInit, OnDestroy {
         }
       });
     });
+  }
 
-    
+  deletePet() {
+    this.store.dispatch(deletePet({id: this.petFormGroup.controls.id.value}));
+    return false
   }
 
   ngOnDestroy() {
@@ -185,3 +227,5 @@ export class PetProfileComponent implements OnInit, OnDestroy {
   }
 
 }
+
+

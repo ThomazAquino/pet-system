@@ -38,6 +38,12 @@ const routes: Routes = [
       canActivate: [AuthGuard],
   },
   {
+    path: 'team',
+    loadChildren: () =>
+      import('./features/team/team.module').then((m) => m.TeamModule),
+      canActivate: [AuthGuard],
+  },
+  {
     path: 'about',
     loadChildren: () =>
       import('./features/about/about.module').then((m) => m.AboutModule),

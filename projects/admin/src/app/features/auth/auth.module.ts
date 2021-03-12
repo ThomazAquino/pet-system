@@ -6,10 +6,12 @@ import { LoginComponent } from './login/login.component';
 import { AuthContainerComponent } from './auth-container/auth-container.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
+import { RegisterComponent } from './register/register.component';
+import { VerifyEmailComponent } from './verify-email/verify-email.component';
 
 
 @NgModule({
-  declarations: [LoginComponent, AuthContainerComponent],
+  declarations: [AuthContainerComponent, LoginComponent, RegisterComponent, VerifyEmailComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

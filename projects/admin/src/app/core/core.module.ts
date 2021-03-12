@@ -66,7 +66,8 @@ import { MatButtonModule } from '@angular/material/button';
 import {
   faBell,
   faClock,
-  faCalendar
+  faCalendar,
+  faTrashAlt
  } from '@fortawesome/free-regular-svg-icons';
 import {
   faCog,
@@ -78,9 +79,13 @@ import {
   faPlayCircle,
   faHome,
   faUser,
+  faUsers,
   faDog,
+  faUserFriends,
   faStethoscope,
-  faPills
+  faMicroscope,
+  faPills,
+  
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faGithub,
@@ -89,6 +94,7 @@ import {
   faInstagram,
   faYoutube
 } from '@fortawesome/free-brands-svg-icons';
+import { DataService } from './_data/data.service';
 
 export {
   TitleService,
@@ -106,7 +112,8 @@ export {
   NotificationService,
   selectEffectiveTheme,
   selectSettingsLanguage,
-  selectSettingsStickyHeader
+  selectSettingsStickyHeader,
+  DataService as TutorsService
 };
 
 export function httpLoaderFactory(http: HttpClient) {
@@ -216,9 +223,13 @@ export class CoreModule {
       faClock,
       faCalendar,
       faUser,
+      faUsers,
       faDog,
       faStethoscope,
-      faPills
+      faMicroscope,
+      faUserFriends,
+      faPills,
+      faTrashAlt
     );
   }
 }

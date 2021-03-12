@@ -2,3 +2,10 @@
   [list]="tutors$ | async"
   (rowClick)="onTutorsListClick($event)">
 </pet-general-list>
+
+<button
+  (click)="onAddTutorClick()"
+  class="accent-button"
+  style="margin: 50px auto auto;">
+  Adicionar Tutor
+</button>

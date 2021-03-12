@@ -1,1 +1,124 @@
-<p>tutors-creator works!</p>
+
+  <h3 class="card-header">Register</h3>
+
+  <form [formGroup]="tutorForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-sm12 col-md-6">
+        <mat-form-field appearance="fill" style="display:block">
+          <mat-label>Nome</mat-label>
+          <input matInput placeholder=""
+            formControlName="firstName" required>
+          <mat-error *ngIf="tutorForm.get('firstName').invalid">
+            {{ 'Campo obrigatório' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm12 col-md-6">
+
+        <mat-form-field appearance="fill" style="display:block">
+          <mat-label>Sobrenome</mat-label>
+          <input matInput placeholder=""
+            formControlName="lastName" required>  
+          <mat-error *ngIf="tutorForm.get('lastName').invalid">
+            {{ 'Campo obrigatório' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    
+    <mat-form-field appearance="fill" style="display:block">
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="email" type="email"
+        formControlName="email" required>
+      <mat-error *ngIf="tutorForm.get('email').invalid">
+        {{ 'Campo obrigatório' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <div class="row">
+      <div class="col-sm12 col-md-6">
+        <mat-form-field appearance="fill" style="display:block">
+          <mat-label>telephone</mat-label>
+          <input matInput placeholder="" type="text"
+            formControlName="telephone" required>
+          <mat-error *ngIf="tutorForm.get('telephone').invalid">
+            {{ 'Campo obrigatório' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm12 col-md-6">
+        <mat-form-field appearance="fill" style="display:block">
+          <mat-label>cellphone</mat-label>
+          <input matInput placeholder="" type="cellphone"
+            formControlName="cellphone" required>
+          <mat-error *ngIf="tutorForm.get('cellphone').invalid">
+            {{ 'Campo obrigatório' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm12 col-md-4">
+        <mat-form-field appearance="fill" style="display:block">
+          <mat-label>street</mat-label>
+          <input matInput placeholder="" type="text"
+            formControlName="street" required>
+          <mat-error *ngIf="tutorForm.get('street').invalid">
+            {{ 'Campo obrigatório' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm12 col-md-4">
+        <mat-form-field appearance="fill" style="display:block">
+          <mat-label>streetNumber</mat-label>
+          <input matInput placeholder="" type="streetNumber"
+            formControlName="streetNumber" required>
+          <mat-error *ngIf="tutorForm.get('streetNumber').invalid">
+            {{ 'Campo obrigatório' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm12 col-md-4">
+        <mat-form-field appearance="fill" style="display:block">
+          <mat-label>postalCode</mat-label>
+          <input matInput placeholder="" type="postalCode"
+            formControlName="postalCode" required>
+          <mat-error *ngIf="tutorForm.get('postalCode').invalid">
+            {{ 'Campo obrigatório' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm12 col-md-6">
+        <mat-form-field appearance="fill" style="display:block">
+          <mat-label>birthday</mat-label>
+          <input matInput placeholder="" type="text"
+            formControlName="birthday" required>
+          <mat-error *ngIf="tutorForm.get('birthday').invalid">
+            {{ 'Campo obrigatório' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm12 col-md-6">
+        <mat-form-field appearance="fill" style="display:block">
+          <mat-label>cpf</mat-label>
+          <input matInput placeholder="" type="cpf"
+            formControlName="cpf" required>
+          <mat-error *ngIf="tutorForm.get('cpf').invalid">
+            {{ 'Campo obrigatório' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <mat-checkbox formControlName="acceptTerms" class="example-margin">Aceito os termos</mat-checkbox>
+      </div>
+    </div>
+    
+    <button style="margin-top: 20px;margin-right: 20px;"  mat-raised-button color="primary" [disabled]="loading">Cadastrar</button>
+    <a routerLink="../login" href="" class="btn btn-link">Cancelar</a>
+  </form>

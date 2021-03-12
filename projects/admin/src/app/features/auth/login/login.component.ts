@@ -9,7 +9,6 @@ import { NotificationService } from '../../../core/notifications/notification.se
   selector: 'pet-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  host: { class: 'section' },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit {

@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onTutorAddButtonClick() {
-    this.router.navigate(['tutor/profile']);
+    this.router.navigate(['tutor/profile/add']);
   }
 
   onPetAddButtonClick() {

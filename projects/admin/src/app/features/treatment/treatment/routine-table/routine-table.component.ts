@@ -126,7 +126,8 @@ export class RoutineTableComponent implements OnInit {
           propertyName: this.data.propertyName,
           label: this.data.label,
           value: data,
-          action: 'update'
+          operation: 'update',
+          isNested: true
         });
       } else {
         // this.userService.addUser({ ...data });
@@ -139,7 +140,8 @@ export class RoutineTableComponent implements OnInit {
           propertyName: this.data.propertyName,
           label: this.data.label,
           value: data,
-          action: 'add'
+          operation: 'add',
+          isNested: true
         });
       }
       routineFormRef.resetForm();
@@ -177,6 +179,21 @@ export class RoutineTableComponent implements OnInit {
     }
 
     
+  }
+
+  onDeleteClick(routine) {
+    if (routine.id && routine.id.length) {
+      // this.userService.updateUser(data);
+      // const objIndex = this.data.findIndex((obj => obj.id === data.id));
+      // this.data[objIndex] = data;
+      this.valueChange.emit({
+        propertyName: this.data.propertyName,
+        label: this.data.label,
+        value: routine,
+        operation: 'delete',
+        isNested: true
+      });
+    }
   }
 
   onRowClick() {

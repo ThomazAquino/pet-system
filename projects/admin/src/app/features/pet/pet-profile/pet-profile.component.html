@@ -1,52 +1,78 @@
-<pet-header-profile [headerData]="{pet: petFormGroup.value, tutor: selectedTutor$ | async}"
-  (imageUploaded)="handleImageUploaded($event)"></pet-header-profile>
+<pet-header-profile
+  [headerData]="{
+    pet: petFormGroup.value,
+    tutor: selectedTutor$ | async,
+    options: {typeOfHeader: petHeader}
+  }"
+  (imageUploaded)="handleImageUploaded($event)">
+</pet-header-profile>
 
 
 <form *ngIf="petFormGroup" [formGroup]="petFormGroup" [ngClass]="routeAnimationsElements" class="profile-form">
-  <mat-form-field appearance="fill">
-    <mat-label>Nome</mat-label>
-    <input matInput placeholder="name"
-      formControlName="name" required>
-    <mat-error *ngIf="petFormGroup.get('name').invalid">
-      {{ 'anms.examples.crud.placeholder1' | translate }}
-      {{ 'anms.examples.crud.error' | translate }}
-    </mat-error>
-  </mat-form-field>
+  <div class="row">
+    <div class="col-md-6 col-lg-4">
+      <mat-form-field appearance="fill">
+        <mat-label>Nome</mat-label>
+        <input matInput placeholder="name"
+          formControlName="name" required>
+        <mat-error *ngIf="petFormGroup.get('name').invalid">
+          {{ 'anms.examples.crud.placeholder1' | translate }}
+          {{ 'anms.examples.crud.error' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-md-6 col-lg-4">  
+      <mat-form-field appearance="fill">
+        <mat-label>type</mat-label>
+        <input matInput placeholder="type"
+          formControlName="type" required>
+        <mat-error *ngIf="petFormGroup.get('type').invalid">
+          {{ 'anms.examples.crud.placeholder1' | translate }}
+          {{ 'anms.examples.crud.error' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </div>
 
-  <mat-form-field appearance="fill">
-    <mat-label>type</mat-label>
-    <input matInput placeholder="type"
-      formControlName="type" required>
-    <mat-error *ngIf="petFormGroup.get('type').invalid">
-      {{ 'anms.examples.crud.placeholder1' | translate }}
-      {{ 'anms.examples.crud.error' | translate }}
-    </mat-error>
-  </mat-form-field>
+    <div class="col-md-6 col-lg-4">
+      <mat-form-field appearance="fill">
+        <mat-label>breed</mat-label>
+        <input matInput placeholder="breed"
+          formControlName="breed" required>
+        <mat-error *ngIf="petFormGroup.get('breed').invalid">
+          {{ 'anms.examples.crud.placeholder1' | translate }}
+          {{ 'anms.examples.crud.error' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </div>
 
-  <mat-form-field appearance="fill">
-    <mat-label>breed</mat-label>
-    <input matInput placeholder="breed"
-      formControlName="breed" required>
-    <mat-error *ngIf="petFormGroup.get('breed').invalid">
-      {{ 'anms.examples.crud.placeholder1' | translate }}
-      {{ 'anms.examples.crud.error' | translate }}
-    </mat-error>
-  </mat-form-field>
+    <div class="col-md-6 col-lg-4">
+      <mat-form-field appearance="fill">
+        <mat-label>color</mat-label>
+        <input matInput placeholder="color"
+          formControlName="color" required>
+        <mat-error *ngIf="petFormGroup.get('color').invalid">
+          {{ 'anms.examples.crud.placeholder1' | translate }}
+          {{ 'anms.examples.crud.error' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
 
-  <mat-form-field appearance="fill">
-    <mat-label>color</mat-label>
-    <input matInput placeholder="color"
-      formControlName="color" required>
-    <mat-error *ngIf="petFormGroup.get('color').invalid">
-      {{ 'anms.examples.crud.placeholder1' | translate }}
-      {{ 'anms.examples.crud.error' | translate }}
-    </mat-error>
-  </mat-form-field>
+  <div style="margin-bottom: 70px;">
+    <button
+      *ngIf="!(formValueChanges$ | async) && !isAddMode"
+      (click)="deletePet()
+      "mat-raised-button
+      color="warn"
+      style="float: right;">
+      <fa-icon [icon]="['far','trash-alt']"></fa-icon> Deletar pet
+    </button>
+  </div>
 
   <button
     class="accent-button"
     type="submit"
-    *ngIf="isNew"
+    *ngIf="isAddMode"
     (click)="save()"
     style="margin-top: 30px;">
     Fnalizar cadastro
@@ -74,7 +100,7 @@
 
 <button
   class="accent-button"
-  *ngIf="!isNew"
+  *ngIf="!isAddMode"
   [disabled]="petFormGroup.controls.status.value === 'interned'"
   (click)="onAddTreatmentClick()"
   style="margin-top:30px">

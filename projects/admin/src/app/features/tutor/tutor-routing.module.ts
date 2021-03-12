@@ -30,11 +30,11 @@ const routes: Routes = [
         component: TutorProfileComponent,
         data: { title: 'pet.examples.menu.profile' }
       },
-      {
-        path: 'add',
-        component: TutorCreatorComponent,
-        data: { title: 'pet.examples.menu.add' }
-      }
+      // {
+      //   path: 'add',
+      //   component: TutorCreatorComponent,
+      //   data: { title: 'pet.examples.menu.add' }
+      // }
     ]
   }
 ];

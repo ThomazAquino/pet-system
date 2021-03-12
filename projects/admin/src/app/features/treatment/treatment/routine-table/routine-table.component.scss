@@ -24,7 +24,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 73px;
+  grid-template-columns: 1fr 1fr 1fr 1fr 73px 20px;
   align-items: center;
   padding: 0 25px;
 
@@ -63,4 +63,9 @@
   fa-icon {
     color: #f62020 !important;
   }
+}
+
+.routine-delete {
+  cursor: pointer;
+  @extend.warn;
 }
