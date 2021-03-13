@@ -7,8 +7,13 @@ import { Tutor } from '../tutors/tutors.model';
 
 // import { environment } from '@environments/environment';
 
-// const baseUrl = `${environment.apiUrl}/accounts`;
-const baseUrl = 'http://localhost:4000/accounts';
+const environment = {
+    production: false,
+    apiUrl: '/api'
+};
+
+const baseUrl = `${environment.apiUrl}/accounts`;
+// const baseUrl = 'http://localhost:4000/accounts';
 // const baseUrl = '/apis/accounts';
 
 @Injectable({ providedIn: 'root' })
@@ -35,6 +40,7 @@ export class AuthService {
         return this.http.post<any>(`${baseUrl}/authenticate`, { email, password }, { withCredentials: true })
         .pipe(map(auth => {
             this.authSubject.next(auth);
+            console.log('auth value -->', auth);
             this.startRefreshTokenTimer();
                 return auth;
             }));
@@ -116,6 +122,7 @@ export class AuthService {
     private startRefreshTokenTimer() {
         // parse json object from base64 encoded jwt token
         const jwtToken = JSON.parse(atob(this.authValue.jwtToken.split('.')[1]));
+        console.log('jwtToken --> ', this.authValue.jwtToken);
 
         // set a timeout to refresh the token a minute before it expires
         const expires = new Date(jwtToken.exp * 1000);

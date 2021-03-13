@@ -9,11 +9,13 @@ import { Treatment } from '../treatments/treatments.model';
 import { Tutor } from '../tutors/tutors.model';
 
 
-// import { environment } from '@environments/environment';
+const environment = {
+  production: false,
+  apiUrl: '/api'
+};
 
-// const baseUrl = `${environment.apiUrl}/accounts`;
-const baseUrl = 'http://localhost:4000';
-// const baseUrl = '/apis/accounts';
+const baseUrl = `${environment.apiUrl}`;
+// const baseUrl = 'http://localhost:4000';
 
 @Injectable({
   providedIn: 'root'
