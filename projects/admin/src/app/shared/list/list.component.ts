@@ -58,9 +58,9 @@ export class ListComponent implements OnInit, AfterViewInit, OnChanges {
     this.displayedColumns = Object.keys(this.list?.info).filter(
       (item) => this.list.info[item].included
     );
-    console.log('list',this.list)
+    // console.log('list',this.list)
 
-    console.log(this.displayedColumns);
+    // console.log(this.displayedColumns);
     this.dataSource.data = this.list.data;
   }
 

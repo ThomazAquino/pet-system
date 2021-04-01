@@ -6,7 +6,7 @@ import {
   on
 } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { Tutor } from './tutors.model';
+import { Tutor } from './chat-history.model';
 import * as TutorsActions from './tutors.actions';
 import { AppState } from '../core.state';
 import { selectRouterState } from '../core.module';
