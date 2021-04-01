@@ -67,7 +67,8 @@ import {
   faBell,
   faClock,
   faCalendar,
-  faTrashAlt
+  faTrashAlt,
+  faGrin
  } from '@fortawesome/free-regular-svg-icons';
 import {
   faCog,
@@ -85,6 +86,8 @@ import {
   faStethoscope,
   faMicroscope,
   faPills,
+  faPhone,
+  faMicrophone
   
 } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -95,6 +98,7 @@ import {
   faYoutube
 } from '@fortawesome/free-brands-svg-icons';
 import { DataService } from './_data/data.service';
+import { WebSocketService } from './web-socket/web-socket.service';
 
 export {
   TitleService,
@@ -113,7 +117,8 @@ export {
   selectEffectiveTheme,
   selectSettingsLanguage,
   selectSettingsStickyHeader,
-  DataService as TutorsService
+  DataService as TutorsService,
+  WebSocketService
 };
 
 export function httpLoaderFactory(http: HttpClient) {
@@ -229,7 +234,10 @@ export class CoreModule {
       faMicroscope,
       faUserFriends,
       faPills,
-      faTrashAlt
+      faTrashAlt,
+      faPhone,
+      faGrin,
+      faMicrophone
     );
   }
 }

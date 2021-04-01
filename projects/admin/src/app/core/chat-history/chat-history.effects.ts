@@ -12,7 +12,7 @@ import * as petsActions from '../pets/pets.actions';
 
 import { selectTutorsState } from '../core.state';
 import { DataService } from '../_data/data.service';
-import { Role, Tutor } from './tutors.model';
+import { Role, Tutor } from './chat-history.model';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { NotificationService } from '../notifications/notification.service';

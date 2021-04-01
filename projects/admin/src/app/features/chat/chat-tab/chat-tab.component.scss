@@ -1,0 +1,178 @@
+$chat-tab-width: 328px;
+$chat-tab-height: 455px;
+
+:host {
+  display: block;
+  width: $chat-tab-width;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  overflow: hidden;
+  background-color: #fff;
+  height: $chat-tab-height;
+  position: relative;
+  box-shadow: 0 12px 28px 0 rgba(0, 0, 0, 0.2),0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  padding-bottom: 105px;
+  margin-left: 20px;
+
+  &:last-of-type {
+    margin-left: 0;
+  }
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  box-shadow: 0 -2px 7px 3px #bebebe;
+}
+
+.header-left-area,
+.header-right-area {
+  display: flex;
+  align-items: center;
+}
+
+.header-avatar {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  margin-right: 7px;
+}
+
+.header-name {
+  font-size: 0.93rem;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+svg {
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+fa-icon {
+  padding: 0 10px;
+  cursor: pointer;
+  display: flex;
+}
+
+// Body area. Default is outgoing. The "incoming" change the defaults styles to right side.
+
+.body {
+  padding: 20px 20px 20px 11px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.message-group {
+  display: flex;
+  margin-bottom: 10px;
+  justify-content: flex-end;
+}
+
+.avatar-place {
+  display: flex;
+  align-items: flex-end;
+}
+
+.message-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.message-item {
+  max-width: 202px;
+  width: fit-content;
+  display: flex;
+  background: #7BBFE8;
+  word-break: break-all;
+  margin-bottom: 2px;
+  padding: 8px 12px;
+  font-size: 0.93rem;
+  line-height: 1.25rem;
+  border-radius: 18px;
+}
+
+// income style variation
+
+[position='incoming'] {
+  justify-content: flex-start;
+
+  .message-list {
+    align-items: flex-start;
+  }
+
+  .message-item {
+    background-color: #E4E6EB;
+    max-width: 182px;
+  }
+}
+
+// footer area
+
+footer {
+  position: absolute;
+  width: 100%;
+  bottom: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 12px;
+  padding-right: 10px;
+}
+
+.message-area {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+  background-color: #F0F2F5;
+  padding: 10px 0;
+  padding-right: 12px;
+  max-width: calc(#{$chat-tab-width}   - 50px);
+  margin-right: 8px;
+}
+
+.message-area__left,
+.message-right {
+  display: flex;
+  align-items: center;
+}
+
+.writing-input {
+  border: none;
+  background-color: transparent;
+  font-size: 1rem;
+  font-weight: 300;
+  max-width: 165px;
+}
+
+.round-button {
+  background: #7BBFE8;
+  height: 44px;
+  width: 44px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  user-select: none;
+  cursor: pointer;
+
+  svg,
+  fa-icon {
+    filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, .23));
+  }
+}
+
+// background-color rgb(228, 230, 235)

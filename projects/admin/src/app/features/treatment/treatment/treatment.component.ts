@@ -118,7 +118,7 @@ export class TreatmentComponent implements OnInit {
           TreatmentComponent.populatePet(treatment)
         );
 
-        debugger
+        // debugger
         this.initialFormState = this.treatmentFormGroup.getRawValue();
 
         if (this.isInitialization) {
