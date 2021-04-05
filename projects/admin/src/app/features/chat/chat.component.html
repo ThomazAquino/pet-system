@@ -1,1 +1,35 @@
-<p>chat works!</p>
+<input matInput placeholder="Pesquisar" class="search">
+
+
+
+
+<div class="chat-section">
+  <div class="chat-section__title">Tutores</div>
+
+  <div class="chat-section__contact" *ngFor="let tutor of tutors$ | async" (click)="onContactClick(tutor)">
+    <img class="chat-section__contact__avatar" src="" onError="this.src='./assets/images/user-placeholder.png'" />
+    <div class="chat-section__contact__name">{{tutor.firstName }} {{tutor.lastName }}</div>
+  </div>
+</div>
+
+<div class="chat-section">
+  <div class="chat-section__title">Equipe</div>
+  <div class="chat-section__contact" *ngFor="let teamMember of team$ | async" (click)="onContactClick(teamMember)">
+    <img class="chat-section__contact__avatar" src="" onError="this.src='./assets/images/user-placeholder.png'" />
+    <div class="chat-section__contact__name">{{teamMember.firstName }} {{teamMember.lastName }}</div>
+  </div>
+</div>
+
+<div *ngIf="openedChatTabs" class="chat-tabs-wrapper">
+  <pet-chat-tab
+    *ngFor="let tab of openedChatTabs | keyvalue"
+    [user]="tab.value"
+    [messageGroups]="history[tab.value.id]"
+    [gotMessages$]="gotMessages$"
+    (sendMessage)="sendPrivateMessage($event,tab.value.id)"
+    (close)="closeTab(tab.value.id)">
+  </pet-chat-tab>
+</div>
+
+
+

@@ -1,0 +1,53 @@
+<header>
+  <div class="header-left-area">
+    <img src="" onError="this.src='./assets/images/user-placeholder.png'" alt="" class="header-avatar">
+    <h4 class="header-name">{{user?.firstName}} {{user?.lastName}}</h4>
+  </div>
+  <div class="header-right-area">
+    <fa-icon icon="phone"></fa-icon>
+    <svg xmlns="http://www.w3.org/2000/svg" width="18.098" height="3" viewBox="0 0 18.098 3"><path d="M-572.212-2166.228h15.1" transform="translate(573.712 2167.728)" fill="none" stroke="#000" stroke-linecap="round" stroke-width="3"/></svg>
+    <svg (click)="close.emit()"xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16"><g transform="translate(-939 -815)"><rect width="17" height="16" transform="translate(939 815)" fill="none"/><path d="M1122.64-1993.881l11.282-11.282" transform="translate(-180.895 2822.408)" fill="none" stroke="#000" stroke-linecap="round" stroke-width="2"/><path d="M0,11.282,11.282,0" transform="translate(941.745 828.527) rotate(-90)" fill="none" stroke="#090909" stroke-linecap="round" stroke-width="2"/></g></svg>
+  </div>
+</header> 
+
+<div class="body" #chatBody>
+  <div style="width: 100%;height: 100%;">
+
+    <div 
+      *ngFor="let messageGroup of messageGroups; let last = last"
+      [attr.position]="messageGroup.position"
+      class="message-group" [style.padding-bottom.px]="last ? 15 : 0">
+      <div class="avatar-place" *ngIf="messageGroup.position === eMessagePosition.incoming">
+        <img src="" onError="this.src='./assets/images/user-placeholder.png'" alt="" class="header-avatar">
+      </div>
+      <div class="message-list">
+        <div class="message-item" *ngFor="let message of messageGroup.messages">{{message.content}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="message-area">
+    <div class="message-area__left">
+      <fa-icon [icon]="['far','grin']"></fa-icon>
+      <input
+        [(ngModel)]="messageContent"
+        (keyup.enter)="onSendMessage()"
+        (keyup.escape)="onClearMessage()"
+        class="writing-input"
+        type="text"
+        placeholder="Digite aqui">
+    </div>
+    <div class="message-right">
+      <svg-viewer src="./assets/images/icons/attachment.svg"></svg-viewer>
+      <svg-viewer src="./assets/images/icons/add-photo.svg" style="margin-left: 12px;"></svg-viewer>
+    </div>
+  </div>
+  <div class="button-area">
+    <div class="round-button" (click)="onSendMessage()">
+      <!-- <fa-icon icon="microphone" style="font-size: 1.2rem"></fa-icon> -->
+      <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 3px;" fill="#FFF" width="21" height="18" viewBox="0 0 21 18"><path d="M2.01,21,23,12,2.01,3,2,10l15,2L2,14Z" transform="translate(-2 -3)"/></svg>
+    </div>
+  </div>
+</footer>

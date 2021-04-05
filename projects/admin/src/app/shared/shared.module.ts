@@ -54,6 +54,7 @@ import { HeaderProfileComponent } from './header-profile/header-profile.componen
 import { ListComponent } from './list/list.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { SvgViewer } from './svg-viewer/svg-viewer';
 
 @NgModule({
   imports: [
@@ -87,7 +88,8 @@ import { MatSortModule } from '@angular/material/sort';
     BigInputActionComponent,
     RtlSupportDirective,
     HeaderProfileComponent,
-    ListComponent
+    ListComponent,
+    SvgViewer,
   ],
   exports: [
     CommonModule,
@@ -114,6 +116,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatSliderModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    SvgViewer,
 
     FontAwesomeModule,
 

@@ -1,5 +1,56 @@
 :host {
   display: block;
-  border: 1px solid green;
   width: 100%;
+  height: calc(100vh - 138px);
+  padding: 25px 17px 0 17px;
 }
+
+.search {
+  border-radius: 50px;
+  border: none;
+  width: 100%;
+  padding: 8px 15px;
+  margin-bottom: 35px;
+}
+
+.chat-section {
+  margin-bottom: 40px;
+}
+
+.chat-section__title {
+  font-size: 1.06rem;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.chat-section__contact {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  margin-bottom: 14px;
+  cursor: pointer;
+}
+
+.chat-section__contact__avatar {
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.chat-section__contact__name {
+  font-size: 1rem;
+}
+
+.chat-tabs-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+  position: fixed;
+  bottom: 0;
+  right: 80px;
+}
+
+

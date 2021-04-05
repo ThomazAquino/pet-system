@@ -1,7 +1,7 @@
 import { createSelector } from '@ngrx/store';
 import { selectRouterState, selectTutorsState } from '../core.state';
-import { Role, Status, Tutor } from './tutors.model';
-import { tutorAdapter, TutorsState } from './tutors.reducer';
+import { Role, Status, Tutor } from './chat-history.model';
+import { tutorAdapter, TutorsState } from './chat-history.reducer';
 
 const { selectEntities, selectAll, selectIds } = tutorAdapter.getSelectors();
 export const selectAllTutors = createSelector(selectTutorsState, selectAll);
@@ -77,10 +77,7 @@ export const selectFilteredUsersForListComponent = createSelector(
 
 export const selectTutorsByRole = createSelector(
   selectAllTutors,
-  (tutors, params: Role | 'all-team') => {
-    if (params === 'all-team') {
-      return  tutors.filter((tutor) => tutor.role !== Role.User);
-    }
+  (tutors, params: Role) => {
     return  tutors.filter((tutor) => tutor.role === params);
 
   }
