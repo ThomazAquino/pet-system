@@ -28,7 +28,7 @@ export class WebSocketService {
 
   socket: any;
   windowsApp = false;
-  urlConnection = 'http://localhost:4000';
+  urlConnection = '/api';
   connectionStatus = new BehaviorSubject<SocketConnectionStatus>(SocketConnectionStatus.initial);
   rooms;
   userName;
