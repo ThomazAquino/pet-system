@@ -59,8 +59,11 @@ export class WebSocketService {
       });
 
       this.socket = io(`${this.urlConnection}`, {query: {user: user, jwtToken: this.authService.authValue.jwtToken}});
-      this.connectionStatus.next(SocketConnectionStatus.connected);
 
+      this.socket.on('connect', () => {
+        console.log('connect', this.socket.connected); // true
+        this.connectionStatus.next(SocketConnectionStatus.connected);
+      });
 
       // hard coded
       // this.socket.onAny((event, args) => {
