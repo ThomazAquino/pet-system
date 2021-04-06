@@ -65,6 +65,11 @@ export class WebSocketService {
         this.connectionStatus.next(SocketConnectionStatus.connected);
       });
 
+      // hard coded
+      // this.socket.onAny((event, args) => {
+      //   console.log('ON ANY', event, args);
+      // });
+
       this.socket.on('usersOnline', (usersOnline) => {
         console.log('Users online now:', usersOnline);
       });

@@ -72,13 +72,13 @@ export const selectOpenTreatmentsForListComponent = createSelector(
       data: treatments.filter((treatment) => treatment.status === 'open').map((treatment) => {
           return {
             id: treatment.id,
-            column1: pets[treatment.petId].avatar,
-            column2: pets[treatment.petId].name,
+            column1: pets[treatment.petId]?.avatar,
+            column2: pets[treatment.petId]?.name,
             column3: treatment.enterDate,
             column4: treatment.vetName,
             column5: treatment.clinicEvoResume,
             column6: treatment.status,
-            column7: pets[treatment.petId].qrCode
+            column7: pets[treatment.petId]?.qrCode
           } as ListComponentDataItem;
         }
       ),

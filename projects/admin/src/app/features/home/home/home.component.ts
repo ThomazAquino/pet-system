@@ -10,6 +10,8 @@ import { MatSort } from '@angular/material/sort';
 import { Store, select } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { selectOpenTreatmentsForListComponent } from '../../../core/treatments/treatments.selectors';
+import { loadAllTreatments } from '../../../core/treatments/treatments.actions';
+import { loadAllPets } from '../../../core/pets/pets.actions';
 
 @Component({
   selector: 'pet-home',
@@ -25,6 +27,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private store: Store, private router: Router) {}
 
   ngOnInit(): void {
+    this.store.dispatch(loadAllTreatments());
+    this.store.dispatch(loadAllPets());
   }
 
   onTutorAddButtonClick() {
