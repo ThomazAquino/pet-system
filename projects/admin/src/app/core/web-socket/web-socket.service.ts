@@ -28,7 +28,7 @@ export class WebSocketService {
 
   socket: any;
   windowsApp = false;
-  urlConnection = '/api';
+  urlConnection = '/';
   connectionStatus = new BehaviorSubject<SocketConnectionStatus>(SocketConnectionStatus.initial);
   rooms;
   userName;
@@ -51,7 +51,7 @@ export class WebSocketService {
     /**
      * Test the connection with the API works before connect to the socket.
      */
-    this.http.get(this.urlConnection + '/test')
+    this.http.get('/api' + '/test')
     .pipe().subscribe(result => {
       const user = JSON.stringify({
         id: this.authService.authValue.id,
@@ -59,13 +59,11 @@ export class WebSocketService {
       });
 
       this.socket = io(`${this.urlConnection}`, {query: {user: user, jwtToken: this.authService.authValue.jwtToken}});
-      this.connectionStatus.next(SocketConnectionStatus.connected);
 
-
-      // hard coded
-      // this.socket.onAny((event, args) => {
-      //   console.log('ON ANY', event, args);
-      // });
+      this.socket.on('connect', () => {
+        console.log('connect', this.socket.connected); // true
+        this.connectionStatus.next(SocketConnectionStatus.connected);
+      });
 
       this.socket.on('usersOnline', (usersOnline) => {
         console.log('Users online now:', usersOnline);
