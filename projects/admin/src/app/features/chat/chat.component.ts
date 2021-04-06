@@ -9,6 +9,7 @@ import { selectAllTutors, selectTutorsByRole } from '../../core/tutors/tutors.se
 import { Role, Tutor } from '../../core/tutors/tutors.model';
 import { ChatTabComponent } from './chat-tab/chat-tab.component';
 import { AuthService } from '../../core/auth/auth.service';
+import { loadAllTutors } from '../../core/tutors/tutors.actions';
 
 export enum MessagePosition {
   incoming = 'incoming',
@@ -78,6 +79,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   fetchTutors() {
+    this.store.dispatch(loadAllTutors())
     this.tutors$ = this.store.select(selectTutorsByRole, Role.User);
   }
 
