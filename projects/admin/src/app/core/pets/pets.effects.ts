@@ -79,9 +79,9 @@ export class PetsEffects {
   addPet = createEffect(() => this.actions$.pipe(
     ofType(petsAction.addPet),
     switchMap(action => this.dataService.createPet(action.pet).pipe(
-      switchMap((petId: string) => { return [
-        petsAction.addPetSuccess({ pet: {...action.pet, id: petId} }),
-        tutorsAction.addPropertyToArrayInTutor({ tutorId: action.pet.tutorId, propertyName: 'pets', value: petId}),
+      switchMap((response: {id: string, avatar: string }) => { return [
+        petsAction.addPetSuccess({ pet: {...action.pet, id: response.id, avatar: response.avatar} }),
+        tutorsAction.addPropertyToArrayInTutor({ tutorId: action.pet.tutorId, propertyName: 'pets', value: response.id}),
       ]}),
       catchError(err => of(petsAction.addPetFail({error: err.error.message})))
     )),

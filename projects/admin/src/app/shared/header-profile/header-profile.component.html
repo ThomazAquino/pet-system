@@ -11,10 +11,18 @@
   </div>  
 
 <hr class="primary-hr">
-
 <ng-template #tutorProfile>
   <section class="left">
-    <img class="left__image" (click)="onImageClick()" [src]="headerData?.tutor?.avatar" onError="this.src='./assets/images/user-placeholder.png'">
+    <img
+      [src]="headerData?.tutor?.avatar ? 
+        headerData?.tutor?.avatar.startsWith('data:image') ?
+          headerData?.tutor?.avatar :
+          apiPrefix + '/images/' + headerData?.tutor?.avatar :
+        ''"
+      onError="this.src='./assets/images/user-placeholder.png'"
+      (click)="onImageClick()"
+      class="left__image"
+    >
     <div class="left__info">
       <h3 class="left__info__title">{{ (headerData?.tutor?.firstName) || ''}} {{' '}}  {{(headerData?.tutor?.lastName || '')}}</h3>
     </div>
@@ -26,7 +34,17 @@
 
 <ng-template #defaultHeader>
   <section class="left">
-    <img class="left__image" (click)="onImageClick()" [src]="headerData?.pet?.avatar" onError="this.src='./assets/images/pet-placeholder.png'">
+    <img
+      [src]="headerData?.pet?.avatar ? 
+        headerData?.pet?.avatar.startsWith('data:image') ?
+          headerData?.pet?.avatar :
+          apiPrefix + '/images/' + headerData?.pet?.avatar :
+        ''"
+        onError="this.src='./assets/images/pet-placeholder.png'"
+        (click)="onImageClick()"
+        class="left__image"
+      >
+    
     <div class="left__info">
       <h3 class="left__info__title">{{headerData?.pet?.name || ''}}</h3>
       <h3 class="left__info__sub-title">{{ (headerData?.pet?.type) || ''}} {{' '}}  {{(headerData?.pet?.breed || '')}} {{' '}}  {{(headerData?.pet?.color || '')}}</h3>
@@ -43,7 +61,15 @@
   
   <section class="right">
     <div class="right__first">
-      <img class="right__image" [src]="headerData?.tutor?.avatar" onError="this.src='./assets/images/user-placeholder.png'">
+      <img
+      [src]="headerData?.tutor?.avatar ? 
+        headerData?.tutor?.avatar.startsWith('data:image') ?
+          headerData?.tutor?.avatar :
+          apiPrefix + '/images/' + headerData?.tutor?.avatar :
+        ''"
+        onError="this.src='./assets/images/user-placeholder.png'"
+        class="right__image"
+      >
       <button class="right profile-button" style="margin-right: 20px;" (click)="openTutorProfile()">
         <fa-icon icon="user"></fa-icon> Ver perfil
       </button>

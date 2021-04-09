@@ -19,7 +19,7 @@
       <td mat-cell *matCellDef="let element" [style.width]="column.value.width">
 
         <ng-container *ngIf="column.value.type === 'image'">
-          <img class="list-table-image" src="{{element[column.key]}}" alt="" onError="this.src='./assets/images/user-placeholder.png'">
+          <img class="list-table-image" [src]="element[column.key] ? apiPrefix + '/images/' + element[column.key] : '' " alt="" onError="this.src='./assets/images/user-placeholder.png'">
         </ng-container>
         <ng-container *ngIf="column.value.type === 'date'">
           {{ element[column.key] | date: 'd/MM/yyyy HH:mm'}}

@@ -1,7 +1,8 @@
 import { Component, Input, OnInit, OnChanges, Output, EventEmitter, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Tutor } from '../../../core/tutors/tutors.model';
-import { Message, MessagePosition, MessageGroup } from '../chat.component';
+import { MessagePosition, MessageGroup } from '../chat.component';
+import { environment as env } from '../../../../environments/environment';
 
 @Component({
   selector: 'pet-chat-tab',
@@ -18,6 +19,8 @@ export class ChatTabComponent implements OnInit, OnDestroy {
 
   eMessagePosition = MessagePosition;
   messageContent;
+
+  apiPrefix = env.apiPrefix;
 
   constructor() { }
 

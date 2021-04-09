@@ -7,9 +7,10 @@ import { select, Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { selectAllTutors, selectTutorsByRole } from '../../core/tutors/tutors.selectors';
 import { Role, Tutor } from '../../core/tutors/tutors.model';
-import { ChatTabComponent } from './chat-tab/chat-tab.component';
 import { AuthService } from '../../core/auth/auth.service';
 import { loadAllTutors } from '../../core/tutors/tutors.actions';
+import { environment as env } from '../../../environments/environment';
+
 
 export enum MessagePosition {
   incoming = 'incoming',
@@ -44,6 +45,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   tutors$: Observable<Tutor[]>;
   team$: Observable<Tutor[]>;
   gotMessages$ = new Subject();
+
+  apiPrefix = env.apiPrefix;
 
   openedChats = {};
 

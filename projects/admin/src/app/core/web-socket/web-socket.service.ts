@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { first } from 'rxjs/operators';
 import {io} from 'socket.io-client';
 import { AuthService } from '../auth/auth.service';
+import { environment as env } from '../../../environments/environment';
+
 
 
 
@@ -28,7 +28,6 @@ export class WebSocketService {
 
   socket: any;
   windowsApp = false;
-  urlConnection = 'http://localhost:4000';
   connectionStatus = new BehaviorSubject<SocketConnectionStatus>(SocketConnectionStatus.initial);
   rooms;
   userName;
@@ -51,14 +50,14 @@ export class WebSocketService {
     /**
      * Test the connection with the API works before connect to the socket.
      */
-    this.http.get(this.urlConnection + '/test')
+    this.http.get(env.socketPrefix + '/test')
     .pipe().subscribe(result => {
       const user = JSON.stringify({
         id: this.authService.authValue.id,
         firstName: this.authService.authValue.firstName
       });
 
-      this.socket = io(`${this.urlConnection}`, {query: {user: user, jwtToken: this.authService.authValue.jwtToken}});
+      this.socket = io(`${env.socketPrefix}`, {query: {user: user, jwtToken: this.authService.authValue.jwtToken}});
 
       this.socket.on('connect', () => {
         console.log('connect', this.socket.connected); // true
@@ -86,7 +85,7 @@ export class WebSocketService {
         console.log('ERR::', err.message);
       });
 
-    }, error => console.error('Socket.io is not running on ' + this.urlConnection));
+    }, error => console.error('Socket.io is not running on ' + env.socketPrefix));
   }
 
   closeConnection() {

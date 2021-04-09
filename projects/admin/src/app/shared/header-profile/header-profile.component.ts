@@ -10,7 +10,7 @@ import {
 import { Tutor } from '../../core/tutors/tutors.model';
 import { Pet } from '../../core/pets/pets.model';
 import { Router } from '@angular/router';
-import { SimpleChanges, OnChanges } from '@angular/core';
+import { environment as env } from '../../../environments/environment';
 
 // Data receive from parent component
 interface HeaderData {
@@ -60,6 +60,8 @@ export class HeaderProfileComponent implements OnInit {
   leftPart: any;
   rightPart: any;
   isTutor: boolean;
+
+  apiPrefix = env.apiPrefix;
 
   constructor(private router: Router) {}
 

@@ -1,6 +1,10 @@
 <header>
   <div class="header-left-area">
-    <img src="" onError="this.src='./assets/images/user-placeholder.png'" alt="" class="header-avatar">
+    <img
+      [src]="apiPrefix + '/images/' + user?.avatar"
+      onError="this.src='./assets/images/user-placeholder.png'"
+      class="header-avatar"
+    >
     <h4 class="header-name">{{user?.firstName}} {{user?.lastName}}</h4>
   </div>
   <div class="header-right-area">

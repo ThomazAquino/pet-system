@@ -4,7 +4,11 @@
   <div class="chat-section__title">Tutores</div>
 
   <div class="chat-section__contact" *ngFor="let tutor of tutors$ | async" (click)="onContactClick(tutor)">
-    <img class="chat-section__contact__avatar" src="" onError="this.src='./assets/images/user-placeholder.png'" />
+    <img
+      [src]="tutor.avatar ? apiPrefix + '/images/' + tutor?.avatar : ''"
+      onError="this.src='./assets/images/user-placeholder.png'"
+      class="chat-section__contact__avatar"
+    >
     <div class="chat-section__contact__name">{{tutor.firstName }} {{tutor.lastName }}</div>
   </div>
 </div>
@@ -12,7 +16,11 @@
 <div class="chat-section">
   <div class="chat-section__title">Equipe</div>
   <div class="chat-section__contact" *ngFor="let teamMember of team$ | async" (click)="onContactClick(teamMember)">
-    <img class="chat-section__contact__avatar" src="" onError="this.src='./assets/images/user-placeholder.png'" />
+    <img
+      [src]="teamMember.avatar ? apiPrefix + '/images/' + teamMember?.avatar : ''"
+      onError="this.src='./assets/images/user-placeholder.png'"
+      class="chat-section__contact__avatar"
+    >
     <div class="chat-section__contact__name">{{teamMember.firstName }} {{teamMember.lastName }}</div>
   </div>
 </div>
