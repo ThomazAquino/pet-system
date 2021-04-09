@@ -6,6 +6,8 @@ export const environment = {
   production: false,
   test: true,
   i18nPrefix: '',
+  apiPrefix: '/api',
+  socketPrefix: '/',
   versions: {
     app: packageJson.version,
     angular: packageJson.dependencies['@angular/core'],

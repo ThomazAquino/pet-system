@@ -1,19 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Update } from '@ngrx/entity';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Pet } from '../pets/pets.model';
 import { Treatment } from '../treatments/treatments.model';
 import { Tutor } from '../tutors/tutors.model';
+import { environment as env } from '../../../environments/environment';
 
-
-// import { environment } from '@environments/environment';
-
-// const baseUrl = `${environment.apiUrl}/accounts`;
-const baseUrl = 'http://localhost:4000';
-// const baseUrl = '/apis/accounts';
 
 @Injectable({
   providedIn: 'root'
@@ -40,23 +34,26 @@ export class DataService {
   /* *********** USERS *********** */
 
   getAllUsers() {
-      return this.http.get<Tutor[]>(`${baseUrl}/accounts`);
+      return this.http.get<Tutor[]>(`${env.apiPrefix}/accounts`);
   }
 
   getUserById(id: string) {
-      return this.http.get<Tutor>(`${baseUrl}/accounts/${id}`);
+      return this.http.get<Tutor>(`${env.apiPrefix}/accounts/${id}`);
   }
 
   getManyUsersByIds(ids: string[]) {
-      return this.http.get<Tutor[]>(`${baseUrl}/accounts/many/${ids}`);
+      return this.http.get<Tutor[]>(`${env.apiPrefix}/accounts/many/${ids}`);
   }
   
   createUser(params) {
-      return this.http.post(`${baseUrl}/accounts`, params);
+    const formData = buildFormData(params);
+    return this.http.post(`${env.apiPrefix}/accounts`, formData);
   }
   
   updateUser(id, params) {
-    return this.http.put(`${baseUrl}/accounts/${id}`, params)
+    const formData = buildFormData(params.changes);
+
+    return this.http.put(`${env.apiPrefix}/accounts/${id}`, formData)
       .pipe(map((account: any) => {
         //   // update the current account if it was updated
         //   if (account.id === this.authValue.id) {
@@ -69,7 +66,7 @@ export class DataService {
   }
   
   deleteUser(id: string) {
-      return this.http.delete(`${baseUrl}/accounts/${id}`)
+      return this.http.delete(`${env.apiPrefix}/accounts/${id}`)
           // .pipe(finalize(() => {
           //     // auto logout if the logged in account was deleted
           //     if (id === this.authValue.id)
@@ -81,30 +78,32 @@ export class DataService {
    /* *********** PETS *********** */
 
   getAllPets() {
-    return this.http.get<Pet[]>(`${baseUrl}/pets`);
+    return this.http.get<Pet[]>(`${env.apiPrefix}/pets`);
   }
 
   getPetById(id: string) {
-    return this.http.get<Pet>(`${baseUrl}/pets/${id}`);
+    return this.http.get<Pet>(`${env.apiPrefix}/pets/${id}`);
   }
 
   getManyPetsByIds(ids: string[]) {
-    return this.http.get<Pet[]>(`${baseUrl}/pets/many/${ids}`);
+    return this.http.get<Pet[]>(`${env.apiPrefix}/pets/many/${ids}`);
   }
 
   createPet(params) {
-    return this.http.post(`${baseUrl}/pets`, params);
+    const formData = buildFormData(params);
+    return this.http.post(`${env.apiPrefix}/pets`, formData);
   }
 
   updatePet(id, params) {
-    return this.http.put(`${baseUrl}/pets/${id}`, params)
+    const formData = buildFormData(params.changes);
+    return this.http.put(`${env.apiPrefix}/pets/${id}`, formData)
       .pipe(map((account: any) => {
           return account;
     }));
   }
 
   deletePet(id: string) {
-    return this.http.delete(`${baseUrl}/pets/${id}`)
+    return this.http.delete(`${env.apiPrefix}/pets/${id}`)
   }
 
 
@@ -112,30 +111,44 @@ export class DataService {
   /* *********** TREATMENTS *********** */
 
   getAllTreatments() {
-    return this.http.get<Treatment[]>(`${baseUrl}/treatments`);
+    return this.http.get<Treatment[]>(`${env.apiPrefix}/treatments`);
   }
 
   getTreatmentById(id: string) {
-    return this.http.get<Treatment>(`${baseUrl}/treatments/${id}`);
+    return this.http.get<Treatment>(`${env.apiPrefix}/treatments/${id}`);
   }
 
   getManyTreatmentsByIds(ids: string[]) {
-    return this.http.get<Treatment[]>(`${baseUrl}/treatments/many/${ids}`);
+    return this.http.get<Treatment[]>(`${env.apiPrefix}/treatments/many/${ids}`);
   }
 
   createTreatment(params) {
-    return this.http.post(`${baseUrl}/treatments`, params);
+    return this.http.post(`${env.apiPrefix}/treatments`, params);
   }
 
   updateTreatment(id, params) {
-    return this.http.put<any>(`${baseUrl}/treatments/${id}`, params);
+    return this.http.put<any>(`${env.apiPrefix}/treatments/${id}`, params);
   }
 
   closeTreatment(id) {
-    return this.http.put<any>(`${baseUrl}/treatments/close/${id}`, null)
+    return this.http.put<any>(`${env.apiPrefix}/treatments/close/${id}`, null)
   }
 
   deleteTreatment(id: string) {
-    return this.http.delete(`${baseUrl}/treatments/${id}`)
+    return this.http.delete(`${env.apiPrefix}/treatments/${id}`)
   }
+}
+
+function buildFormData(objectForm) {
+  const formData = new FormData();
+  Object.keys(objectForm).forEach(field => {
+    // ForData cannot send arrays.
+    if (field === 'treatments') {
+      formData.append(field, JSON.stringify(objectForm[field]));
+      return
+    }
+    formData.append(field, objectForm[field]);
+  });
+
+  return formData;
 }

@@ -12,6 +12,8 @@ import {
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { OnChanges } from '@angular/core';
+import { environment as env } from '../../../environments/environment';
+
 
 export interface ListComponent {
   data?: ListComponentDataItem[];
@@ -51,6 +53,8 @@ export class ListComponent implements OnInit, AfterViewInit, OnChanges {
   @Output() rowClick = new EventEmitter<any>();
   displayedColumns: string[] = [];
   dataSource = new MatTableDataSource();
+
+  apiPrefix = env.apiPrefix;
 
   constructor() {}
 

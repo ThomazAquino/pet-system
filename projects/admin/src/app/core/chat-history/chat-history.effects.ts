@@ -81,8 +81,8 @@ export class TutorsEffects {
     ofType(tutorsAction.addTutor),
     switchMap(action => 
       this.dataService.createUser(action.tutor).pipe(
-        map((userId: string) => {
-          const tutor = {...action.tutor, id:userId, password: null, confirmPassword: null, pets: []};
+        map((response: {userId: string, avatar: string }) => {
+          const tutor = {...action.tutor, id:response.userId, avatar: response.avatar, password: null, confirmPassword: null, pets: []};
           if (!tutor.role) { tutor.role = Role.User}
           return tutorsAction.addTutorSuccess({ tutor: tutor });
         }),

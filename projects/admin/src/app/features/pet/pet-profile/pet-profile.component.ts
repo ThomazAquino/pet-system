@@ -18,6 +18,7 @@ import { updateTutor } from '../../../core/tutors/tutors.actions';
 import { Tutor } from '../../../core/tutors/tutors.model';
 import { selectTutorById } from '../../../core/tutors/tutors.selectors';
 import { TypeOfHeader } from '../../../shared/header-profile/header-profile.component';
+import { parseUrlToFile } from '../../../shared/hepper-functions';
 
 class ImageSnippet {
   constructor(public file: File) {}
@@ -49,7 +50,7 @@ export class PetProfileComponent implements OnInit, OnDestroy {
 
   // old pets in tutor profile
   treatments$: Observable<any>;
-  selectedFile: ImageSnippet;
+  imageToUpload: any;
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
 
@@ -151,7 +152,7 @@ export class PetProfileComponent implements OnInit, OnDestroy {
       if (this.isAddMode) {
         const pet = this.petFormGroup.getRawValue()
         pet.treatments = [];
-        console.log(pet)
+        if (this.imageToUpload) { pet.avatar = this.imageToUpload; }
         this.store.dispatch(addPet({ pet: pet }));
       } else {
         this.formValueChanges$.next(false);
@@ -161,6 +162,7 @@ export class PetProfileComponent implements OnInit, OnDestroy {
           if (this.petFormGroup.controls[fieldKey].touched && this.initialFormState[fieldKey] !== this.petFormGroup.controls[fieldKey].value) {
             changes[fieldKey] = this.petFormGroup.controls[fieldKey].value;
           }
+          if (changes.avatar) { changes.avatar = this.imageToUpload; }
         });
         this.store.dispatch(updatePet({
           pet: {
@@ -183,19 +185,21 @@ export class PetProfileComponent implements OnInit, OnDestroy {
 
     reader.addEventListener('load', (event: any) => {
       this.imageCompress
-        .compressFile(event.target.result, null, 75, 50)
+        .compressFile(event.target.result, null, 50, 50)
         .then((result) => {
-          // this.store.dispatch(upsertTutor({tutor : {...this.tutorFormGroup.value, image:result}}));
-          this.petFormGroup.controls.avatar.setValue(result);
-          this.cdRef.detectChanges();
+          parseUrlToFile(result, 'a',file.type)
+          .then(file => {
+            this.imageToUpload = file;
+
+            // Before sync we replace this base64 result for the actual fileToUpload.
+            // We do this because the headerComponent is not expecting a file Object.
+            // It can receive either a string with a path or a base46.
+            this.petFormGroup.controls.avatar.setValue(result);
+            this.petFormGroup.controls.avatar.markAllAsTouched();
+            this.cdRef.detectChanges();
+
+          });
         });
-      // this.imageService.uploadImage(this.selectedFile.file).subscribe(
-      //   (res) => {
-
-      //   },
-      //   (err) => {
-
-      //   })
     });
 
     reader.readAsDataURL(file);
