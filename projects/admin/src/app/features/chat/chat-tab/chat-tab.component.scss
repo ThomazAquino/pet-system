@@ -175,4 +175,18 @@ footer {
   }
 }
 
+.backdrop-emoji {
+  height: 100px;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+::ng-deep {
+  .emoji-mart-anchor, .emoji-mart-emoji, .emoji-mart-emoji * {
+    cursor: pointer !important
+  }
+}
+
 // background-color rgb(228, 230, 235)

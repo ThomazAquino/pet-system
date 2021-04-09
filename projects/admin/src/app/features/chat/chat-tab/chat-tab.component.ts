@@ -17,10 +17,26 @@ export class ChatTabComponent implements OnInit, OnDestroy {
   @Input() gotMessages$ = new Subject();
   @ViewChild('chatBody') private chatBody: ElementRef;
 
+  public isEmojiPickerVisible: boolean;
+
   eMessagePosition = MessagePosition;
-  messageContent;
+  messageContent = '';
 
   apiPrefix = env.apiPrefix;
+
+  emojiTexts = {
+    search: 'Procurar',
+    emojilist: 'Lista de emojis',
+    notfound: 'Nenhum emoji encontrado :(',
+    clear: 'Limpar',
+    categories: {
+      search: 'Resultados de busca',
+      recent: 'Recentes',
+      people: 'Rostinhos',
+      nature: 'Animais & Natureza',
+      objects: 'Objetos',
+    },
+  }
 
   constructor() { }
 
@@ -42,6 +58,11 @@ export class ChatTabComponent implements OnInit, OnDestroy {
   onClearMessage(): void {
     this.messageContent = '';
   }
+
+  public addEmoji(event) {
+    this.messageContent = `${this.messageContent}${event.emoji.native}`;
+    this.isEmojiPickerVisible = false;
+ }
 
   ngOnDestroy() {
 

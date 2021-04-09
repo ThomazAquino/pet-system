@@ -7,6 +7,7 @@ import { CoreModule } from '../../core/core.module';
 import { FormsModule } from '@angular/forms';
 import { ChatTabComponent } from './chat-tab/chat-tab.component';
 import { SharedModule } from '../../shared/shared.module';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { SharedModule } from '../../shared/shared.module';
     FormsModule,
     ChatRoutingModule,
     CoreModule,
-    SharedModule
+    SharedModule,
+    PickerModule
   ],
   exports: [ChatComponent],
   entryComponents: [ChatTabComponent]

@@ -30,7 +30,8 @@
             ],
             "styles": [
               "projects/admin/src/styles-app-loading.scss",
-              "projects/admin/src/styles.scss"
+              "projects/admin/src/styles.scss",
+              "node_modules/@ctrl/ngx-emoji-mart/picker.css"
             ],
             "scripts": []
           },
@@ -110,7 +111,8 @@
             ],
             "styles": [
               "projects/admin/src/styles-app-loading.scss",
-              "projects/admin/src/styles.scss"
+              "projects/admin/src/styles.scss",
+              "node_modules/@ctrl/ngx-emoji-mart/picker.css"
             ],
             "scripts": []
           },
