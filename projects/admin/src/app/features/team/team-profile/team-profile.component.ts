@@ -10,6 +10,7 @@ import { addTutor, deleteTutor, updateTutor } from '../../../core/tutors/tutors.
 import { Role, Tutor } from '../../../core/tutors/tutors.model';
 import { selectSelectedTutor } from '../../../core/tutors/tutors.selectors';
 import { mustMatch } from '../../../shared/must-match.validator';
+import { parseUrlToFile } from '../../../shared/hepper-functions';
 
 class ImageSnippet {
   constructor(public file: File) {}
@@ -41,6 +42,9 @@ export class TeamProfileComponent implements OnInit {
     {value: Role.Vet, label: 'Veterinário'},
     {value: Role.Nurse, label: 'Enfermeiro'}
   ];
+
+  imageToUpload: any;
+
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
   constructor(
@@ -113,10 +117,26 @@ export class TeamProfileComponent implements OnInit {
       console.log(this.tutorFormGroup.value);
 
       if (this.isAddMode) {
-        this.store.dispatch(addTutor({ tutor: this.tutorFormGroup.value }));
+        const tutor = this.tutorFormGroup.getRawValue()
+        if (this.imageToUpload) { tutor.avatar = this.imageToUpload; }
+        this.store.dispatch(addTutor({ tutor: tutor }));
       } else {
         this.formValueChanges$.next(false);
-        this.store.dispatch(updateTutor({ tutor: this.tutorFormGroup.value }));
+        const changes: Partial<Tutor> = {};
+        Object.keys(this.tutorFormGroup.controls).forEach(fieldKey => {
+          if (fieldKey === 'id') return;
+          if (this.tutorFormGroup.controls[fieldKey].touched && this.initialFormState[fieldKey] !== this.tutorFormGroup.controls[fieldKey].value) {
+            changes[fieldKey] = this.tutorFormGroup.controls[fieldKey].value;
+          }
+          if (changes.avatar) { changes.avatar = this.imageToUpload; }
+        });
+
+        this.store.dispatch(updateTutor({
+          tutor: {
+            id: this.tutorFormGroup.controls.id.value,
+            changes: changes
+          }
+        }));
       }
     }
   }
@@ -132,21 +152,22 @@ export class TeamProfileComponent implements OnInit {
 
     reader.addEventListener('load', (event: any) => {
       this.imageCompress
-        .compressFile(event.target.result, null, 75, 50)
+        .compressFile(event.target.result, null, 50, 50)
         .then((result) => {
-          // this.store.dispatch(upsertTutor({tutor : {...this.tutorFormGroup.value, image:result}}));
-          this.tutorFormGroup.controls.avatar.setValue(result);
-          this.cdRef.detectChanges();
+          parseUrlToFile(result, 'a',file.type)
+          .then(file => {
+            this.imageToUpload = file;
+
+            // Before sync we replace this base64 result for the actual fileToUpload.
+            // We do this because the headerComponent is not expecting a file Object.
+            // It can receive either a string with a path or a base46.
+            this.tutorFormGroup.controls.avatar.setValue(result);
+            this.tutorFormGroup.controls.avatar.markAllAsTouched();
+            this.cdRef.detectChanges();
+
+          });
         });
-      // this.imageService.uploadImage(this.selectedFile.file).subscribe(
-      //   (res) => {
-
-      //   },
-      //   (err) => {
-
-      //   })
     });
-
     reader.readAsDataURL(file);
   }
 
