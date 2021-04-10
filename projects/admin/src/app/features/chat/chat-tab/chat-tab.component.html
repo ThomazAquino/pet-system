@@ -34,7 +34,21 @@
 <footer>
   <div class="message-area">
     <div class="message-area__left">
-      <fa-icon [icon]="['far','grin']"></fa-icon>
+      <fa-icon [icon]="['far','grin']" (click)="isEmojiPickerVisible = !isEmojiPickerVisible;" ></fa-icon>
+      
+      <emoji-mart 
+        *ngIf="isEmojiPickerVisible"
+        (emojiSelect)="addEmoji($event)"
+        color="#7BBFE8"
+        [perLine]="8"
+        [totalFrequentLines]="1"
+        [sheetSize]="32"
+        [showPreview]="false"
+        [i18n]="emojiTexts"
+        [exclude]="['foods', 'activity', 'places', 'symbols', 'flags' ]"
+        [style]="{ position: 'absolute', bottom: '-7px', right: '0px', width: '100%'}"
+      ></emoji-mart>
+
       <input
         [(ngModel)]="messageContent"
         (keyup.enter)="onSendMessage()"
@@ -55,3 +69,4 @@
     </div>
   </div>
 </footer>
+<div class="backdrop-emoji" *ngIf="isEmojiPickerVisible" (click)="isEmojiPickerVisible = !isEmojiPickerVisible;"></div>
