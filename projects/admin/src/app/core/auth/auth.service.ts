@@ -4,11 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, finalize } from 'rxjs/operators';
 import { Tutor } from '../tutors/tutors.model';
+import { environment as env } from '../../../environments/environment';
 
 // import { environment } from '@environments/environment';
 
-// const baseUrl = `${environment.apiUrl}/accounts`;
-const baseUrl = 'http://localhost:4000/accounts';
+// const env.apiPrefix = `${environment.apiUrl}/accounts`;
+// const baseUrl = 'http://localhost:4000/accounts';
 // const baseUrl = '/apis/accounts';
 
 @Injectable({ providedIn: 'root' })
@@ -32,7 +33,7 @@ export class AuthService {
     }
 
     login(email: string, password: string) {
-        return this.http.post<any>(`${baseUrl}/authenticate`, { email, password }, { withCredentials: true })
+        return this.http.post<any>(`${env.apiPrefix}/authenticate`, { email, password }, { withCredentials: true })
         .pipe(map(auth => {
             this.authSubject.next(auth);
             this.startRefreshTokenTimer();
@@ -41,14 +42,14 @@ export class AuthService {
     }
 
     logout() {
-        this.http.post<any>(`${baseUrl}/revoke-token`, {}, { withCredentials: true }).subscribe();
+        this.http.post<any>(`${env.apiPrefix}/revoke-token`, {}, { withCredentials: true }).subscribe();
         this.stopRefreshTokenTimer();
         this.authSubject.next(null);
         this.router.navigate(['/auth/login']);
     }
 
     refreshToken() {
-        return this.http.post<any>(`${baseUrl}/refresh-token`, {}, { withCredentials: true })
+        return this.http.post<any>(`${env.apiPrefix}/refresh-token`, {}, { withCredentials: true })
             .pipe(map((auth) => {
                 this.authSubject.next(auth);
                 this.startRefreshTokenTimer();
@@ -57,39 +58,39 @@ export class AuthService {
     }
 
     register(account: Tutor) {
-        return this.http.post(`${baseUrl}/register`, account);
+        return this.http.post(`${env.apiPrefix}/register`, account);
     }
 
     verifyEmail(token: string) {
-        return this.http.post(`${baseUrl}/verify-email`, { token });
+        return this.http.post(`${env.apiPrefix}/verify-email`, { token });
     }
     
     forgotPassword(email: string) {
-        return this.http.post(`${baseUrl}/forgot-password`, { email });
+        return this.http.post(`${env.apiPrefix}/forgot-password`, { email });
     }
     
     validateResetToken(token: string) {
-        return this.http.post(`${baseUrl}/validate-reset-token`, { token });
+        return this.http.post(`${env.apiPrefix}/validate-reset-token`, { token });
     }
     
     resetPassword(token: string, password: string, confirmPassword: string) {
-        return this.http.post(`${baseUrl}/reset-password`, { token, password, confirmPassword });
+        return this.http.post(`${env.apiPrefix}/reset-password`, { token, password, confirmPassword });
     }
 
     getAll() {
-        return this.http.get<Tutor[]>(baseUrl);
+        return this.http.get<Tutor[]>(env.apiPrefix);
     }
 
     getById(id: string) {
-        return this.http.get<Tutor>(`${baseUrl}/${id}`);
+        return this.http.get<Tutor>(`${env.apiPrefix}/${id}`);
     }
     
     create(params) {
-        return this.http.post(baseUrl, params);
+        return this.http.post(env.apiPrefix, params);
     }
     
     update(id, params) {
-        return this.http.put(`${baseUrl}/${id}`, params)
+        return this.http.put(`${env.apiPrefix}/${id}`, params)
             .pipe(map((account: any) => {
                 // update the current account if it was updated
                 if (account.id === this.authValue.id) {
@@ -102,7 +103,7 @@ export class AuthService {
     }
     
     delete(id: string) {
-        return this.http.delete(`${baseUrl}/${id}`)
+        return this.http.delete(`${env.apiPrefix}/${id}`)
             .pipe(finalize(() => {
                 // auto logout if the logged in account was deleted
                 if (id === this.authValue.id)

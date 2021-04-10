@@ -8,6 +8,7 @@
     "api": "cd ../_Node_consultas/node-mongo-signup-verification-api && yarn start:dev",
     "start:prod": "npm run build:prod && npm run server",
     "build": "ng build",
+    "build:aws": "ng build --configuration=test",
     "build:prod": "ng build --prod",
     "lint": "eslint --color -c .eslintrc --ext .ts .",
     "test": "npm run lint && ng test --configuration=test",
