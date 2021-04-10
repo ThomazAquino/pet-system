@@ -5,7 +5,7 @@ export const environment = {
   envName: 'PROD',
   production: true,
   test: false,
-  i18nPrefix: '/admin',
+  i18nPrefix: '',
   apiPrefix: '/api',
   socketPrefix: '/',
   versions: {

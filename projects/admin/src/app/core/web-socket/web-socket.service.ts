@@ -50,7 +50,7 @@ export class WebSocketService {
     /**
      * Test the connection with the API works before connect to the socket.
      */
-    this.http.get(env.socketPrefix + '/test')
+    this.http.get(env.apiPrefix + '/test')
     .pipe().subscribe(result => {
       const user = JSON.stringify({
         id: this.authService.authValue.id,
