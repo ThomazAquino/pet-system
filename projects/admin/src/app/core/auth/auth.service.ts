@@ -33,7 +33,7 @@ export class AuthService {
     }
 
     login(email: string, password: string) {
-        return this.http.post<any>(`${env.apiPrefix}/authenticate`, { email, password }, { withCredentials: true })
+        return this.http.post<any>(`${env.apiPrefix}/accounts/authenticate`, { email, password }, { withCredentials: true })
         .pipe(map(auth => {
             this.authSubject.next(auth);
             this.startRefreshTokenTimer();
@@ -42,14 +42,14 @@ export class AuthService {
     }
 
     logout() {
-        this.http.post<any>(`${env.apiPrefix}/revoke-token`, {}, { withCredentials: true }).subscribe();
+        this.http.post<any>(`${env.apiPrefix}/accounts/revoke-token`, {}, { withCredentials: true }).subscribe();
         this.stopRefreshTokenTimer();
         this.authSubject.next(null);
         this.router.navigate(['/auth/login']);
     }
 
     refreshToken() {
-        return this.http.post<any>(`${env.apiPrefix}/refresh-token`, {}, { withCredentials: true })
+        return this.http.post<any>(`${env.apiPrefix}/accounts/refresh-token`, {}, { withCredentials: true })
             .pipe(map((auth) => {
                 this.authSubject.next(auth);
                 this.startRefreshTokenTimer();
@@ -58,23 +58,23 @@ export class AuthService {
     }
 
     register(account: Tutor) {
-        return this.http.post(`${env.apiPrefix}/register`, account);
+        return this.http.post(`${env.apiPrefix}/accounts/register`, account);
     }
 
     verifyEmail(token: string) {
-        return this.http.post(`${env.apiPrefix}/verify-email`, { token });
+        return this.http.post(`${env.apiPrefix}/accounts/verify-email`, { token });
     }
     
     forgotPassword(email: string) {
-        return this.http.post(`${env.apiPrefix}/forgot-password`, { email });
+        return this.http.post(`${env.apiPrefix}/accounts/forgot-password`, { email });
     }
     
     validateResetToken(token: string) {
-        return this.http.post(`${env.apiPrefix}/validate-reset-token`, { token });
+        return this.http.post(`${env.apiPrefix}/accounts/validate-reset-token`, { token });
     }
     
     resetPassword(token: string, password: string, confirmPassword: string) {
-        return this.http.post(`${env.apiPrefix}/reset-password`, { token, password, confirmPassword });
+        return this.http.post(`${env.apiPrefix}/accounts/reset-password`, { token, password, confirmPassword });
     }
 
     getAll() {
@@ -82,7 +82,7 @@ export class AuthService {
     }
 
     getById(id: string) {
-        return this.http.get<Tutor>(`${env.apiPrefix}/${id}`);
+        return this.http.get<Tutor>(`${env.apiPrefix}/accounts/${id}`);
     }
     
     create(params) {
@@ -90,7 +90,7 @@ export class AuthService {
     }
     
     update(id, params) {
-        return this.http.put(`${env.apiPrefix}/${id}`, params)
+        return this.http.put(`${env.apiPrefix}/accounts/${id}`, params)
             .pipe(map((account: any) => {
                 // update the current account if it was updated
                 if (account.id === this.authValue.id) {
@@ -103,7 +103,7 @@ export class AuthService {
     }
     
     delete(id: string) {
-        return this.http.delete(`${env.apiPrefix}/${id}`)
+        return this.http.delete(`${env.apiPrefix}/accounts/${id}`)
             .pipe(finalize(() => {
                 // auto logout if the logged in account was deleted
                 if (id === this.authValue.id)
