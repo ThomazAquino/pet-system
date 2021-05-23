@@ -1,3 +1,4 @@
+/* eslint-disable arrow-body-style */
 import { createSelector } from '@ngrx/store';
 import { selectRouterState } from '../core.state';
 import { selectPetsState, AppState, NO_ID_PROVIDED } from '../core.state';

@@ -4,12 +4,14 @@ import { filter, first } from 'rxjs/operators';
 import { SocketConnectionStatus, WebSocketService } from '../../core/web-socket/web-socket.service';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { select, Store } from '@ngrx/store';
-import { Router } from '@angular/router';
-import { selectAllTutors, selectTutorsByRole } from '../../core/tutors/tutors.selectors';
+import { selectTutorsByRole } from '../../core/tutors/tutors.selectors';
 import { Role, Tutor } from '../../core/tutors/tutors.model';
 import { AuthService } from '../../core/auth/auth.service';
 import { loadAllTutors } from '../../core/tutors/tutors.actions';
 import { environment as env } from '../../../environments/environment';
+import { MatDialog } from '@angular/material/dialog';
+import { Overlay } from '@angular/cdk/overlay';
+import { CallComponent, CallPosition } from './call/call.component';
 
 
 export enum MessagePosition {
@@ -27,6 +29,13 @@ export interface MessageGroup {
   /* income or outgoing. */
   position: MessagePosition,
   messages: Message[];
+}
+
+export interface CallData {
+  incomingUser?: Tutor,
+  callState?: CallPosition,
+  remoteSessionDescription?: RTCSessionDescription,
+  haveVideo?: boolean,
 }
 
 @Component({
@@ -54,11 +63,18 @@ export class ChatComponent implements OnInit, OnDestroy {
   history: { [key: string]: MessageGroup[] } = {}
   maximumChatTab = 2;
 
+  callData: CallData = {};
+
+  private onCall = false;
+
   constructor(
     private webSocketService: WebSocketService,
     private store: Store,
     private authService: AuthService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    public dialog: MatDialog,
+    private _overlay: Overlay,
+    private _viewContainerRef: ViewContainerRef
   ) { }
 
   ngOnInit(): void {
@@ -69,10 +85,13 @@ export class ChatComponent implements OnInit, OnDestroy {
       if (status === SocketConnectionStatus.connected) {
         this.webSocketService.emit('messageToServer', {data: 'This is ANGULAR!'});
 
-        this.subscriptions.push(this.webSocketService.listen('messageFromServer').subscribe((message: any) => {
+        this.subscriptions.push(
+          this.webSocketService.listen('messageFromServer').subscribe((message: any) => {
           console.log(message)
         }));
+
         this.setupChatListeners();
+        this.setupCallListeners();
       }
     });
 
@@ -183,6 +202,63 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     // this.componentRef.instance.messageGroups = messageGroup;
+  }
+
+  openCallDialog() {
+    this.onCall = true;
+    const dialogRef = this.dialog.open(CallComponent, {
+      width: '100%',
+      height: '100%',
+      maxWidth: '100%',
+      maxHeight: '100%',
+      panelClass: 'call-wrapper',
+      data: this.callData
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.onCall = false;
+    });
+  }
+
+  setupCallListeners() {
+    this.webSocketService.listen('messageResponse').subscribe((message: any) => {
+      switch (message.message.type) {
+        case 'offer':
+          console.log('offer coming', message);
+          if (this.onCall) {
+            return;
+          }
+          
+          this.store.select(selectTutorById, message.from).pipe(first()).subscribe(user => this.callData.incomingUser = user);
+          if (!this.callData.incomingUser) {
+            console.log(`User ${message.from} not found.`);
+            return;
+          }
+          this.callData.callState = CallPosition.receiving;
+          this.callData.remoteSessionDescription = message.message.data;
+          this.openCallDialog();
+          break;
+      
+        case 'answer':
+          console.log('answer', message.message.data);
+          break;
+      
+        case 'ice-candidate':
+          // console.log('FATHER COMPONENT: ice-candidate', message.message.data);
+          break;
+
+        case 'hangup':
+          // no data here
+          console.log('hangup', message.message);
+          break;
+      
+        default:
+          console.error('Unknown message type', message.message);
+          break;
+      }
+    })
+
   }
 
   ngOnDestroy() {

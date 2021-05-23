@@ -71,6 +71,7 @@
     "import/no-deprecated": "warn",
     "no-bitwise": "error",
     "no-caller": "error",
+    "arrow-body-style": [2, "as-needed"],
     "no-console": [
       "error",
       {

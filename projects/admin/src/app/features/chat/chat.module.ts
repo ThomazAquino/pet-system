@@ -8,19 +8,22 @@ import { FormsModule } from '@angular/forms';
 import { ChatTabComponent } from './chat-tab/chat-tab.component';
 import { SharedModule } from '../../shared/shared.module';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { CallComponent } from './call/call.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 
 @NgModule({
-  declarations: [ChatComponent, ChatTabComponent],
+  declarations: [ChatComponent, ChatTabComponent, CallComponent],
   imports: [
     CommonModule,
     FormsModule,
     ChatRoutingModule,
     CoreModule,
     SharedModule,
-    PickerModule
+    PickerModule,
+    DragDropModule
   ],
   exports: [ChatComponent],
-  entryComponents: [ChatTabComponent]
+  entryComponents: [ChatTabComponent, CallComponent]
 })
 export class ChatModule { }

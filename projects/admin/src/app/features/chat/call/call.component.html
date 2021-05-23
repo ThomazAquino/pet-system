@@ -1,0 +1,80 @@
+<section class="call-container">
+  <header class="header">
+
+  </header>
+
+  <div class="call-body">
+
+
+    <!-- Local -->
+    <div class="local-stream-container" [class.have-video]="connectionState === 'connected' && localStreamInfo.video.enabled && !localStreamInfo.video.muted">
+      <fa-icon class="stream__muted" *ngIf="localStreamInfo.audio.muted" icon="microphone-slash"></fa-icon>
+
+      <ng-container [ngTemplateOutlet]="userProfile" [ngTemplateOutletContext]="{user: authService.authValue}"></ng-container>
+    
+      <div class="stream" [style.opacity]="connectionState === 'connected' && localStreamInfo.video.enabled && !localStreamInfo.video.muted? 1 : 0">
+        <div class="stream__name">Você</div>
+        <video #localVideo [style.width.px]="videoWidth" class="local-video" [autoplay]="true" [muted]="true"></video>
+      </div>
+    </div>
+    
+    <!-- Remote -->
+    <div class="remote-stream-container" [class.have-video]="connectionState === 'connected' && remoteStreamInfo.video.enabled && !remoteStreamInfo.video.muted">
+      <fa-icon class="stream__muted" *ngIf="remoteStreamInfo.audio.muted" icon="microphone-slash"></fa-icon>
+
+      <ng-container [ngTemplateOutlet]="userProfile" [ngTemplateOutletContext]="{user: data.incomingUser}"></ng-container>
+    
+      <div class="stream" [style.opacity]="connectionState === 'connected' && remoteStreamInfo.video.enabled && !remoteStreamInfo.video.muted? 1 : 0">
+        <div class="stream__name">{{ data.incomingUser.firstName }}</div>
+        <video #remoteVideo [style.width.px]="videoWidth" class="remote-video" [autoplay]="true" [muted]="true"></video>
+      </div>
+    </div>
+  </div>
+
+  <footer class="call-footer" *ngIf="connectionState !== 'disconnected'">
+    <span style="color: white;"> -- {{ remoteStreamInfo.video | json }} -- </span>
+
+    <ng-container [ngTemplateOutlet]="callPosition === 'receiving' && connectionState !== 'connected' ? receivingCallButtons : onCallButtons"></ng-container>
+  </footer>
+
+  
+</section>
+
+<aside class="chat-container"></aside>
+
+
+
+<!-- callPosition: {{ callPosition }} -- connectionState: {{ connectionState }} --  -->
+
+
+<!-- <video #remoteVideo class="remote-video" [autoplay]="true" [muted]="true"></video> -->
+
+<!-- <button mat-raised-button color="primary" (click)="startLocalVideo()" >Start local</button>
+<button mat-raised-button color="primary" (click)="pauseLocalVideo()">Stop local</button>
+<button mat-raised-button color="primary" (click)="call()">Call</button>
+<button mat-raised-button color="warn" (click)="hangup()">Hangup</button>  -->
+
+<ng-template #userProfile let-user='user'>
+  <div class="profile">
+    <div class="profile__name">{{user?.firstName}}</div>
+    <div class="profile__avatar">
+      <img
+        [src]="apiPrefix + '/images/' + user?.avatar"
+        onError="this.src='./assets/images/user-placeholder.png'"
+        class="profile__avatar__content"
+      >
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #receivingCallButtons>
+  <button class="circle-button" style="background: #4AB7F2" (click)="pickupCall(true)"><fa-icon icon="video"></fa-icon></button>
+  <button class="circle-button" style="background: #4AB7F2" (click)="pickupCall()"><fa-icon icon="phone"></fa-icon></button>
+  <button class="circle-button" style="background: #C4314B" (click)="hangup()"><fa-icon icon="phone-slash"></fa-icon></button>
+</ng-template>
+
+<ng-template #onCallButtons>
+  <button class="circle-button" style="background: #1d1d1d" (click)="toggleVideoStream()"><fa-icon [icon]="!localStreamInfo.video.enabled || localStreamInfo.video.muted ? 'video-slash' : 'video'"></fa-icon></button>
+  <button class="circle-button" style="background: #C4314B" (click)="hangup()"><fa-icon icon="phone-slash"></fa-icon></button>
+  <button class="circle-button" style="background: #1d1d1d" (click)="toggleAudioStream()"><fa-icon [icon]="localStreamInfo.audio.muted ? 'microphone-slash' : 'microphone'"></fa-icon></button>
+</ng-template>

@@ -87,7 +87,11 @@ import {
   faMicroscope,
   faPills,
   faPhone,
-  faMicrophone
+  faPhoneSlash,
+  faVideo,
+  faVideoSlash,
+  faMicrophone,
+  faMicrophoneSlash,
   
 } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -236,8 +240,12 @@ export class CoreModule {
       faPills,
       faTrashAlt,
       faPhone,
+      faPhoneSlash,
       faGrin,
-      faMicrophone
+      faMicrophone,
+      faMicrophoneSlash,
+      faVideo,
+      faVideoSlash
     );
   }
 }

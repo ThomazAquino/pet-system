@@ -54,4 +54,12 @@
   right: 80px;
 }
 
+::ng-deep .mat-dialog-container {
+  padding: 0 !important;
+}
+
+::ng-deep .call-wrapper mat-dialog-container {
+  overflow: hidden !important;
+}
+
 
