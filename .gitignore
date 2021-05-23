@@ -2,8 +2,8 @@
 
 # compiled output
 /dist
-/tmp
-/out-tsc
+/tmp  
+/out-tsc   
 /coverage
 
 /be/**/*
